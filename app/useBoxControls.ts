@@ -24,6 +24,10 @@ export default function useBoxControls() {
 
   // Phase II controls
   const [logoSize, setLogoSize] = useState(100)
+  const [boxName, setBoxName] = useState("Lola's Chizcakes")
+  const [codeNumber, setCodeNumber] = useState('')
+  const [ctnNumber, setCtnNumber] = useState('')
+  const [ctnBase, setCtnBase] = useState(200)
 
   useEffect(() => {
     const w = document.getElementById('main-container')?.clientWidth ?? 0
@@ -67,5 +71,13 @@ export default function useBoxControls() {
     lPanelRef,
     logoSize,
     setLogoSize,
+    boxName,
+    setBoxName,
+    codeNumber,
+    setCodeNumber,
+    ctnNumber,
+    setCtnNumber,
+    ctnBase,
+    setCtnBase,
   }
 }

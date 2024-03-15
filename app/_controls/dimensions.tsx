@@ -2,6 +2,8 @@ import { Button } from '@/components/ui/button'
 import useBoxControls from '../useBoxControls'
 import { Input } from '@/components/ui/input'
 import { Slider } from '@/components/ui/slider'
+import { Label } from '@/components/ui/label'
+import { DimensionsIcon } from '@radix-ui/react-icons'
 
 interface Props {
   controls: ReturnType<typeof useBoxControls>
@@ -14,19 +16,19 @@ export default function DimensionControls(props: Props) {
         e.preventDefault()
         props.controls.applyChanges()
       }}
-      className='grid gap-4 p-4'
+      className='grid gap-4 p-4 pt-1'
     >
       <div className='flex items-center justify-between'>
         <div className='text-muted-foreground small'>Dimensions</div>
-        <Button size={'sm'}>Apply</Button>
+        <Button
+          size={'sm'}
+          variant={'secondary'}
+        >
+          <DimensionsIcon className='mr-2' /> Apply
+        </Button>
       </div>
       <div className='flex items-center justify-between'>
-        <label
-          htmlFor='Width'
-          className='small'
-        >
-          Width
-        </label>
+        <Label htmlFor='Width'>Width</Label>
         <Input
           ref={props.controls.widthRef}
           id='Width'
@@ -38,12 +40,7 @@ export default function DimensionControls(props: Props) {
         />
       </div>
       <div className='flex items-center justify-between'>
-        <label
-          htmlFor='Length'
-          className='small'
-        >
-          Length
-        </label>
+        <Label htmlFor='Length'>Length</Label>
         <Input
           ref={props.controls.lengthRef}
           id='Length'
@@ -55,12 +52,7 @@ export default function DimensionControls(props: Props) {
         />
       </div>
       <div className='flex items-center justify-between'>
-        <label
-          htmlFor='Height'
-          className='small'
-        >
-          Height
-        </label>
+        <Label htmlFor='Height'>Height</Label>
         <Input
           ref={props.controls.heightRef}
           type='number'

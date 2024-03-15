@@ -96,7 +96,7 @@ export default function Panels(props: {
         defaultSize={lengthPercentage}
         onResize={setLengthPercentage}
       >
-        <Phase2 size={props.controls.logoSize} />
+        <Phase2 controls={props.controls} />
       </ResizablePanel>
 
       <ResizableHandle withHandle />
