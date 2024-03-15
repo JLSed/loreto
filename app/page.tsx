@@ -2,39 +2,41 @@
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from '@/components/ui/resizable'
+
 import { Slider } from '@/components/ui/slider'
-import { useEffect, useState } from 'react'
+import useBoxControls from './useBoxControls'
+import dynamic from 'next/dynamic'
+
+const Panels = dynamic(() => import('./Panels'), { ssr: false })
 
 export default function Home() {
-  // actual pixel
-  const [height, setHeight] = useState(400)
-  const [pixelWidth, setPixelWidth] = useState(0)
-  const [pixelLength, setPixelLength] = useState(0)
+  const controls = useBoxControls()
 
-  const [containerWidth, setContainerWidth] = useState(0)
-
-  // percentage
-  const [widthPercentage, setWidthPercentage] = useState(25)
-  const [lengthPercentage, setLengthPercentage] = useState(35)
-
-  useEffect(() => {
-    const w = document.getElementById('main-container')?.clientWidth || 0
-    setContainerWidth(w)
-    setPixelWidth(Math.round((w * widthPercentage) / 100))
-    setPixelLength(Math.round((w * lengthPercentage) / 100))
-  }, [lengthPercentage, widthPercentage])
+  const {
+    height,
+    setHeight,
+    pixelWidth,
+    pixelLength,
+    widthRef,
+    lengthRef,
+    heightRef,
+    applyChanges,
+  } = controls
 
   return (
     <main className='grid grid-cols-[250px_1fr] pr-4 py-4'>
-      <div className='flex flex-col p-4 pt-0 gap-4'>
+      <div
+        aria-label='controls'
+        className='flex flex-col p-4 pt-0 gap-4'
+      >
         <div className='border-b py-3 flex items-center justify-between'>
           <div className='text-muted-foreground small'>Controls</div>
-          <Button size={'sm'}>Apply</Button>
+          <Button
+            size={'sm'}
+            onClick={applyChanges}
+          >
+            Apply
+          </Button>
         </div>
         <div className='flex items-center justify-between'>
           <label
@@ -44,10 +46,12 @@ export default function Home() {
             Width
           </label>
           <Input
+            ref={widthRef}
             id='Width'
             type='number'
             placeholder='Width'
             defaultValue={pixelWidth}
+            key={pixelWidth}
             className='w-24'
           />
         </div>
@@ -59,10 +63,12 @@ export default function Home() {
             Length
           </label>
           <Input
+            ref={lengthRef}
             id='Length'
             type='number'
             placeholder='Length'
             defaultValue={pixelLength}
+            key={pixelLength}
             className='w-24'
           />
         </div>
@@ -74,16 +80,13 @@ export default function Home() {
             Height
           </label>
           <Input
+            ref={heightRef}
             type='number'
+            id='Height'
             placeholder='Height'
-            key={height}
             defaultValue={height}
+            key={height}
             className='w-24'
-            onChange={(e) => {
-              let value = +e.currentTarget.value
-              if (value < 100 || value > 1000) return
-              setHeight(value)
-            }}
           />
         </div>
         <Slider
@@ -95,51 +98,7 @@ export default function Home() {
         />
       </div>
 
-      <ResizablePanelGroup
-        id={'main-container'}
-        direction='horizontal'
-        className='rounded-lg border py-8'
-        style={{
-          height: `${height}px`,
-        }}
-      >
-        <ResizablePanel defaultSize={20} />
-
-        <ResizableHandle withHandle />
-
-        <ResizablePanel
-          className='bg-yellow-900/45 relative'
-          defaultValue={widthPercentage}
-          onResize={setWidthPercentage}
-        >
-          <div className='absolute bottom-0 left-1/2 -translate-x-1/2 p-4 flex items-center gap-2'>
-            W - {pixelWidth}
-          </div>
-        </ResizablePanel>
-
-        <ResizableHandle withHandle />
-
-        <ResizablePanel
-          className='bg-yellow-900/30 relative'
-          defaultSize={lengthPercentage}
-          onResize={setLengthPercentage}
-        >
-          <div className='absolute bottom-0 left-1/2 -translate-x-1/2 p-4 flex items-center gap-2'>
-            L - {pixelLength}
-          </div>
-        </ResizablePanel>
-
-        <ResizableHandle withHandle />
-
-        <ResizablePanel
-          defaultSize={20}
-          className='relative'
-        >
-          <div className='absolute left-0 top-1/2 -translate-y-1/2 p-4'>
-            H: {height}
-          </div>
-        </ResizablePanel>
-      </ResizablePanelGroup>
+      <Panels controls={controls} />
     </main>
   )
 }
