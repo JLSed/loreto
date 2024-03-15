@@ -23,12 +23,10 @@ export default function useBoxControls() {
   const lPanelRef = useRef<ImperativePanelHandle>(null)
 
   useEffect(() => {
-    setTimeout(() => {
-      const w = document.getElementById('main-container')?.clientWidth ?? 0
-      setContainerWidth(Math.round(w))
-      setPixelWidth(Math.round(w * (widthPercentage / 100)))
-      setPixelLength(Math.round(w * (lengthPercentage / 100)))
-    }, 0)
+    const w = document.getElementById('main-container')?.clientWidth ?? 0
+    setContainerWidth(Math.round(w))
+    setPixelWidth(Math.round(w * (widthPercentage / 100)))
+    setPixelLength(Math.round(w * (lengthPercentage / 100)))
   }, [lengthPercentage, widthPercentage])
 
   const applyChanges = () => {

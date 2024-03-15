@@ -6,6 +6,7 @@ import {
 
 import useBoxControls from './useBoxControls'
 import { cn } from '@/lib/utils'
+import { useState } from 'react'
 
 export default function Panels(props: {
   controls: ReturnType<typeof useBoxControls>
@@ -20,7 +21,20 @@ export default function Panels(props: {
     setWidthPercentage,
     wPanelRef,
     lPanelRef,
+    containerWidth,
   } = props.controls
+
+  const [leftMostPanelSize, setLeftMostPanelSize] = useState(20)
+  const [rightMostPanelSize, setRightMostPanelSize] = useState(20)
+
+  const computeWLabelPosition = () => {
+    const p = leftMostPanelSize + widthPercentage / 2
+    return containerWidth * (p / 100)
+  }
+  const computeLLabelPosition = () => {
+    const p = leftMostPanelSize + widthPercentage + lengthPercentage / 2
+    return containerWidth * (p / 100)
+  }
 
   return (
     <ResizablePanelGroup
@@ -33,22 +47,29 @@ export default function Panels(props: {
     >
       <div className='absolute bottom-0 pb-4 flex w-full'>
         <div
-          className='ml-auto text-center small'
-          style={{ width: `${widthPercentage < 5 ? 10 : widthPercentage}%` }}
+          hidden={pixelWidth === 0}
+          className='text-center small -translate-x-1/2 absolute bottom-3'
+          style={{
+            left: `${computeWLabelPosition()}px`,
+          }}
         >
           W - {pixelWidth}
         </div>
         <div
-          className='mr-auto text-center small'
-          style={{ width: `${lengthPercentage < 5 ? 10 : lengthPercentage}%` }}
+          hidden={pixelLength === 0}
+          className='text-center small -translate-x-1/2 absolute bottom-3'
+          style={{
+            left: `${computeLLabelPosition()}px`,
+          }}
         >
           L - {pixelLength}
         </div>
       </div>
 
       <ResizablePanel
-        defaultSize={20}
+        defaultSize={leftMostPanelSize}
         className='relative'
+        onResize={setLeftMostPanelSize}
       >
         <div className='absolute right-0 top-1/2 -translate-y-1/2 p-4 small'>
           H - {height}
@@ -78,7 +99,8 @@ export default function Panels(props: {
       <ResizableHandle withHandle />
 
       <ResizablePanel
-        defaultSize={20}
+        defaultSize={rightMostPanelSize}
+        onResize={setRightMostPanelSize}
         className='relative'
       >
         <div className='absolute left-0 top-1/2 -translate-y-1/2 p-4 small'>
