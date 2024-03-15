@@ -26,11 +26,26 @@ export default function Panels(props: {
     <ResizablePanelGroup
       id={'main-container'}
       direction='horizontal'
-      className='rounded-lg border py-8'
+      className='rounded-lg border py-8 relative pb-10'
       style={{
         height: `${height}px`,
       }}
     >
+      <div className='absolute bottom-0 pb-4 flex w-full'>
+        <div
+          className='ml-auto text-center small'
+          style={{ width: `${widthPercentage < 5 ? 10 : widthPercentage}%` }}
+        >
+          W - {pixelWidth}
+        </div>
+        <div
+          className='mr-auto text-center small'
+          style={{ width: `${lengthPercentage < 5 ? 10 : lengthPercentage}%` }}
+        >
+          L - {pixelLength}
+        </div>
+      </div>
+
       <ResizablePanel
         defaultSize={20}
         className='relative'
@@ -49,11 +64,7 @@ export default function Panels(props: {
         })}
         defaultValue={widthPercentage}
         onResize={setWidthPercentage}
-      >
-        <div className='absolute bottom-0 left-1/2 -translate-x-1/2 p-4 small'>
-          W - {pixelWidth}
-        </div>
-      </ResizablePanel>
+      />
 
       <ResizableHandle withHandle />
 
@@ -62,11 +73,7 @@ export default function Panels(props: {
         className='bg-yellow-900/30 relative'
         defaultSize={lengthPercentage}
         onResize={setLengthPercentage}
-      >
-        <div className='absolute bottom-0 left-1/2 -translate-x-1/2 p-4 small'>
-          L - {pixelLength}
-        </div>
-      </ResizablePanel>
+      />
 
       <ResizableHandle withHandle />
 
