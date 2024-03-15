@@ -1,0 +1,19 @@
+{
+  "css.customData": ["./.vscode/css-data.json"],
+  "editor.formatOnSave": true,
+  "prettier.jsxSingleQuote": true,
+  "prettier.singleQuote": true,
+  "prettier.singleAttributePerLine": true,
+  "typescript.format.semicolons": "remove",
+  "prettier.semi": false,
+  "javascript.format.semicolons": "remove",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className",
+    "classNames",
+    ".*class.*",
+    ".*Class.*",
+    ".*Classes.*"
+  ]
+}
