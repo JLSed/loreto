@@ -5,9 +5,8 @@ import { Input } from '@/components/ui/input'
 
 import { Slider } from '@/components/ui/slider'
 import useBoxControls from './useBoxControls'
-import dynamic from 'next/dynamic'
 
-const Panels = dynamic(() => import('./Panels'), { ssr: false })
+import Panels from './Panels'
 
 export default function Home() {
   const controls = useBoxControls()

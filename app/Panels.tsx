@@ -5,6 +5,7 @@ import {
 } from '@/components/ui/resizable'
 
 import useBoxControls from './useBoxControls'
+import { cn } from '@/lib/utils'
 
 export default function Panels(props: {
   controls: ReturnType<typeof useBoxControls>
@@ -43,7 +44,9 @@ export default function Panels(props: {
 
       <ResizablePanel
         ref={wPanelRef}
-        className='bg-yellow-900/45 relative'
+        className={cn('bg-yellow-900/45 relative', {
+          'min-w-[25%]': pixelWidth === 0,
+        })}
         defaultValue={widthPercentage}
         onResize={setWidthPercentage}
       >

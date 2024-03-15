@@ -28,7 +28,7 @@ export default function useBoxControls() {
       setContainerWidth(Math.round(w))
       setPixelWidth(Math.round(w * (widthPercentage / 100)))
       setPixelLength(Math.round(w * (lengthPercentage / 100)))
-    }, 100)
+    }, 0)
   }, [lengthPercentage, widthPercentage])
 
   const applyChanges = () => {
