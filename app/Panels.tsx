@@ -41,7 +41,7 @@ export default function Panels(props: {
     <ResizablePanelGroup
       id={'main-container'}
       direction='horizontal'
-      className='rounded-lg border py-8 relative pb-10'
+      className='py-8 relative pb-10'
       style={{
         height: `${height}px`,
       }}

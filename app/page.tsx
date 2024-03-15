@@ -7,18 +7,49 @@ import { Separator } from '@/components/ui/separator'
 import DimensionControls from './_controls/dimensions'
 import Phase2Controls from './_controls/Phase2Controls'
 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import Phase1Controls from './_controls/Phase1Controls'
+
 export default function Home() {
   const controls = useBoxControls()
 
   return (
-    <main className='grid grid-cols-[250px_1fr] pr-4 py-4'>
-      <div aria-label='controls'>
-        <DimensionControls controls={controls} />
-        <div className='px-4'>
-          <Separator />
-        </div>
-        <Phase2Controls controls={controls} />
-      </div>
+    <main className='grid grid-cols-[250px_1fr]'>
+      <ScrollArea className='h-screen border-r'>
+        <Accordion
+          type='multiple'
+          className='w-full'
+        >
+          <AccordionItem value='dimensions'>
+            <AccordionTrigger className='p-4'>Dimensions</AccordionTrigger>
+            <AccordionContent>
+              <DimensionControls controls={controls} />
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value='phase-1'>
+            <AccordionTrigger className='p-4'>
+              Phase 1 Markings
+            </AccordionTrigger>
+            <AccordionContent>
+              <Phase1Controls controls={controls} />
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value='phase-2'>
+            <AccordionTrigger className='p-4'>
+              Phase 2 Markings
+            </AccordionTrigger>
+            <AccordionContent>
+              <Phase2Controls controls={controls} />
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      </ScrollArea>
 
       <Panels controls={controls} />
     </main>

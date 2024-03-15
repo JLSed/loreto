@@ -16,17 +16,8 @@ export default function DimensionControls(props: Props) {
         e.preventDefault()
         props.controls.applyChanges()
       }}
-      className='grid gap-4 p-4 pt-1'
+      className='grid gap-4 px-4 pt-1'
     >
-      <div className='flex items-center justify-between'>
-        <div className='text-muted-foreground small'>Dimensions</div>
-        <Button
-          size={'sm'}
-          variant={'secondary'}
-        >
-          <DimensionsIcon className='mr-2' /> Apply
-        </Button>
-      </div>
       <div className='flex items-center justify-between'>
         <Label htmlFor='Width'>Width</Label>
         <Input
@@ -70,6 +61,12 @@ export default function DimensionControls(props: Props) {
         step={1}
         className='w-full'
       />
+      <Button
+        size={'sm'}
+        variant={'secondary'}
+      >
+        <DimensionsIcon className='mr-2' /> Apply
+      </Button>
     </form>
   )
 }

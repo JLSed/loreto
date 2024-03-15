@@ -10,8 +10,7 @@ interface Props {
 
 export default function Phase2Controls(props: Props) {
   return (
-    <div className='grid gap-4 p-4'>
-      <div className='text-muted-foreground small'>Phase II</div>
+    <div className='grid gap-4 px-4'>
       <div className='flex items-center justify-between'>
         <Label htmlFor='logo-size'>Logo Size</Label>
         <Input

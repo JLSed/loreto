@@ -22,7 +22,7 @@ export default function useBoxControls() {
   const wPanelRef = useRef<ImperativePanelHandle>(null)
   const lPanelRef = useRef<ImperativePanelHandle>(null)
 
-  // Phase II controls
+  // Phase 2 controls
   const [logoSize, setLogoSize] = useState(100)
   const [boxName, setBoxName] = useState("Lola's Chizcakes")
   const [codeNumber, setCodeNumber] = useState('')
