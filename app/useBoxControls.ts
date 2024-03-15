@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { ImperativePanelHandle } from 'react-resizable-panels'
 
 export default function useBoxControls() {
   // actual pixel
@@ -17,6 +18,10 @@ export default function useBoxControls() {
   const lengthRef = useRef<HTMLInputElement>(null)
   const heightRef = useRef<HTMLInputElement>(null)
 
+  // panel refs
+  const wPanelRef = useRef<ImperativePanelHandle>(null)
+  const lPanelRef = useRef<ImperativePanelHandle>(null)
+
   useEffect(() => {
     setTimeout(() => {
       const w = document.getElementById('main-container')?.clientWidth ?? 0
@@ -27,16 +32,17 @@ export default function useBoxControls() {
   }, [lengthPercentage, widthPercentage])
 
   const applyChanges = () => {
-    const width = parseInt(widthRef.current?.value || '0')
-    const length = parseInt(lengthRef.current?.value || '0')
-    const height = parseInt(heightRef.current?.value || '0')
+    const width = widthRef.current?.valueAsNumber ?? 0
+    const length = lengthRef.current?.valueAsNumber ?? 0
+    const height = heightRef.current?.valueAsNumber ?? 0
 
-    setPixelWidth(width)
-    setPixelLength(length)
     setHeight(height)
 
-    setWidthPercentage((width / containerWidth) * 100)
-    setLengthPercentage((length / containerWidth) * 100)
+    const wPercent = (width / containerWidth) * 100
+    const lPercent = (length / containerWidth) * 100
+
+    wPanelRef.current?.resize(wPercent)
+    lPanelRef.current?.resize(lPercent)
   }
 
   return {
@@ -56,5 +62,7 @@ export default function useBoxControls() {
     lengthRef,
     heightRef,
     applyChanges,
+    wPanelRef,
+    lPanelRef,
   }
 }

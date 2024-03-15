@@ -17,6 +17,8 @@ export default function Panels(props: {
     lengthPercentage,
     setLengthPercentage,
     setWidthPercentage,
+    wPanelRef,
+    lPanelRef,
   } = props.controls
 
   return (
@@ -28,16 +30,24 @@ export default function Panels(props: {
         height: `${height}px`,
       }}
     >
-      <ResizablePanel defaultSize={20} />
+      <ResizablePanel
+        defaultSize={20}
+        className='relative'
+      >
+        <div className='absolute right-0 top-1/2 -translate-y-1/2 p-4 small'>
+          H - {height}
+        </div>
+      </ResizablePanel>
 
       <ResizableHandle withHandle />
 
       <ResizablePanel
+        ref={wPanelRef}
         className='bg-yellow-900/45 relative'
         defaultValue={widthPercentage}
         onResize={setWidthPercentage}
       >
-        <div className='absolute bottom-0 left-1/2 -translate-x-1/2 p-4'>
+        <div className='absolute bottom-0 left-1/2 -translate-x-1/2 p-4 small'>
           W - {pixelWidth}
         </div>
       </ResizablePanel>
@@ -45,11 +55,12 @@ export default function Panels(props: {
       <ResizableHandle withHandle />
 
       <ResizablePanel
+        ref={lPanelRef}
         className='bg-yellow-900/30 relative'
         defaultSize={lengthPercentage}
         onResize={setLengthPercentage}
       >
-        <div className='absolute bottom-0 left-1/2 -translate-x-1/2 p-4'>
+        <div className='absolute bottom-0 left-1/2 -translate-x-1/2 p-4 small'>
           L - {pixelLength}
         </div>
       </ResizablePanel>
@@ -60,7 +71,7 @@ export default function Panels(props: {
         defaultSize={20}
         className='relative'
       >
-        <div className='absolute left-0 top-1/2 -translate-y-1/2 p-4'>
+        <div className='absolute left-0 top-1/2 -translate-y-1/2 p-4 small'>
           H - {height}
         </div>
       </ResizablePanel>

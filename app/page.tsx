@@ -25,18 +25,17 @@ export default function Home() {
 
   return (
     <main className='grid grid-cols-[250px_1fr] pr-4 py-4'>
-      <div
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
+          applyChanges()
+        }}
         aria-label='controls'
         className='flex flex-col p-4 pt-0 gap-4'
       >
         <div className='border-b py-3 flex items-center justify-between'>
           <div className='text-muted-foreground small'>Controls</div>
-          <Button
-            size={'sm'}
-            onClick={applyChanges}
-          >
-            Apply
-          </Button>
+          <Button size={'sm'}>Apply</Button>
         </div>
         <div className='flex items-center justify-between'>
           <label
@@ -96,7 +95,7 @@ export default function Home() {
           step={1}
           className='w-full'
         />
-      </div>
+      </form>
 
       <Panels controls={controls} />
     </main>
