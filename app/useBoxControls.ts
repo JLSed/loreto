@@ -22,6 +22,9 @@ export default function useBoxControls() {
   const wPanelRef = useRef<ImperativePanelHandle>(null)
   const lPanelRef = useRef<ImperativePanelHandle>(null)
 
+  // Phase II controls
+  const [logoSize, setLogoSize] = useState(100)
+
   useEffect(() => {
     const w = document.getElementById('main-container')?.clientWidth ?? 0
     setContainerWidth(Math.round(w))
@@ -62,5 +65,7 @@ export default function useBoxControls() {
     applyChanges,
     wPanelRef,
     lPanelRef,
+    logoSize,
+    setLogoSize,
   }
 }
