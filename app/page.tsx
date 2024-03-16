@@ -3,7 +3,6 @@
 import useBoxControls from './useBoxControls'
 
 import Panels from './Panels'
-import { Separator } from '@/components/ui/separator'
 import DimensionControls from './_controls/dimensions'
 import Phase2Controls from './_controls/Phase2Controls'
 
@@ -13,8 +12,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
+
 import { ScrollArea } from '@/components/ui/scroll-area'
 import Phase1Controls from './_controls/Phase1Controls'
+import { Button } from '@/components/ui/button'
+import { signIn } from 'next-auth/react'
 
 export default function Home() {
   const controls = useBoxControls()
@@ -22,6 +24,9 @@ export default function Home() {
   return (
     <main className='grid grid-cols-[250px_1fr]'>
       <ScrollArea className='h-screen border-r'>
+        <div>
+          <Button onClick={() => signIn('google')}>Sign</Button>
+        </div>
         <Accordion
           type='multiple'
           className='w-full'

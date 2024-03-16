@@ -8,8 +8,9 @@ datasource db {
 }
 
 model User {
-  id       String   @id @default(cuid())
-  joinedAt DateTime @default(now())
+  id         String   @id @default(cuid())
+  joinedAt   DateTime @default(now())
+  modifiedAt DateTime @default(now()) @updatedAt
 
   email    String  @unique
   username String
@@ -80,9 +81,8 @@ model BoxOrder {
 }
 
 model Transaction {
-  id         String   @id @default(cuid())
-  createdAt  DateTime @default(now())
-  modifiedAt DateTime @updatedAt
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
 
   // 1: cash
   // 2: gcash
