@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import useBoxControls from '../useBoxControls'
 
 interface Props {
@@ -7,17 +8,16 @@ interface Props {
 export default function Phase2(props: Props) {
   return (
     <div className='p-8 flex items-center justify-center flex-col h-full'>
-      <div
-        className='border rounded-full grid place-items-center border-black'
-        style={{
-          width: `${props.controls.logoSize}px`,
-          height: `${props.controls.logoSize}px`,
-        }}
-      >
-        LOGO
-      </div>
+      <Image
+        alt=''
+        src={'/cheesecakes.png'}
+        width={props.controls.logoSize}
+        height={props.controls.logoSize}
+        priority
+        className='w-auto h-auto'
+      />
 
-      <div className='large'>{props.controls.boxName}</div>
+      <div className='large mt-2'>{props.controls.boxName}</div>
       <div>
         CODE #:{' '}
         {props.controls.codeNumber === '' ? (

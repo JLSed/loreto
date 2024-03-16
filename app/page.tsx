@@ -27,13 +27,15 @@ export default function Home() {
           className='w-full'
         >
           <AccordionItem value='dimensions'>
-            <AccordionTrigger className='p-4'>Dimensions</AccordionTrigger>
+            <AccordionTrigger className='p-4 small text-muted-foreground'>
+              Dimensions
+            </AccordionTrigger>
             <AccordionContent>
               <DimensionControls controls={controls} />
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value='phase-1'>
-            <AccordionTrigger className='p-4'>
+            <AccordionTrigger className='p-4 small text-muted-foreground'>
               Phase 1 Markings
             </AccordionTrigger>
             <AccordionContent>
@@ -41,7 +43,7 @@ export default function Home() {
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value='phase-2'>
-            <AccordionTrigger className='p-4'>
+            <AccordionTrigger className='p-4 small text-muted-foreground'>
               Phase 2 Markings
             </AccordionTrigger>
             <AccordionContent>

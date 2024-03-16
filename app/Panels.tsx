@@ -8,6 +8,7 @@ import useBoxControls from './useBoxControls'
 import { cn } from '@/lib/utils'
 import { useState } from 'react'
 import Phase2 from './_markings/Phase2'
+import Phase1 from './_markings/Phase1'
 
 export default function Panels(props: {
   controls: ReturnType<typeof useBoxControls>
@@ -86,7 +87,9 @@ export default function Panels(props: {
         })}
         defaultValue={widthPercentage}
         onResize={setWidthPercentage}
-      />
+      >
+        <Phase1 controls={props.controls} />
+      </ResizablePanel>
 
       <ResizableHandle withHandle />
 

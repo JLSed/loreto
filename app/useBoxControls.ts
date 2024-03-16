@@ -22,9 +22,17 @@ export default function useBoxControls() {
   const wPanelRef = useRef<ImperativePanelHandle>(null)
   const lPanelRef = useRef<ImperativePanelHandle>(null)
 
+  // Phase 1 controls
+  const [poNumber, setPoNumber] = useState('')
+  const [itemNumber, setItemNumber] = useState('')
+  const [quantity, setQuantity] = useState(0)
+  const [description, setDescription] = useState('')
+  const [weight, setWeight] = useState('')
+  const [meas, setMeas] = useState('')
+
   // Phase 2 controls
   const [logoSize, setLogoSize] = useState(100)
-  const [boxName, setBoxName] = useState("Lola's Chizcakes")
+  const [boxName, setBoxName] = useState('Cheesecakes')
   const [codeNumber, setCodeNumber] = useState('')
   const [ctnNumber, setCtnNumber] = useState('')
   const [ctnBase, setCtnBase] = useState(200)
@@ -69,6 +77,22 @@ export default function useBoxControls() {
     applyChanges,
     wPanelRef,
     lPanelRef,
+
+    // Phase 1
+    poNumber,
+    setPoNumber,
+    itemNumber,
+    setItemNumber,
+    quantity,
+    setQuantity,
+    description,
+    setDescription,
+    weight,
+    setWeight,
+    meas,
+    setMeas,
+
+    // Phase 2
     logoSize,
     setLogoSize,
     boxName,
