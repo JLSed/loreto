@@ -7,6 +7,7 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Loreto Trading',
   description: '2D packaging design solution',
+  icons: ['/logo.png'],
 }
 
 export default function RootLayout({

@@ -1,27 +1,27 @@
-enum UserRole {
+export enum UserRole {
   Admin = 1,
   Staff,
   Customer,
 }
 
-enum UserStatus {
+export enum UserStatus {
   Active = 1,
   InActive,
   Banned,
   Deleted,
 }
 
-enum BoxThickness {
+export enum BoxThickness {
   Single = 1,
   Double,
 }
 
-enum BoxPlacement {
+export enum BoxPlacement {
   Master = 1, // The actual box
   Inner, // The divider inside the box
 }
 
-enum BoxOrderStatus {
+export enum BoxOrderStatus {
   cancelled,
   InCart,
   Placed,
@@ -32,32 +32,32 @@ enum BoxOrderStatus {
   OrderCompleted,
 }
 
-enum ModeOfPayment {
+export enum ModeOfPayment {
   Cash = 1,
   GCash,
   Bank,
 }
 
-enum TransactionType {
+export enum TransactionType {
   FullPayment = 1,
   PartialPayment,
   DownPayment,
 }
 
-enum TransactionItemType {
+export enum TransactionItemType {
   Box = 1,
   Vehicle,
   Apartment,
 }
 
-enum AuditAffectedTable {
+export enum AuditAffectedTable {
   User = 1,
   Box,
   BoxOrder,
   Transaction,
 }
 
-enum AuditAction {
+export enum AuditAction {
   Creation = 1,
   Modification,
   Deletion,
