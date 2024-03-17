@@ -8,8 +8,6 @@ import {
 } from '@/components/ui/accordion'
 
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { Button } from '@/components/ui/button'
-import { signIn } from 'next-auth/react'
 
 import useBoxControls from './useBoxControls'
 import DimensionControls from './_controls/dimensions'
@@ -23,9 +21,6 @@ export default function Home() {
   return (
     <main className='grid grid-cols-[250px_1fr]'>
       <ScrollArea className='h-screen border-r'>
-        <div>
-          <Button onClick={() => signIn('google')}>Sign</Button>
-        </div>
         <Accordion
           type='multiple'
           className='w-full'

@@ -31,6 +31,7 @@ model User {
   boxes        Box[]
   boxOrders    BoxOrder[]
   transactions Transaction[]
+  auditLogs    AuditLog[]
 }
 
 model Box {
@@ -49,6 +50,14 @@ model Box {
   width  Float
   height Float
 
+  // 1: single
+  // 2: double
+  thickness Int @default(1)
+
+  // 1: master
+  // 2: inner
+  placement Int @default(1)
+
   // owner
   owner   User   @relation(fields: [ownerId], references: [id])
   ownerId String
@@ -65,11 +74,21 @@ model BoxOrder {
   // 0: cancelled
   // 1: in cart
   // 2: placed
-  // 3: Processing
-  // 4: For Delivery
-  // 5: Delivered
-  // 6: Completed
+  // 3: Payment Info Confirmed
+  // 4: Processing order
+  // 5: Out for delivery
+  // 6: order received
+  // 7: order completed
   status Int @default(1)
+
+  // dates
+  cancelledAt        DateTime?
+  placedAt           DateTime?
+  paymentConfirmedAt DateTime?
+  processingAt       DateTime?
+  outForDeliveryAt   DateTime?
+  receivedAt         DateTime?
+  completedAt        DateTime?
 
   // box
   box   Box    @relation(fields: [boxId], references: [id])
@@ -81,24 +100,51 @@ model BoxOrder {
 }
 
 model Transaction {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  modifiedAt DateTime @updatedAt
 
   // 1: cash
   // 2: gcash
   // 3: bank
-  mode Int
+  modeOfPayment Int
 
+  // 1: pending
   // 2: completed
   // 3: failed
   // 4: for review
-  status Int
+  status Int @default(1)
 
   // 1: box
   item Int
 
   amount Float
 
-  from       User?   @relation(fields: [fromUserId], references: [id])
-  fromUserId String?
+  from       User   @relation(fields: [fromUserId], references: [id])
+  fromUserId String
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  modifiedAt DateTime @updatedAt
+
+  // 1: user
+  // 2: box
+  // 3: boxOrder
+  // 4: transaction
+  // 5: audit
+  type Int
+
+  // 1: create
+  // 2: update
+  // 3: delete
+  action Int
+
+  actor   User   @relation(fields: [actorId], references: [id])
+  actorId String
+
+  // the id of the document that was either created, updated, or deleted
+  // either a box, user, boxOrder, or transaction
+  affectedRowId String
 }
