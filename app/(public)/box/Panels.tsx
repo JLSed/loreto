@@ -85,7 +85,7 @@ export default function Panels(props: {
         className={cn('bg-yellow-900/45 relative', {
           'min-w-[25%]': pixelWidth === 0,
         })}
-        defaultValue={widthPercentage}
+        defaultSize={widthPercentage}
         onResize={setWidthPercentage}
       >
         <Phase1 controls={props.controls} />
