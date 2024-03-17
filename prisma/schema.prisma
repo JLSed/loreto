@@ -109,14 +109,15 @@ model Transaction {
   // 3: bank
   modeOfPayment Int
 
-  // 1: pending
-  // 2: completed
-  // 3: failed
-  // 4: for review
-  status Int @default(1)
+  // 1: full payment
+  // 2: partial payment
+  // 3: down payment
+  type Int
 
   // 1: box
-  item Int
+  // 2: vehicle
+  // 3: apartment
+  itemType Int
 
   amount Float
 
@@ -125,16 +126,17 @@ model Transaction {
 }
 
 model AuditLog {
-  id         String   @id @default(cuid())
-  createdAt  DateTime @default(now())
-  modifiedAt DateTime @updatedAt
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  remark String?
 
   // 1: user
   // 2: box
   // 3: boxOrder
   // 4: transaction
   // 5: audit
-  type Int
+  affectedTable Int
 
   // 1: create
   // 2: update
