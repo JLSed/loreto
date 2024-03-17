@@ -1,11 +1,5 @@
 'use client'
 
-import useBoxControls from './(public)/box/useBoxControls'
-
-import Panels from './(public)/box/Panels'
-import DimensionControls from './(public)/box/_controls/dimensions'
-import Phase2Controls from './(public)/box/_controls/Phase2Controls'
-
 import {
   Accordion,
   AccordionContent,
@@ -14,9 +8,14 @@ import {
 } from '@/components/ui/accordion'
 
 import { ScrollArea } from '@/components/ui/scroll-area'
-import Phase1Controls from './(public)/box/_controls/Phase1Controls'
 import { Button } from '@/components/ui/button'
 import { signIn } from 'next-auth/react'
+
+import useBoxControls from './useBoxControls'
+import DimensionControls from './_controls/dimensions'
+import Phase1Controls from './_controls/Phase1Controls'
+import Phase2Controls from './_controls/Phase2Controls'
+import Panels from './Panels'
 
 export default function Home() {
   const controls = useBoxControls()
