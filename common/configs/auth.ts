@@ -5,12 +5,12 @@ import { prisma } from './prisma'
 
 const googleClientId = process.env.GOOGLE_CLIENT_ID
 const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET
-const nextAuthSecret = process.env.NEXT_AUTH_SECRET
+const nextAuthSecret = process.env.NEXTAUTH_SECRET
 
 if (!googleClientId) throw new Error('GOOGLE_CLIENT_ID env var is not set')
 if (!googleClientSecret)
   throw new Error('GOOGLE_CLIENT_SECRET env var is not set')
-if (!nextAuthSecret) throw new Error('NEXT_AUTH_SECRET env var is not set')
+if (!nextAuthSecret) throw new Error('NEXTAUTH_SECRET env var is not set')
 
 export const authOptions: AuthOptions = {
   providers: [
