@@ -1,0 +1,95 @@
+<mxfile host="65bd71144e">
+    <diagram id="1LbdXJ3_BakfauATyAy-" name="Page-1">
+        <mxGraphModel dx="662" dy="543" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" background="none" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="5" value="User visits the home page" style="edgeStyle=entityRelationEdgeStyle;html=1;" parent="1" source="2" target="32" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="310" y="260" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="2" value="START" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#60a917;fontColor=#ffffff;strokeColor=#2D7600;rounded=1;" parent="1" vertex="1">
+                    <mxGeometry x="30" y="300" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="&lt;h1&gt;Loreto Trading Customer Journey&lt;/h1&gt;&lt;p&gt;This diagrams describes the user journey&amp;nbsp; (Customer) upon visiting the system. This will illustrate the flow from start to finish.&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=1;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="90" width="240" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="&lt;h1&gt;Contents/Branding&lt;/h1&gt;&lt;p&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;font-size: 10px;&quot;&gt;Images you want to show on the home page that states something meanig full about the product.&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 10px;&quot;&gt;What is the product all about. Short description or a tagline would be better&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 10px;&quot;&gt;Official logo of the business&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 10px;&quot;&gt;What services you offer. List them and provide descriptions&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 10px;&quot;&gt;It would be better to have client testimonials&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 10px;&quot;&gt;What is the primary color that represents the business&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 10px;&quot;&gt;&lt;b&gt;Remember:&amp;nbsp;&lt;/b&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 10px;&quot;&gt;&lt;b&gt;Home page is the brand of a website. We need to establish users trust and attention on the first time they visit the site.&lt;/b&gt;&lt;/span&gt;&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=1;" parent="1" vertex="1">
+                    <mxGeometry x="310" y="300" width="220" height="360" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="&lt;h1&gt;Action Elements&lt;/h1&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=1;" parent="1" vertex="1">
+                    <mxGeometry x="310" y="650" width="190" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="20" value="no" style="edgeStyle=none;html=1;" parent="1" source="18" target="19" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" value="yes" style="edgeStyle=none;html=1;" parent="1" source="18" target="21" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="user has active session on the browser?" style="rhombus;whiteSpace=wrap;html=1;fillColor=none;rounded=1;" parent="1" vertex="1">
+                    <mxGeometry x="343" y="732.73" width="120" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" value="Show sign in button" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="143" y="762.73" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="28" value="" style="edgeStyle=none;html=1;" parent="1" source="21" target="27" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="29" value="When user click the dashboard button" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];rounded=1;" parent="28" vertex="1" connectable="0">
+                    <mxGeometry x="0.0348" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="21" value="Show ff. action buttons" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="543" y="762.73" width="165" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="43" value="web request" style="edgeStyle=entityRelationEdgeStyle;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="27" target="42" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="27" value="Customer Dashboard" style="ellipse;whiteSpace=wrap;html=1;align=center;fillColor=none;rounded=1;" parent="1" vertex="1">
+                    <mxGeometry x="587.5" y="560" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="32" value="Home Page" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="310" y="230" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="47" style="edgeStyle=entityRelationEdgeStyle;html=1;" parent="1" source="42" target="46" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="42" value="Authenticate User" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="770" y="570" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="58" value="false" style="edgeStyle=entityRelationEdgeStyle;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="46" target="57" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="63" value="true" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;html=1;" parent="1" source="46" target="52" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="46" value="authenticated?" style="rhombus;whiteSpace=wrap;html=1;rounded=1;" parent="1" vertex="1">
+                    <mxGeometry x="770" y="420" width="110" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="64" style="edgeStyle=elbowEdgeStyle;elbow=vertical;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="52" target="60" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="52" value="Get dashboard data" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="765" y="270" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="57" value="Sign in Page" style="ellipse;whiteSpace=wrap;html=1;align=center;fillColor=none;rounded=1;" parent="1" vertex="1">
+                    <mxGeometry x="587.5" y="430" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="68" value="" style="edgeStyle=elbowEdgeStyle;elbow=vertical;html=1;" parent="1" source="60" target="67" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="60" value="Customer Dashboard" style="ellipse;whiteSpace=wrap;html=1;rounded=1;" parent="1" vertex="1">
+                    <mxGeometry x="1000" y="260" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="66" value="&lt;ul&gt;&lt;li&gt;Cart icon button&lt;/li&gt;&lt;li&gt;Dashboard button&lt;/li&gt;&lt;/ul&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=1;" parent="1" vertex="1">
+                    <mxGeometry x="548" y="842.73" width="155" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="67" value="&lt;h1&gt;Dashboard Contents&lt;/h1&gt;&lt;p&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;User Profile / Information &amp;gt; User Settings&lt;/li&gt;&lt;li&gt;Cart&lt;/li&gt;&lt;li&gt;Orders &amp;gt; Order Details&lt;/li&gt;&lt;li&gt;Transactions &amp;gt; Transaction Details&lt;/li&gt;&lt;li&gt;Order Form&lt;/li&gt;&lt;li&gt;Box Customization Panel&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=1;" parent="1" vertex="1">
+                    <mxGeometry x="945" y="390" width="190" height="310" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
