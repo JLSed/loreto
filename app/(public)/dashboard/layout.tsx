@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { redirect } from 'next/navigation'
 import { ReactNode } from 'react'
 import SignOutButton from '../SignOutButton'
+import Link from 'next/link'
 
 export default async function DashboardPage(props: { children: ReactNode }) {
   const session = await getServerSession()
@@ -23,11 +24,11 @@ export default async function DashboardPage(props: { children: ReactNode }) {
             className='rounded-full'
             src={user.image ?? ''}
             alt=''
-            width={50}
-            height={50}
+            width={36}
+            height={36}
           />
           <div>
-            <div className='font-medium capitalize'>{user.name}</div>
+            <div className='font-bold capitalize text-sm'>{user.name}</div>
             <div className='text-muted-foreground text-sm'>{user.email}</div>
           </div>
         </div>
@@ -42,12 +43,12 @@ export default async function DashboardPage(props: { children: ReactNode }) {
         <Button variant={'ghost'}>Cart</Button>
         <Button variant={'ghost'}>Orders</Button>
         <Button variant={'ghost'}>Transactions</Button>
-        <Button
-          variant={'default'}
+        <Link
+          href={'/box'}
           className='ml-auto'
         >
-          Custom Box
-        </Button>
+          <Button variant={'default'}>Custom Box</Button>
+        </Link>
       </div>
 
       <main>{props.children}</main>
