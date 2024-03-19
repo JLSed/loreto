@@ -1,42 +1,46 @@
 import { Button } from '@/components/ui/button'
 import { getServerSession } from 'next-auth'
 import Link from 'next/link'
-import React from 'react'
 import SignInButton from './SignInButton'
 import Image from 'next/image'
-import SignOutButton from './SignOutButton'
+
+const HomeLinkTitle = (
+  <Link href={'/'}>
+    <div className='font-bold flex items-center gap-3'>
+      <Image
+        src={'/logo.png'}
+        alt=''
+        width={30}
+        height={30}
+      />
+      <span>Loreto Trading</span>
+    </div>
+  </Link>
+)
 
 export default async function Navbar() {
   const session = await getServerSession()
 
   if (!session?.user) {
     return (
-      <nav>
-        <SignInButton />
+      <nav className='flex gap-4 items-center max-w-4xl m-auto p-3'>
+        {HomeLinkTitle}
+        <div className='space-x-2 ml-auto'>
+          <SignInButton />
+        </div>
       </nav>
     )
   }
 
-  const user = session.user
-
   return (
-    <nav className='flex gap-4 items-center'>
-      <div>{user.name}</div>
-      {user.image && (
-        <div>
-          <Image
-            src={user.image}
-            alt=''
-            width={100}
-            height={100}
-            className='rounded-full'
-          />
-        </div>
-      )}
-      <Link href={'/dashboard'}>
-        <Button>Dashboard</Button>
-      </Link>
-      <SignOutButton />
+    <nav className='flex gap-4 items-center max-w-4xl m-auto p-3 sticky top-0'>
+      {HomeLinkTitle}
+
+      <div className='space-x-2 ml-auto'>
+        <Link href={'/dashboard'}>
+          <Button>Dashboard</Button>
+        </Link>
+      </div>
     </nav>
   )
 }
