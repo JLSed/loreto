@@ -55,10 +55,28 @@ export enum AuditAffectedTable {
   Box,
   BoxOrder,
   Transaction,
+  Vehicles,
+  Bookings,
 }
 
 export enum AuditAction {
   Creation = 1,
   Modification,
-  Deletion,
+  // Deletion,
+}
+
+export enum BookStatus {
+  Cancelled,
+  Pending,
+  Confirmed,
+  OnTheRoad,
+  Completed,
+}
+
+export enum VehicleStatus {
+  Available = 1,
+  Booked,
+  Rented,
+  OnTheRoad,
+  UnderMaintenance,
 }

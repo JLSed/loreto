@@ -1,7 +1,7 @@
 import { AuthOptions } from 'next-auth'
-import CredentialsProvider from 'next-auth/providers/credentials'
 import GoogleProvider from 'next-auth/providers/google'
 import { prisma } from './prisma'
+import async from '../../app/(public)/Navbar'
 
 const googleClientId = process.env.GOOGLE_CLIENT_ID
 const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET
@@ -20,29 +20,48 @@ export const authOptions: AuthOptions = {
     }),
   ],
   session: {
-    maxAge: 1400,
+    maxAge: 3600,
   },
   secret: nextAuthSecret,
   callbacks: {
-    signIn: async ({ user }) => {
-      if (!user?.email || !user.name)
+    signIn: async ({ user, profile }) => {
+      if (!user?.email || !user.name || !profile)
         return 'Unable to sign in. Missing profile email and profile name'
 
       const u = await prisma.user.upsert({
         where: { email: user.email },
-        update: { username: user.name, photoUrl: user.image },
+        update: {
+          username: user.name,
+          photoUrl: user.image,
+          firstName: profile.given_name,
+          lastName: profile.family_name,
+        },
         create: {
           email: user.email,
           username: user.name,
           photoUrl: user.image,
+          firstName: profile.given_name,
+          lastName: profile.family_name,
         },
       })
 
-      user.id = u.id
       user.name = u.username
-      user.image = u.photoUrl
+      user.image = u.photoUrl ?? undefined
+      user.role = u.role
 
       return true
+    },
+    jwt: async ({ token, user }) => {
+      if (user) {
+        token.role = user.role
+      }
+
+      return token
+    },
+    session: async ({ session, token }) => {
+      session.user.role = token.role
+
+      return session
     },
   },
 }

@@ -21,25 +21,24 @@ const HomeLinkTitle = (
 export default async function Navbar() {
   const session = await getServerSession()
 
-  if (!session?.user) {
+  const getAction = () => {
+    if (!session?.user) return <SignInButton />
     return (
-      <nav className='flex gap-4 items-center max-w-4xl m-auto p-3'>
-        {HomeLinkTitle}
-        <div className='space-x-2 ml-auto'>
-          <SignInButton />
-        </div>
-      </nav>
+      <Link href={'/dashboard/home'}>
+        <Button>Dashboard</Button>
+      </Link>
     )
   }
 
   return (
-    <nav className='flex gap-4 items-center max-w-4xl m-auto p-3 sticky top-0'>
+    <nav className='flex gap-4 items-center max-w-4xl m-auto p-3'>
       {HomeLinkTitle}
+      <div className='gap-8 ml-auto flex items-center'>
+        <Link href={'/apartments'}>Apartments</Link>
+        <Link href={'/vehicles/booking'}>Book a Vehicle</Link>
+        <Link href={'/vehicles/booking'}>Custom Box</Link>
 
-      <div className='space-x-2 ml-auto'>
-        <Link href={'/dashboard'}>
-          <Button>Dashboard</Button>
-        </Link>
+        {getAction()}
       </div>
     </nav>
   )

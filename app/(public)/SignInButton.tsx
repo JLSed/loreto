@@ -6,12 +6,12 @@ import { signIn } from 'next-auth/react'
 export default function SignInButton() {
   return (
     <Button
-      onClick={() =>
-        signIn('google', {
+      onClick={async () => {
+        await signIn('google', {
           redirect: true,
           callbackUrl: '/dashboard',
         })
-      }
+      }}
     >
       Sign in
     </Button>
