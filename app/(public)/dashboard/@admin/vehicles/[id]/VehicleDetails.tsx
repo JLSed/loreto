@@ -33,7 +33,7 @@ export default function VehicleDetails({ data }: { data: Vehicle }) {
   }
 
   return (
-    <div className='bg-neutral-50'>
+    <div className='bg-neutral-50 dark:bg-neutral-900'>
       <header className='p-4 flex items-center gap-2 justify-between'>
         <div className='flex items-center gap-2'>
           <Button
