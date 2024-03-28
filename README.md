@@ -65,3 +65,15 @@ both for custom, vehicle and apartment payment option and requirement: total vie
 - Downpayment
 - proof of identity
 - note and other details.
+
+
+### Uploading Logic to Prevent Image Bloat up
+
+```
+// if the photo changed, upload the new photo to cloudinary
+// if the photo is a string, it means the photo was not changed
+// if the upload is successful, update the vehicle with the new photo url
+// save the vehicle to the database with the new photo url
+// if saved successfully, delete the old photo from cloudinary
+// else delte the new uploaded photo from cloudinary
+```

@@ -2,7 +2,6 @@
 
 import { VehicleStatusLabel } from '@/common/constants/business'
 import { VehicleStatus } from '@/common/enums/enums.db'
-import { formatDate } from '@/lib/utils'
 import { Vehicle } from '@prisma/client'
 import { ColumnDef } from '@tanstack/react-table'
 import { Button } from '@/components/ui/button'
@@ -15,9 +14,12 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-import { DotsHorizontalIcon } from '@radix-ui/react-icons'
+import { ArrowDownIcon, DotsHorizontalIcon } from '@radix-ui/react-icons'
 import Image from 'next/image'
 import Link from 'next/link'
+import { format } from 'date-fns'
+import StatusWithDot from '@/components/shared/StatusWithDot'
+import { VehicleStatusColor } from '@/common/constants/status-colors'
 
 export const vehiclesTableColumns: ColumnDef<Vehicle>[] = [
   {
@@ -47,14 +49,52 @@ export const vehiclesTableColumns: ColumnDef<Vehicle>[] = [
   {
     accessorKey: 'status',
     header: 'Status',
-    cell: ({ row }) => VehicleStatusLabel[row.original.status as VehicleStatus],
+    cell: ({ row }) => {
+      const status = row.original.status as VehicleStatus
+      return (
+        <StatusWithDot
+          label={VehicleStatusLabel[status]}
+          color={VehicleStatusColor[status]}
+        />
+      )
+    },
   },
   {
     accessorKey: 'lastMaintenance',
-    header: 'Last Maintenance',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant='ghost'
+          className='-translate-x-4'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Last Maintenance
+          <ArrowDownIcon className='ml-2 h-4 w-4' />
+        </Button>
+      )
+    },
     cell: ({ row }) => {
       const date = row.original.lastMaintenance
-      return date ? formatDate(date.toString()) : ''
+      return date ? format(date, 'MMMM dd yyyy') : ''
+    },
+  },
+  {
+    accessorKey: 'purchaseDate',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant='ghost'
+          className='-translate-x-4'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Date Purchased
+          <ArrowDownIcon className='ml-2 h-4 w-4' />
+        </Button>
+      )
+    },
+    cell: ({ row }) => {
+      const date = row.original.purchaseDate
+      return date ? format(date, 'MMMM dd yyyy') : ''
     },
   },
   {
