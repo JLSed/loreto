@@ -13,7 +13,7 @@ import {
   TransactionItemType,
   TransactionType,
   UserRole,
-} from '../common/enums/enums.db'
+} from '../src/common/enums/enums.db'
 
 const prisma = new PrismaClient()
 
