@@ -3,6 +3,8 @@ import { getServerSession } from 'next-auth'
 import Link from 'next/link'
 import SignInButton from './SignInButton'
 import Image from 'next/image'
+import { UserRole } from '@/common/enums/enums.db'
+import { authOptions } from '@/common/configs/auth'
 
 const HomeLinkTitle = (
   <Link href={'/'}>
@@ -19,15 +21,26 @@ const HomeLinkTitle = (
 )
 
 export default async function Navbar() {
-  const session = await getServerSession()
+  const session = await getServerSession(authOptions)
 
   const getAction = () => {
     if (!session?.user) return <SignInButton />
-    return (
-      <Link href={'/dashboard/home'}>
-        <Button>Dashboard</Button>
-      </Link>
-    )
+
+    if (session.user.role == UserRole.Admin) {
+      return (
+        <Link href={'/dashboard'}>
+          <Button>Dashboard</Button>
+        </Link>
+      )
+    }
+
+    if (session.user.role == UserRole.Customer) {
+      return (
+        <Link href={'/me'}>
+          <Button variant={'secondary'}>My Account</Button>
+        </Link>
+      )
+    }
   }
 
   return (

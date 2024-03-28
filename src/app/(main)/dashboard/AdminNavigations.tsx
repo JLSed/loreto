@@ -13,10 +13,16 @@ export default function AdminNavigationLink(props: {
 }) {
   const pathname = usePathname()
 
+  let isActive = pathname.startsWith(props.href)
+
+  if (props.href === '/dashboard') {
+    isActive = pathname === '/dashboard'
+  }
+
   return (
     <Link href={props.href}>
       <Button
-        variant={pathname.startsWith(props.href) ? 'secondary' : 'ghost'}
+        variant={isActive ? 'secondary' : 'ghost'}
         className='w-full justify-start'
       >
         <MaterialIcon

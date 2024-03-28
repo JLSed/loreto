@@ -1,32 +1,23 @@
-import { getServerSession } from 'next-auth'
-import { redirect } from 'next/navigation'
 import { ReactNode } from 'react'
+
+import AdminLayout from './AdminLayout'
+import { getServerSession } from 'next-auth'
 import { authOptions } from '@/common/configs/auth'
+import { redirect } from 'next/navigation'
 import { UserRole } from '@/common/enums/enums.db'
-import { Metadata } from 'next'
 
-export const metadata: Metadata = {
-  title: 'Dashboard',
-}
-
-export default async function DashboardPage(props: {
+export default async function AdminDashboardRootLayout(props: {
   children: ReactNode
-  admin: ReactNode
-  staff: ReactNode
-  customer: ReactNode
 }) {
   const session = await getServerSession(authOptions)
-  const user = session?.user
 
-  if (!user) {
+  if (!session?.user) {
     redirect('/')
   }
 
-  const PageMap: Record<UserRole, ReactNode> = {
-    [UserRole.Admin]: props.admin,
-    [UserRole.Staff]: props.staff,
-    [UserRole.Customer]: props.customer,
+  if (session.user.role !== UserRole.Admin) {
+    redirect('/')
   }
 
-  return PageMap[user.role as UserRole]
+  return <AdminLayout user={session.user}>{props.children}</AdminLayout>
 }

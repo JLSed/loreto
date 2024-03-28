@@ -16,8 +16,8 @@ import {
 } from '@/components/ui/dropdown-menu'
 
 import { Session } from 'next-auth'
-import SignoutButton from '../SignoutButton'
-import { ThemeSwitcher } from '../ThemeSwitcher'
+import SignoutButton from './SignoutButton'
+import { ThemeSwitcher } from './ThemeSwitcher'
 import AdminNavigationLink from './AdminNavigations'
 
 export default function AdminLayout(props: {
@@ -52,7 +52,7 @@ export default function AdminLayout(props: {
         <nav className='flex flex-col gap-1'>
           <AdminNavigationLink
             label='Dashboard'
-            href='/dashboard/home'
+            href='/dashboard'
             materialIconName='dashboard'
           />
 
