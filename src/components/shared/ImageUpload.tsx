@@ -16,7 +16,7 @@ export default function ImageUpload(props: {
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   return (
-    <div className='relative overflow-hidden rounded-lg bg-white border'>
+    <div className='relative overflow-hidden rounded-lg bg-white dark:bg-neutral-950 border'>
       <input
         disabled={props.disabled}
         hidden
@@ -47,7 +47,7 @@ export default function ImageUpload(props: {
           sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
         />
       ) : (
-        <div className='bg-neutral-200 w-full aspect-video grid place-items-center small'>
+        <div className='bg-neutral-200 dark:bg-neutral-950 w-full aspect-video grid place-items-center small'>
           Image Preview
         </div>
       )}
