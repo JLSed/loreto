@@ -177,11 +177,11 @@ model Booking {
 
   // dates
   pickupDate DateTime
-  returnDate DateTime
+  returnDate DateTime?
 
   // location
   pickUpLocation String
-  returnLocation String
+  destination String?
 
   // vehicle
   vehicle   Vehicle @relation(fields: [vehicleId], references: [id])

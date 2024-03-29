@@ -132,9 +132,8 @@ async function main() {
             bookerId: faker.helpers.arrayElement(users).id,
             vehicleId: faker.helpers.arrayElement(vehicles).id,
             pickupDate: faker.date.soon({ days: 5 }),
-            returnDate: faker.date.soon({ days: 10 }),
             pickUpLocation: faker.location.streetAddress(),
-            returnLocation: faker.location.streetAddress(),
+            destination: faker.location.streetAddress(),
             status: faker.helpers.enumValue(BookStatus),
             transactionId: faker.helpers.arrayElement(transactions).id,
           } as Prisma.BookingCreateManyInput)

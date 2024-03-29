@@ -34,6 +34,7 @@ export default async function Page(props: {
     <BookingForm
       v={v}
       user={user}
+      vehicleId={props.searchParams.vehicleId}
     />
   )
 }
