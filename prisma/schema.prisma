@@ -170,6 +170,11 @@ model Booking {
   // 4: completed
   status Int @default(1)
 
+  travelType Int @default(1)
+  // 1: one way
+  // 2: round trip
+  // 3: hourly
+
   // dates
   pickupDate DateTime
   returnDate DateTime

@@ -11,6 +11,17 @@ import { Session } from 'next-auth'
 import { Textarea } from '@/components/ui/textarea'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { pesos } from '@/lib/utils'
+import { z } from 'zod'
+
+const BookInputSchema = z.object({
+  firstName: z.string(),
+  lastName: z.string(),
+  contactNumber: z.string(),
+  email: z.string(),
+  pickUpAddress: z.string(),
+  destination: z.string(),
+  travelType: z.enum(['1', '2', '3']),
+})
 
 export default function BookingForm({
   v,
@@ -76,7 +87,7 @@ export default function BookingForm({
               <Label>Destination</Label>
               <Textarea placeholder='Please tell us the complete address of the destination' />
             </div>
-            <div className='space-y-1'>
+            <div className='space-y-2'>
               <Label>Travel type</Label>
               <RadioGroup className='flex justify-between'>
                 <div className='flex items-center space-x-2'>
@@ -98,7 +109,7 @@ export default function BookingForm({
                     value='3'
                     id='r3'
                   />
-                  <Label htmlFor='r3'>Multiple trip</Label>
+                  <Label htmlFor='r3'>Hourly</Label>
                 </div>
               </RadioGroup>
             </div>

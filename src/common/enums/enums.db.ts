@@ -80,3 +80,9 @@ export enum VehicleStatus {
   OnTheRoad,
   UnderMaintenance,
 }
+
+export enum BookingTravelType {
+  OneWay = 1,
+  RoundTrip,
+  Hourly,
+}

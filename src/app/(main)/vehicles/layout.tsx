@@ -10,6 +10,7 @@ import {
 import { HamburgerMenuIcon } from '@radix-ui/react-icons'
 import { ThemeSwitcher } from '../dashboard/ThemeSwitcher'
 import { ReactNode } from 'react'
+import SignoutButton from '../dashboard/SignoutButton'
 
 export default async function Layout(props: { children: ReactNode }) {
   return (
@@ -32,6 +33,7 @@ export default async function Layout(props: { children: ReactNode }) {
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
                 <ThemeSwitcher />
+                <SignoutButton />
               </DropdownMenuGroup>
             </DropdownMenuContent>
           </DropdownMenu>
