@@ -9,7 +9,7 @@ export default function SignInButton() {
       onClick={async () => {
         await signIn('google', {
           redirect: true,
-          callbackUrl: '/dashboard',
+          callbackUrl: '/',
         })
       }}
     >
