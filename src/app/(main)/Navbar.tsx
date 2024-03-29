@@ -48,8 +48,8 @@ export default async function Navbar() {
       {HomeLinkTitle}
       <div className='gap-8 ml-auto flex items-center'>
         <Link href={'/apartments'}>Apartments</Link>
-        <Link href={'/vehicles/booking'}>Book a Vehicle</Link>
-        <Link href={'/vehicles/booking'}>Custom Box</Link>
+        <Link href={'/vehicles/'}>Book a Vehicle</Link>
+        <Link href={'/box'}>Custom Box</Link>
 
         {getAction()}
       </div>
