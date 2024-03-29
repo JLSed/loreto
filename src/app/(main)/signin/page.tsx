@@ -2,13 +2,9 @@
 
 import { Button } from '@/components/ui/button'
 import { signIn } from 'next-auth/react'
-import { useSearchParams } from 'next/navigation'
-import React from 'react'
 
-export default function Page() {
-  const searchParams = useSearchParams()
-
-  const redirect = searchParams.get('redirect')
+export default function Page(props: { searchParams: { redirect?: string } }) {
+  const redirect = props.searchParams.redirect
 
   return (
     <div className='text-center px-4 py-14 space-y-8'>

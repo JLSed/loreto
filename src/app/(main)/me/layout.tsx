@@ -1,7 +1,5 @@
 import { authOptions } from '@/common/configs/auth'
-import { prisma } from '@/common/configs/prisma'
 import { getServerSession } from 'next-auth'
-import Image from 'next/image'
 import { redirect } from 'next/navigation'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -22,15 +20,10 @@ import SignoutButton from '../dashboard/SignoutButton'
 export default async function Layout(props: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions)
 
-  const user = await prisma.user.findUnique({
-    where: {
-      email: session?.user.email,
-    },
-  })
-
-  if (!user) {
+  if (!session?.user) {
     redirect('/sigin?redirect=/me')
   }
+  const user = session.user
 
   return (
     <div className='max-w-4xl m-auto'>
@@ -38,14 +31,14 @@ export default async function Layout(props: { children: React.ReactNode }) {
         <div className='flex gap-2 items-center'>
           <Avatar>
             <AvatarImage
-              src={user.photoUrl ?? ''}
-              alt={user.username}
+              src={user.image ?? ''}
+              alt={user.name}
             />
             <AvatarFallback className='uppercase'>
-              {user.username[0]}
+              {user.name[0]}
             </AvatarFallback>
           </Avatar>
-          <div className='capitalize font-bold'>{user.username}</div>
+          <div className='capitalize font-bold'>Hi, {user.name}</div>
         </div>
 
         <div className='flex items-center gap-4'>

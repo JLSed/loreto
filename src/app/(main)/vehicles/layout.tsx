@@ -21,7 +21,9 @@ export default async function Layout(props: { children: ReactNode }) {
         <div className='flex items-center gap-3'>
           <Link href='/'> Home </Link>
           <Link href='/vehicles'> Vehicles </Link>
-          <Button variant={'secondary'}>My Bookings</Button>
+          <Link href='/me/bookings'>
+            <Button variant={'secondary'}>My Bookings</Button>
+          </Link>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button

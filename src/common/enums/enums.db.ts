@@ -86,3 +86,11 @@ export enum BookingTravelType {
   RoundTrip,
   Hourly,
 }
+
+export enum BookingStatus {
+  Cancelled,
+  Pending,
+  Confirmed,
+  OnTheRoad,
+  Completed,
+}
