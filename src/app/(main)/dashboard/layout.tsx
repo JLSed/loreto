@@ -11,12 +11,8 @@ export default async function AdminDashboardRootLayout(props: {
 }) {
   const session = await getServerSession(authOptions)
 
-  if (!session?.user) {
-    redirect('/')
-  }
-
-  if (session.user.role !== UserRole.Admin) {
-    redirect('/')
+  if (session?.user.role !== UserRole.Admin) {
+    redirect('/signin?redirect=/dashboard')
   }
 
   return <AdminLayout user={session.user}>{props.children}</AdminLayout>

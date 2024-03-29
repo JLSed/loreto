@@ -11,6 +11,7 @@ import { HamburgerMenuIcon } from '@radix-ui/react-icons'
 import { ThemeSwitcher } from '../dashboard/ThemeSwitcher'
 import { ReactNode } from 'react'
 import SignoutButton from '../dashboard/SignoutButton'
+import Link from 'next/link'
 
 export default async function Layout(props: { children: ReactNode }) {
   return (
@@ -18,6 +19,8 @@ export default async function Layout(props: { children: ReactNode }) {
       <header className='p-4 py-5 flex items-center justify-between'>
         <h3>Book a vehicle</h3>
         <div className='flex items-center gap-3'>
+          <Link href='/'> Home </Link>
+          <Link href='/vehicles'> Vehicles </Link>
           <Button variant={'secondary'}>My Bookings</Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

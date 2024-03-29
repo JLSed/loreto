@@ -14,7 +14,11 @@ export default async function Page(props: {
   const user = session?.user
 
   if (user?.role != UserRole.Customer) {
-    redirect('/')
+    redirect(
+      encodeURI(
+        `/signin?redirect=/vehicles/booking?vehicleId=${props.searchParams.vehicleId}`
+      )
+    )
   }
 
   const v = await prisma.vehicle.findUnique({
