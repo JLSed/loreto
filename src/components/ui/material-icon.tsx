@@ -17,6 +17,7 @@ const icons = [
   'light_mode',
   'group',
   'more_horiz',
+  'directions_car',
 ] as const
 
 export type MaterialIconName = (typeof icons)[number]

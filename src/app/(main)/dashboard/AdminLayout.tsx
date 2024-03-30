@@ -69,6 +69,12 @@ export default function AdminLayout(props: {
           />
 
           <AdminNavigationLink
+            label='Bookings'
+            href='/dashboard/bookings'
+            materialIconName='directions_car'
+          />
+
+          <AdminNavigationLink
             label='Box Packaging'
             href='/dashboard/box'
             materialIconName='package_2'
