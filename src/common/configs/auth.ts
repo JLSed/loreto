@@ -47,18 +47,21 @@ export const authOptions: AuthOptions = {
       user.name = u.username
       user.image = u.photoUrl ?? undefined
       user.role = u.role
+      user.id = u.id
 
       return true
     },
     jwt: async ({ token, user }) => {
       if (user) {
         token.role = user.role
+        token.id = user.id
       }
 
       return token
     },
     session: async ({ session, token }) => {
       session.user.role = token.role
+      session.user.id = token.id
 
       return session
     },

@@ -25,6 +25,7 @@ export async function createNewVehicle({ photo, ...data }: NewVehicleInput) {
           : undefined,
       },
     })
+
     return { status: 200 }
   } catch (error) {
     console.log(error)

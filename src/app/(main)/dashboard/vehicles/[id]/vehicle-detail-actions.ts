@@ -17,7 +17,7 @@ export async function updateVehicleAction(input: UpdateVehicleInput) {
   try {
     return await prisma.$transaction(async (tx) => {
       const session = await getServerSession(authOptions)
-      if (!session?.user.email) {
+      if (!session?.user.id) {
         return { status: 401 }
       }
 
@@ -60,19 +60,11 @@ export async function updateVehicleAction(input: UpdateVehicleInput) {
         },
       })
 
-      const actor = await tx.user.findUnique({
-        where: { email: session.user.email },
-      })
-
-      if (!actor) {
-        return { status: 401 }
-      }
-
       await Promise.all([
         old.name !== updated.name &&
           tx.auditLog.create({
             data: {
-              actorId: actor.id,
+              actorId: session.user.id,
               action: AuditAction.Modification,
               affectedTable: AuditAffectedTable.Vehicles,
               affectedRowId: updated.id,
@@ -84,7 +76,7 @@ export async function updateVehicleAction(input: UpdateVehicleInput) {
         old.model !== updated.model &&
           tx.auditLog.create({
             data: {
-              actorId: actor.id,
+              actorId: session.user.id,
               action: AuditAction.Modification,
               affectedTable: AuditAffectedTable.Vehicles,
               affectedRowId: updated.id,
@@ -96,7 +88,7 @@ export async function updateVehicleAction(input: UpdateVehicleInput) {
         old.plateNumber !== updated.plateNumber &&
           tx.auditLog.create({
             data: {
-              actorId: actor.id,
+              actorId: session.user.id,
               action: AuditAction.Modification,
               affectedTable: AuditAffectedTable.Vehicles,
               affectedRowId: updated.id,
@@ -108,7 +100,7 @@ export async function updateVehicleAction(input: UpdateVehicleInput) {
         old.photoUrl !== updated.photoUrl &&
           tx.auditLog.create({
             data: {
-              actorId: actor.id,
+              actorId: session.user.id,
               action: AuditAction.Modification,
               affectedTable: AuditAffectedTable.Vehicles,
               affectedRowId: updated.id,
@@ -121,7 +113,7 @@ export async function updateVehicleAction(input: UpdateVehicleInput) {
           +old.serviceFeePerHour !== updated.serviceFeePerHour &&
           tx.auditLog.create({
             data: {
-              actorId: actor.id,
+              actorId: session.user.id,
               action: AuditAction.Modification,
               affectedTable: AuditAffectedTable.Vehicles,
               affectedRowId: updated.id,
@@ -133,7 +125,7 @@ export async function updateVehicleAction(input: UpdateVehicleInput) {
         old.purchaseDate.toISOString() !== updated.purchaseDate.toISOString() &&
           tx.auditLog.create({
             data: {
-              actorId: actor.id,
+              actorId: session.user.id,
               action: AuditAction.Modification,
               affectedTable: AuditAffectedTable.Vehicles,
               affectedRowId: updated.id,
@@ -146,7 +138,7 @@ export async function updateVehicleAction(input: UpdateVehicleInput) {
           updated.lastMaintenance?.toISOString() &&
           tx.auditLog.create({
             data: {
-              actorId: actor.id,
+              actorId: session.user.id,
               action: AuditAction.Modification,
               affectedTable: AuditAffectedTable.Vehicles,
               affectedRowId: updated.id,
@@ -160,7 +152,7 @@ export async function updateVehicleAction(input: UpdateVehicleInput) {
         old.status !== updated.status &&
           tx.auditLog.create({
             data: {
-              actorId: actor.id,
+              actorId: session.user.id,
               action: AuditAction.Modification,
               affectedTable: AuditAffectedTable.Vehicles,
               affectedRowId: updated.id,
