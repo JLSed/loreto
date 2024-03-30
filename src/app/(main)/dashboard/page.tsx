@@ -1,14 +1,23 @@
 import PageUnderConstruction from '@/components/shared/PageUnderConstruction'
 
 import { prisma } from '@/common/configs/prisma'
-import { UserRole, UserStatus } from '@/common/enums/enums.db'
+import {
+  AuditAction,
+  AuditAffectedTable,
+  UserRole,
+  UserStatus,
+} from '@/common/enums/enums.db'
 import MaterialIcon, { MaterialIconName } from '@/components/ui/material-icon'
-import { Card } from '@/components/ui/card'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { ReactNode } from 'react'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Badge } from '@/components/ui/badge'
+import { ArrowRightIcon } from '@radix-ui/react-icons'
 
 export default async function Page() {
-  const [boxOrders, bookings, transactions, activeCustomers] =
+  const [boxOrders, bookings, transactions, activeCustomers, auditLogs] =
     await Promise.all([
       prisma.boxOrder.findMany({
         orderBy: { createdAt: 'desc' },
@@ -19,6 +28,18 @@ export default async function Page() {
       }),
       prisma.user.findMany({
         where: { role: UserRole.Customer, status: UserStatus.Active },
+      }),
+      prisma.auditLog.findMany({
+        take: 10,
+        orderBy: { createdAt: 'desc' },
+        include: {
+          actor: {
+            select: {
+              username: true,
+              photoUrl: true,
+            },
+          },
+        },
       }),
     ])
 
@@ -59,6 +80,66 @@ export default async function Page() {
               value={activeCustomers.length}
               materialIconName={'group'}
             />
+          </div>
+
+          <div className='grid grid-cols-12 gap-4'>
+            <Card className='mt-4 col-span-8'>
+              <CardHeader className='small'>Most Recent Logs</CardHeader>
+              <CardContent>
+                <ScrollArea className='max-h-[400px]'>
+                  <ul>
+                    {auditLogs.map((log) => {
+                      const action =
+                        log.action === AuditAction.Creation
+                          ? 'created'
+                          : 'modified'
+
+                      return (
+                        <li
+                          key={log.id}
+                          className='py-1'
+                        >
+                          <div className='flex items-center'>
+                            <Avatar className='scale-50'>
+                              <AvatarImage
+                                src={log.actor.photoUrl ?? ''}
+                                alt=''
+                              />
+                              <AvatarFallback>
+                                {log.actor.username[0]}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div className='capitalize mr-4'>
+                              {log.actor.username}
+                            </div>
+                            <span>{action}</span>
+                            <span className='text-muted-foreground mx-4'>
+                              {AuditAffectedTable[log.affectedTable]}
+                            </span>
+                            <Badge className='capitalize'>
+                              {log.columnName}
+                            </Badge>
+                            <Badge
+                              className='mx-4'
+                              variant={'secondary'}
+                            >
+                              {log.from}
+                            </Badge>
+                            <ArrowRightIcon />
+                            <Badge
+                              className='ml-4'
+                              variant={'secondary'}
+                            >
+                              {log.to}
+                            </Badge>
+                          </div>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </ScrollArea>
+              </CardContent>
+            </Card>
           </div>
         </TabsContent>
 

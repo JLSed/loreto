@@ -13,11 +13,11 @@ export default async function Page(props: {
   }
 }) {
   const logs = await prisma.auditLog.findMany({
-    take: parseInt(props.searchParams.per_page ?? '10'),
-    skip: props.searchParams.page
-      ? (parseInt(props.searchParams.page) - 1) *
-        parseInt(props.searchParams.per_page ?? '10')
-      : 0,
+    // take: parseInt(props.searchParams.per_page ?? '10'),
+    // skip: props.searchParams.page
+    //   ? (parseInt(props.searchParams.page) - 1) *
+    //     parseInt(props.searchParams.per_page ?? '10')
+    //   : 0,
     include: {
       actor: {
         select: {
@@ -26,6 +26,7 @@ export default async function Page(props: {
         },
       },
     },
+    orderBy: { createdAt: 'desc' },
   })
 
   return (
@@ -68,9 +69,9 @@ export default async function Page(props: {
               </CardHeader>
               <CardContent className='flex items-center gap-3'>
                 <Badge>{log.columnName}</Badge>
-                <div>{log.from}</div>
+                <Badge variant={'secondary'}>{log.from}</Badge>
                 <ArrowRightIcon />
-                <div>{log.to}</div>
+                <Badge variant={'secondary'}>{log.to}</Badge>
               </CardContent>
             </Card>
           )
