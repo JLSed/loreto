@@ -66,7 +66,7 @@ export async function updateVehicleAction(input: UpdateVehicleInput) {
             data: {
               actorId: session.user.id,
               action: AuditAction.Modification,
-              affectedTable: AuditAffectedTable.Vehicles,
+              affectedTable: AuditAffectedTable.Vehicle,
               affectedRowId: updated.id,
               columnName: 'name',
               from: old.name,
@@ -78,7 +78,7 @@ export async function updateVehicleAction(input: UpdateVehicleInput) {
             data: {
               actorId: session.user.id,
               action: AuditAction.Modification,
-              affectedTable: AuditAffectedTable.Vehicles,
+              affectedTable: AuditAffectedTable.Vehicle,
               affectedRowId: updated.id,
               columnName: 'model',
               from: old.model,
@@ -90,7 +90,7 @@ export async function updateVehicleAction(input: UpdateVehicleInput) {
             data: {
               actorId: session.user.id,
               action: AuditAction.Modification,
-              affectedTable: AuditAffectedTable.Vehicles,
+              affectedTable: AuditAffectedTable.Vehicle,
               affectedRowId: updated.id,
               columnName: 'plate number',
               from: old.plateNumber,
@@ -102,7 +102,7 @@ export async function updateVehicleAction(input: UpdateVehicleInput) {
             data: {
               actorId: session.user.id,
               action: AuditAction.Modification,
-              affectedTable: AuditAffectedTable.Vehicles,
+              affectedTable: AuditAffectedTable.Vehicle,
               affectedRowId: updated.id,
               columnName: 'image',
               from: old.photoUrl,
@@ -115,7 +115,7 @@ export async function updateVehicleAction(input: UpdateVehicleInput) {
             data: {
               actorId: session.user.id,
               action: AuditAction.Modification,
-              affectedTable: AuditAffectedTable.Vehicles,
+              affectedTable: AuditAffectedTable.Vehicle,
               affectedRowId: updated.id,
               columnName: 'service Fee Per Hour',
               from: old.serviceFeePerHour.toString(),
@@ -127,7 +127,7 @@ export async function updateVehicleAction(input: UpdateVehicleInput) {
             data: {
               actorId: session.user.id,
               action: AuditAction.Modification,
-              affectedTable: AuditAffectedTable.Vehicles,
+              affectedTable: AuditAffectedTable.Vehicle,
               affectedRowId: updated.id,
               columnName: 'purchase date',
               from: old.purchaseDate.toString(),
@@ -140,7 +140,7 @@ export async function updateVehicleAction(input: UpdateVehicleInput) {
             data: {
               actorId: session.user.id,
               action: AuditAction.Modification,
-              affectedTable: AuditAffectedTable.Vehicles,
+              affectedTable: AuditAffectedTable.Vehicle,
               affectedRowId: updated.id,
               columnName: 'last maintenance',
               from: old.lastMaintenance?.toString(),
@@ -154,7 +154,7 @@ export async function updateVehicleAction(input: UpdateVehicleInput) {
             data: {
               actorId: session.user.id,
               action: AuditAction.Modification,
-              affectedTable: AuditAffectedTable.Vehicles,
+              affectedTable: AuditAffectedTable.Vehicle,
               affectedRowId: updated.id,
               columnName: 'status',
               from: VehicleStatusLabel[old.status as VehicleStatus],

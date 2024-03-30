@@ -39,7 +39,7 @@ export async function createNewVehicle({ photo, ...data }: NewVehicleInput) {
       data: {
         actorId: session.user.id,
         action: AuditAction.Creation,
-        affectedTable: AuditAffectedTable.Vehicles,
+        affectedTable: AuditAffectedTable.Vehicle,
         affectedRowId: entry.id,
       },
     })

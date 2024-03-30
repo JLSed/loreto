@@ -1,4 +1,4 @@
-import { UserRole, VehicleStatus } from '../enums/enums.db'
+import { AuditAction, UserRole, VehicleStatus } from '../enums/enums.db'
 
 export const PRICE_PER_SQUAREFOOT = {
   SINGLE: 6,

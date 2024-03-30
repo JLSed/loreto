@@ -276,10 +276,10 @@ async function main() {
           case AuditAffectedTable.User:
             table = users
             break
-          case AuditAffectedTable.Vehicles:
+          case AuditAffectedTable.Vehicle:
             table = vehicles
             break
-          case AuditAffectedTable.Bookings:
+          case AuditAffectedTable.Booking:
             table = bookings
             break
           default:
