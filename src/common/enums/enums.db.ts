@@ -56,7 +56,7 @@ export enum AuditAffectedTable {
   BoxOrder,
   Transaction,
   Vehicle,
-  Booking,
+  Bookings,
 }
 
 export enum AuditAction {

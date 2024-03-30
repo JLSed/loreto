@@ -243,6 +243,8 @@ model Apartment {
   images                     String[]
   withMotorcycleParkingSpace Boolean
   withCarParkingSpace        Boolean
+  bedrooms                   Int
+  toiletAndBath              Int
 
   // square meters
   area Float

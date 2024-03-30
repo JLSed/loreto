@@ -251,7 +251,22 @@ async function main() {
     })
   }
 
-  await Promise.all([seedBookings(), seedBoxOrders()])
+  const seedApartments = () => {
+    return prisma.apartment.create({
+      data: {
+        address: faker.address.streetAddress(),
+        area: 40,
+        bedrooms: 1,
+        toiletAndBath: 1,
+        maxOccupantsPerUnit: 3,
+        monthlyRentalPrice: 5_000,
+        withCarParkingSpace: true,
+        withMotorcycleParkingSpace: true,
+      },
+    })
+  }
+
+  await Promise.all([seedBookings(), seedBoxOrders(), seedApartments()])
   const [boxOrders, bookings] = await Promise.all([
     prisma.boxOrder.findMany(),
     prisma.booking.findMany(),
@@ -279,7 +294,7 @@ async function main() {
           case AuditAffectedTable.Vehicle:
             table = vehicles
             break
-          case AuditAffectedTable.Booking:
+          case AuditAffectedTable.Bookings:
             table = bookings
             break
           default:
