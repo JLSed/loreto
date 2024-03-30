@@ -181,7 +181,7 @@ model Booking {
 
   // location
   pickUpLocation String
-  destination String?
+  destination    String?
 
   // vehicle
   vehicle   Vehicle @relation(fields: [vehicleId], references: [id])
@@ -225,5 +225,25 @@ model AuditLog {
   // either a box, user, boxOrder, or transaction
   affectedRowId String
 
+  columnName String?
+  from       String?
+  to         String?
+
   @@index([actorId, affectedRowId])
+}
+
+model Apartment {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  modifiedAt DateTime @updatedAt
+
+  address                    String
+  monthlyRentalPrice         Float
+  maxOccupantsPerUnit        Int
+  images                     String[]
+  withMotorcycleParkingSpace Boolean
+  withCarParkingSpace        Boolean
+
+  // square meters
+  area Float
 }

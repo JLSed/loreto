@@ -287,7 +287,6 @@ async function main() {
         }
 
         return {
-          remark: faker.lorem.sentence(),
           affectedTable,
           action: faker.helpers.enumValue(AuditAction),
           actorId: faker.helpers.arrayElement(users).id,

@@ -71,6 +71,7 @@ export default function VehicleDetails({ data }: { data: Vehicle }) {
 
     try {
       const res = await updateVehicleAction(data)
+
       if (res.status === 201) {
         router.replace('/dashboard/vehicles')
         router.refresh()
