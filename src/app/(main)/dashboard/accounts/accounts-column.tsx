@@ -2,7 +2,7 @@
 
 import { ColumnDef } from '@tanstack/react-table'
 import { getAccountsForDashboard } from './accounts-actions'
-import { format, formatDistance, formatRelative } from 'date-fns'
+import { formatDistance } from 'date-fns'
 import UserRoleLabel from '@/components/shared/UserRoleLabel'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
@@ -41,7 +41,6 @@ export const accountsColumns: ColumnDef<Account>[] = [
     accessorKey: 'lastName',
     header: 'Last Name',
   },
-
   {
     accessorKey: 'joinedAt',
     header: 'Joined',
