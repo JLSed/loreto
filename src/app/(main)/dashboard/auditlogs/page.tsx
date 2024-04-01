@@ -67,12 +67,14 @@ export default async function Page(props: {
                   </span>
                 </CardTitle>
               </CardHeader>
-              <CardContent className='flex items-center gap-3'>
-                <Badge>{log.columnName}</Badge>
-                <Badge variant={'secondary'}>{log.from}</Badge>
-                <ArrowRightIcon />
-                <Badge variant={'secondary'}>{log.to}</Badge>
-              </CardContent>
+              {log.action === AuditAction.Modification && (
+                <CardContent className='flex items-center gap-3'>
+                  <Badge>{log.columnName}</Badge>
+                  <Badge variant={'secondary'}>{log.from}</Badge>
+                  <ArrowRightIcon />
+                  <Badge variant={'secondary'}>{log.to}</Badge>
+                </CardContent>
+              )}
             </Card>
           )
         })}

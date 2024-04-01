@@ -116,22 +116,26 @@ export default async function Page() {
                             <span className='text-muted-foreground mx-4'>
                               {AuditAffectedTable[log.affectedTable]}
                             </span>
-                            <Badge className='capitalize'>
-                              {log.columnName}
-                            </Badge>
-                            <Badge
-                              className='mx-4'
-                              variant={'secondary'}
-                            >
-                              {log.from}
-                            </Badge>
-                            <ArrowRightIcon />
-                            <Badge
-                              className='ml-4'
-                              variant={'secondary'}
-                            >
-                              {log.to}
-                            </Badge>
+                            {log.action === AuditAction.Modification && (
+                              <>
+                                <Badge className='capitalize'>
+                                  {log.columnName}
+                                </Badge>
+                                <Badge
+                                  className='mx-4'
+                                  variant={'secondary'}
+                                >
+                                  {log.from}
+                                </Badge>
+                                <ArrowRightIcon />
+                                <Badge
+                                  className='ml-4'
+                                  variant={'secondary'}
+                                >
+                                  {log.to}
+                                </Badge>
+                              </>
+                            )}
                           </div>
                         </li>
                       )
