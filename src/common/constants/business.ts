@@ -1,4 +1,4 @@
-import { AuditAction, UserRole, VehicleStatus } from '../enums/enums.db'
+import { BookingStatus, UserRole, VehicleStatus } from '../enums/enums.db'
 
 export const PRICE_PER_SQUAREFOOT = {
   SINGLE: 6,
@@ -17,4 +17,12 @@ export const VehicleStatusLabel = {
   [VehicleStatus.OnTheRoad]: 'On the road',
   [VehicleStatus.Rented]: 'Rented',
   [VehicleStatus.UnderMaintenance]: 'Under maintenance',
+}
+
+export const BookingStatusTexts = {
+  [BookingStatus.Cancelled]: 'Cancelled',
+  [BookingStatus.Pending]: 'Pending',
+  [BookingStatus.Confirmed]: 'Confirmed',
+  [BookingStatus.OnTheRoad]: 'On the road',
+  [BookingStatus.Completed]: 'Completed',
 }

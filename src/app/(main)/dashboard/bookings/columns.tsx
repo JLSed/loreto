@@ -12,10 +12,12 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+
 import { Button } from '@/components/ui/button'
 import { DotsHorizontalIcon } from '@radix-ui/react-icons'
+import Link from 'next/link'
 
-type Booking = Awaited<ReturnType<typeof getBookings>>[number]
+export type Booking = Awaited<ReturnType<typeof getBookings>>[number]
 
 export const bookingsColumns: ColumnDef<Booking>[] = [
   {
@@ -74,8 +76,11 @@ export const bookingsColumns: ColumnDef<Booking>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align='end'>
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>View details</DropdownMenuItem>
-            <DropdownMenuItem>Edit</DropdownMenuItem>
+            <Link href={`/dashboard/bookings/${row.original.id}`}>
+              <DropdownMenuItem>Update status</DropdownMenuItem>
+            </Link>
+            <DropdownMenuItem disabled>View details</DropdownMenuItem>
+            <DropdownMenuItem disabled>Edit</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )
