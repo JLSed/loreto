@@ -23,6 +23,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { createNewVehicle } from './new-vehicle-action'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import FormGroup from '@/components/shared/forms/FormGroup'
+import FormItem from '@/components/shared/forms/FormItem'
 
 const NewVehicleInputSchema = z.object({
   name: z.string().trim().min(1, 'Please enter a complete vehilc name'),
@@ -84,52 +86,40 @@ export default function NewVehicle() {
           aria-label='right side'
           className='col-span-7 space-y-4'
         >
-          <Card className='shadow-none'>
-            <CardHeader>
-              <CardTitle className='text-base'>Vehicle Information</CardTitle>
-            </CardHeader>
-            <CardContent className='space-y-4'>
-              <div className='space-y-1'>
-                <Label htmlFor='name'>Vehicle Name</Label>
-                <Input
-                  id='name'
-                  {...form.register('name')}
-                  placeholder='Enter vehicle name'
-                />
-                {form.formState.errors.name && (
-                  <div className='text-xs text-red-700 font-medium'>
-                    {form.formState.errors.name.message}
-                  </div>
-                )}
-              </div>
-              <div className='space-y-1'>
-                <Label htmlFor='model'>Vehicle Model</Label>
-                <Input
-                  id='model'
-                  {...form.register('model')}
-                  placeholder='Enter model'
-                />
-                {form.formState.errors.model && (
-                  <div className='text-xs text-red-700 font-medium'>
-                    {form.formState.errors.model.message}
-                  </div>
-                )}
-              </div>
-              <div className='space-y-1'>
-                <Label htmlFor='plateNumber'>Plate Number</Label>
-                <Input
-                  id='plateNumber'
-                  {...form.register('plateNumber')}
-                  placeholder='Enter plate number'
-                />
-                {form.formState.errors.plateNumber && (
-                  <div className='text-xs text-red-700 font-medium'>
-                    {form.formState.errors.plateNumber.message}
-                  </div>
-                )}
-              </div>
-            </CardContent>
-          </Card>
+          <FormGroup groupTitle='Vehicle Information'>
+            <FormItem
+              title='Vehicle Name'
+              error={form.formState.errors.name?.message}
+            >
+              <Input
+                id='name'
+                {...form.register('name')}
+                placeholder='Enter vehicle name'
+              />
+            </FormItem>
+
+            <FormItem
+              title='Vehicle Model'
+              error={form.formState.errors.model?.message}
+            >
+              <Input
+                id='model'
+                {...form.register('model')}
+                placeholder='Enter model'
+              />
+            </FormItem>
+
+            <FormItem
+              title='Plate Number'
+              error={form.formState.errors.plateNumber?.message}
+            >
+              <Input
+                id='plateNumber'
+                {...form.register('plateNumber')}
+                placeholder='Enter plate number'
+              />
+            </FormItem>
+          </FormGroup>
 
           <Card className='shadow-none'>
             <CardHeader>
