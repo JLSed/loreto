@@ -86,7 +86,7 @@ export default async function Page() {
             <Card className='mt-4 col-span-8'>
               <CardHeader className='small'>Most Recent Logs</CardHeader>
               <CardContent>
-                <ScrollArea className='max-h-[400px]'>
+                <ScrollArea className='max-h-[400px] overflow-y-visible'>
                   <ul>
                     {auditLogs.map((log) => {
                       const action =
@@ -109,16 +109,19 @@ export default async function Page() {
                                 {log.actor.username[0]}
                               </AvatarFallback>
                             </Avatar>
-                            <div className='capitalize mr-4'>
+                            <div className='capitalize mr-4 text-sm max-w-[200px] truncate text-ellipsis'>
                               {log.actor.username}
                             </div>
-                            <span>{action}</span>
+                            <span className='text-sm'>{action}</span>
                             <span className='text-muted-foreground mx-4'>
                               {AuditAffectedTable[log.affectedTable]}
                             </span>
                             {log.action === AuditAction.Modification && (
                               <>
-                                <Badge className='capitalize'>
+                                <Badge
+                                  className='capitalize'
+                                  variant={'outline'}
+                                >
                                   {log.columnName}
                                 </Badge>
                                 <Badge
