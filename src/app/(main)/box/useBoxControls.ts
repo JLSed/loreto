@@ -3,15 +3,15 @@ import { ImperativePanelHandle } from 'react-resizable-panels'
 
 export default function useBoxControls() {
   // actual pixel
-  const [height, setHeight] = useState(400)
+  const [height, setHeight] = useState(600)
   const [pixelWidth, setPixelWidth] = useState(0)
   const [pixelLength, setPixelLength] = useState(0)
 
   const [containerWidth, setContainerWidth] = useState(0)
 
   // percentage
-  const [widthPercentage, setWidthPercentage] = useState(25)
-  const [lengthPercentage, setLengthPercentage] = useState(35)
+  const [widthPercentage, setWidthPercentage] = useState(35)
+  const [lengthPercentage, setLengthPercentage] = useState(45)
 
   // controls refs
   const widthRef = useRef<HTMLInputElement>(null)
@@ -21,21 +21,6 @@ export default function useBoxControls() {
   // panel refs
   const wPanelRef = useRef<ImperativePanelHandle>(null)
   const lPanelRef = useRef<ImperativePanelHandle>(null)
-
-  // Phase 1 controls
-  const [poNumber, setPoNumber] = useState('')
-  const [itemNumber, setItemNumber] = useState('')
-  const [quantity, setQuantity] = useState(0)
-  const [description, setDescription] = useState('')
-  const [weight, setWeight] = useState('')
-  const [meas, setMeas] = useState('')
-
-  // Phase 2 controls
-  const [logoSize, setLogoSize] = useState(100)
-  const [boxName, setBoxName] = useState('Cheesecakes')
-  const [codeNumber, setCodeNumber] = useState('')
-  const [ctnNumber, setCtnNumber] = useState('')
-  const [ctnBase, setCtnBase] = useState(200)
 
   useEffect(() => {
     const w = document.getElementById('main-container')?.clientWidth ?? 0
@@ -77,31 +62,5 @@ export default function useBoxControls() {
     applyChanges,
     wPanelRef,
     lPanelRef,
-
-    // Phase 1
-    poNumber,
-    setPoNumber,
-    itemNumber,
-    setItemNumber,
-    quantity,
-    setQuantity,
-    description,
-    setDescription,
-    weight,
-    setWeight,
-    meas,
-    setMeas,
-
-    // Phase 2
-    logoSize,
-    setLogoSize,
-    boxName,
-    setBoxName,
-    codeNumber,
-    setCodeNumber,
-    ctnNumber,
-    setCtnNumber,
-    ctnBase,
-    setCtnBase,
   }
 }

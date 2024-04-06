@@ -7,6 +7,7 @@ import {
 import useBoxControls from './useBoxControls'
 import { cn } from '@/lib/utils'
 import { useState } from 'react'
+
 import Phase2 from './_markings/Phase2'
 import Phase1 from './_markings/Phase1'
 
@@ -26,8 +27,8 @@ export default function Panels(props: {
     containerWidth,
   } = props.controls
 
-  const [leftMostPanelSize, setLeftMostPanelSize] = useState(20)
-  const [rightMostPanelSize, setRightMostPanelSize] = useState(20)
+  const [leftMostPanelSize, setLeftMostPanelSize] = useState(10)
+  const [rightMostPanelSize, setRightMostPanelSize] = useState(10)
 
   const computeWLabelPosition = () => {
     const p = leftMostPanelSize + widthPercentage / 2
@@ -42,7 +43,7 @@ export default function Panels(props: {
     <ResizablePanelGroup
       id={'main-container'}
       direction='horizontal'
-      className='py-8 relative pb-10'
+      className='py-8 relative pb-10 m-auto'
       style={{
         height: `${height}px`,
       }}

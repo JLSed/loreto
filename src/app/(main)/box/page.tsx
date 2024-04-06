@@ -24,6 +24,7 @@ export default function Home() {
         <Accordion
           type='multiple'
           className='w-full'
+          defaultValue={['dimensions', 'phase-1', 'phase-2']}
         >
           <AccordionItem value='dimensions'>
             <AccordionTrigger className='p-4 small text-muted-foreground'>
