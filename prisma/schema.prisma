@@ -43,11 +43,8 @@ model Box {
   createdAt  DateTime @default(now())
   modifiedAt DateTime @updatedAt
 
-  name             String
-  status           Int     @default(1)
-  logoUrl          String?
-  phaseOneMarkings Json?
-  phaseTwoMarkings Json?
+  name   String
+  status Int    @default(1)
 
   // diemnsions
   length Float
@@ -62,6 +59,9 @@ model Box {
   // 2: inner
   placement Int @default(1)
 
+  // markings
+  markings BoxMarking[]
+
   // owner
   owner   User   @relation(fields: [ownerId], references: [id])
   ownerId String
@@ -69,6 +69,22 @@ model Box {
   orders BoxOrder[]
 
   @@index([ownerId])
+}
+
+model BoxMarking {
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  modifiedAt DateTime @updatedAt
+
+  cssTransform String
+  label        String
+  value        String
+
+  // 1 or 2 only
+  phase Int
+
+  Box   Box?    @relation(fields: [boxId], references: [id])
+  boxId String?
 }
 
 model BoxOrder {
