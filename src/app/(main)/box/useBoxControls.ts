@@ -72,6 +72,15 @@ export default function useBoxControls() {
     return true
   }
 
+  const updateMarkValue = (marking: LocalMarking): void => {
+    const mark = markings.find((m) => m.label === marking.label)
+    if (mark) {
+      mark.value = marking.value
+      localStorage.setItem('box-markings', JSON.stringify(markings))
+      setMarkings([...markings])
+    }
+  }
+
   const applyChanges = () => {
     const width = widthRef.current?.valueAsNumber ?? 0
     const length = lengthRef.current?.valueAsNumber ?? 0
@@ -108,5 +117,6 @@ export default function useBoxControls() {
     markings,
     setMarkings,
     addMarking,
+    updateMarkValue,
   }
 }
