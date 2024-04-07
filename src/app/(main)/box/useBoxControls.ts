@@ -1,6 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { ImperativePanelHandle } from 'react-resizable-panels'
 
+export type LocalMarking = {
+  label: string
+  value: string
+  phase: number
+  transform: string
+}
+
 export default function useBoxControls() {
   // actual pixel
   const [height, setHeight] = useState(600)
@@ -22,12 +29,48 @@ export default function useBoxControls() {
   const wPanelRef = useRef<ImperativePanelHandle>(null)
   const lPanelRef = useRef<ImperativePanelHandle>(null)
 
+  // markgins
+  const [markings, setMarkings] = useState<LocalMarking[]>([])
+
+  useEffect(() => {
+    const markings = localStorage.getItem('box-markings')
+    if (markings) {
+      setMarkings(JSON.parse(markings))
+      return
+    }
+    const newMarkings = [
+      {
+        label: 'Serial No:',
+        value: '123456',
+        phase: 1,
+        transform: 'translate(0, 0)',
+      },
+    ]
+    setMarkings(newMarkings)
+    localStorage.setItem('box-markings', JSON.stringify(newMarkings))
+  }, [])
+
   useEffect(() => {
     const w = document.getElementById('main-container')?.clientWidth ?? 0
     setContainerWidth(Math.round(w))
     setPixelWidth(Math.round(w * (widthPercentage / 100)))
     setPixelLength(Math.round(w * (lengthPercentage / 100)))
   }, [lengthPercentage, widthPercentage])
+
+  const addMarking = (marking: LocalMarking): boolean => {
+    const labelExistInPhase = markings.some(
+      (m) => m.label === marking.label && m.phase === marking.phase
+    )
+
+    if (labelExistInPhase) {
+      alert(`${marking.label} is already added in phase ${marking.phase}.`)
+      return false
+    }
+    const newMarkings = [...markings, marking]
+    localStorage.setItem('box-markings', JSON.stringify(newMarkings))
+    setMarkings(newMarkings)
+    return true
+  }
 
   const applyChanges = () => {
     const width = widthRef.current?.valueAsNumber ?? 0
@@ -62,5 +105,8 @@ export default function useBoxControls() {
     applyChanges,
     wPanelRef,
     lPanelRef,
+    markings,
+    setMarkings,
+    addMarking,
   }
 }
