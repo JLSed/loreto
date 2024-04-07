@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { ImperativePanelHandle } from 'react-resizable-panels'
 
 export type LocalMarking = {
+  id: number
   label: string
   value: string
   phase: number
@@ -44,6 +45,7 @@ export default function useBoxControls() {
         value: '123456',
         phase: 1,
         transform: 'translate(0, 0)',
+        id: 1,
       },
     ]
     setMarkings(newMarkings)
@@ -73,9 +75,18 @@ export default function useBoxControls() {
   }
 
   const updateMarkValue = (marking: LocalMarking): void => {
-    const mark = markings.find((m) => m.label === marking.label)
+    const mark = markings.find((m) => m.id === marking.id)
     if (mark) {
       mark.value = marking.value
+      localStorage.setItem('box-markings', JSON.stringify(markings))
+      setMarkings([...markings])
+    }
+  }
+
+  const updateMarkLabel = (marking: LocalMarking): void => {
+    const mark = markings.find((m) => m.id === marking.id)
+    if (mark) {
+      mark.label = marking.label
       localStorage.setItem('box-markings', JSON.stringify(markings))
       setMarkings([...markings])
     }
@@ -118,5 +129,6 @@ export default function useBoxControls() {
     setMarkings,
     addMarking,
     updateMarkValue,
+    updateMarkLabel,
   }
 }

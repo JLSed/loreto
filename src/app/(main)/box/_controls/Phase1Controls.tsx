@@ -3,7 +3,8 @@ import useBoxControls from '../useBoxControls'
 
 import AddMarking from './AddMarking'
 import { Label } from '@/components/ui/label'
-import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { Cross2Icon } from '@radix-ui/react-icons'
 
 interface Props {
   controls: ReturnType<typeof useBoxControls>
@@ -17,23 +18,23 @@ export default function Phase1Controls(props: Props) {
 
   return (
     <div className='grid gap-4 px-4'>
+      <div className='text-sm text-center p-4 bg-muted rounded'>
+        💡Right click a marking on the box to edit.
+      </div>
+
       {markings.map((m) => {
         return (
           <div
             key={m.label.replaceAll(' ', '-')}
-            className='grid space-y-2'
+            className='flex items-center justify-between'
           >
-            <Label className='text-xs'>{m.label}</Label>
-            <Input
-              placeholder={'Edit value here...'}
-              value={m.value}
-              onChange={(e) =>
-                props.controls.updateMarkValue({
-                  ...m,
-                  value: e.target.value,
-                })
-              }
-            />
+            <Label>{m.label}</Label>
+            <Button
+              size={'icon'}
+              variant={'ghost'}
+            >
+              <Cross2Icon className='w-3 h-3' />
+            </Button>
           </div>
         )
       })}

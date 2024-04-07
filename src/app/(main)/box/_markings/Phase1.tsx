@@ -27,9 +27,8 @@ export default function Phase1(props: Props) {
         key={m.label.replaceAll(' ', '-')}
         parentWidth={props.controls.widthPercentage}
         containerRef={containerRef}
-        label={m.label}
-        value={m.value}
-        transform={m.transform}
+        controls={props.controls}
+        marking={m}
       />
     )
   }
