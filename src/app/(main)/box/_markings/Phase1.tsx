@@ -24,7 +24,7 @@ export default function Phase1(props: Props) {
   const renderMarkings = (m: LocalMarking) => {
     return (
       <BoxMarking
-        key={m.label.replaceAll(' ', '-')}
+        key={m.id}
         parentWidth={props.controls.widthPercentage}
         containerRef={containerRef}
         controls={props.controls}

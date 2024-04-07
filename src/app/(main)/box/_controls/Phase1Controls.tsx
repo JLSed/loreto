@@ -18,8 +18,8 @@ export default function Phase1Controls(props: Props) {
 
   return (
     <div className='grid gap-4 px-4'>
-      <div className='text-sm text-center p-4 bg-muted rounded'>
-        💡Right click a marking on the box to edit.
+      <div className='text-sm text-balance text-center p-4 bg-muted rounded-md'>
+        Right click on a marking inside the box to edit.
       </div>
 
       {markings.map((m) => {

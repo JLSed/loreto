@@ -27,13 +27,21 @@ export default function BoxMarking(props: Props) {
   const targetRef = useRef<HTMLDivElement>(null)
 
   const [targetted, setTargetted] = useState(false)
+  const [totalChars, setTotalChars] = useState(
+    props.marking.label.length + props.marking.value.length
+  )
 
   return (
     <>
       <ContextMenu>
         <ContextMenuTrigger asChild>
           <div
-            onMouseOver={() => setTargetted(true)}
+            onMouseOver={() => {
+              setTargetted(true)
+              setTotalChars(
+                props.marking.label.length + props.marking.value.length
+              )
+            }}
             onMouseUp={() => {
               setTargetted(false)
               const markings = localStorage.getItem('box-markings')
@@ -54,18 +62,30 @@ export default function BoxMarking(props: Props) {
         </ContextMenuTrigger>
         <ContextMenuContent className='rounded-xl'>
           <div className='grid grid-cols-[.3fr_1fr] gap-4 items-center p-4'>
-            <Label className='text-right'>Label</Label>
+            <Label
+              className='text-right'
+              htmlFor='edit__marking__label'
+            >
+              Label
+            </Label>
             <Input
+              id='edit__marking__label'
               defaultValue={props.marking.label}
-              // onChange={(e) =>
-              //   props.controls.updateMarkLabel({
-              //     ...props.marking,
-              //     label: e.target.value,
-              //   })
-              // }
+              onChange={(e) =>
+                props.controls.updateMarkLabel({
+                  ...props.marking,
+                  label: e.target.value,
+                })
+              }
             />
-            <Label className='text-right'>Value</Label>
+            <Label
+              htmlFor='edit__marking__value'
+              className='text-right'
+            >
+              Value
+            </Label>
             <Input
+              id='edit__marking__value'
               defaultValue={props.marking.value}
               onChange={(e) =>
                 props.controls.updateMarkValue({
@@ -74,9 +94,17 @@ export default function BoxMarking(props: Props) {
                 })
               }
             />
-            <Label className='text-right'>Location</Label>
+            <Label
+              htmlFor='edit__marking__phase'
+              className='text-right'
+            >
+              Location
+            </Label>
             <div>
-              <Tabs defaultValue={props.marking.phase.toString()}>
+              <Tabs
+                defaultValue={props.marking.phase.toString()}
+                id='edit__marking__phase'
+              >
                 <TabsList className='grid w-full grid-cols-2'>
                   <TabsTrigger value='1'>Phase 1</TabsTrigger>
                   <TabsTrigger value='2'>Phase 2</TabsTrigger>
@@ -86,8 +114,9 @@ export default function BoxMarking(props: Props) {
           </div>
         </ContextMenuContent>
       </ContextMenu>
+
       <Moveable
-        key={props.parentWidth}
+        key={props.parentWidth + props.marking.id + totalChars}
         draggable
         hideDefaultLines={!targetted}
         flushSync={flushSync}
