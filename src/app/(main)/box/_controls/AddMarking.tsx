@@ -101,6 +101,7 @@ export default function AddMarking(props: Props) {
               defaultValue={'1'}
               id='edit__marking__phase'
               className='col-span-3'
+              onValueChange={(v) => setPhase(+v)}
             >
               <TabsList className='grid w-full grid-cols-2'>
                 <TabsTrigger value='1'>Phase 1</TabsTrigger>
