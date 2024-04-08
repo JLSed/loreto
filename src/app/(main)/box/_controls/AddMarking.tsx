@@ -13,8 +13,8 @@ import {
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { PlusIcon } from '@radix-ui/react-icons'
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { useState } from 'react'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 interface Props {
   controls: ReturnType<typeof useBoxControls>
@@ -34,6 +34,7 @@ export default function AddMarking(props: Props) {
       value,
       phase,
       transform: 'translate(0, 0)',
+      id: props.controls.markings.length + 1,
     })
     if (added) setOpen(false)
   }
@@ -96,28 +97,16 @@ export default function AddMarking(props: Props) {
             >
               Phase
             </Label>
-            <RadioGroup
-              value={phase.toString()}
-              onValueChange={(v) => {
-                setPhase(parseInt(v))
-              }}
-              className='flex items-center gap-8 col-span-3'
+            <Tabs
+              defaultValue={'1'}
+              id='edit__marking__phase'
+              className='col-span-3'
             >
-              <div className='flex items-center space-x-2'>
-                <RadioGroupItem
-                  value='1'
-                  id='r1'
-                />
-                <Label htmlFor='r1'>Phase 1</Label>
-              </div>
-              <div className='flex items-center space-x-2'>
-                <RadioGroupItem
-                  value='2'
-                  id='r2'
-                />
-                <Label htmlFor='r2'>Phase 2</Label>
-              </div>
-            </RadioGroup>
+              <TabsList className='grid w-full grid-cols-2'>
+                <TabsTrigger value='1'>Phase 1</TabsTrigger>
+                <TabsTrigger value='2'>Phase 2</TabsTrigger>
+              </TabsList>
+            </Tabs>
           </div>
         </div>
         <DialogFooter>

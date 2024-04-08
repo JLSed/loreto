@@ -92,6 +92,12 @@ export default function useBoxControls() {
     }
   }
 
+  const removeMarking = (marking: LocalMarking): void => {
+    const newMarkings = markings.filter((m) => m.id !== marking.id)
+    localStorage.setItem('box-markings', JSON.stringify(newMarkings))
+    setMarkings(newMarkings)
+  }
+
   const applyChanges = () => {
     const width = widthRef.current?.valueAsNumber ?? 0
     const length = lengthRef.current?.valueAsNumber ?? 0
@@ -130,5 +136,6 @@ export default function useBoxControls() {
     addMarking,
     updateMarkValue,
     updateMarkLabel,
+    removeMarking,
   }
 }

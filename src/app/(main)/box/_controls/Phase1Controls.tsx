@@ -30,6 +30,7 @@ export default function Phase1Controls(props: Props) {
           >
             <Label>{m.label}</Label>
             <Button
+              onClick={() => props.controls.removeMarking(m)}
               size={'icon'}
               variant={'ghost'}
             >
