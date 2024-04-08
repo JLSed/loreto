@@ -104,6 +104,9 @@ export default function BoxMarking(props: Props) {
               <Tabs
                 defaultValue={props.marking.phase.toString()}
                 id='edit__marking__phase'
+                onValueChange={() =>
+                  props.controls.moveMarkingToOtherPhase(props.marking.id)
+                }
               >
                 <TabsList className='grid w-full grid-cols-2'>
                   <TabsTrigger value='1'>Phase 1</TabsTrigger>

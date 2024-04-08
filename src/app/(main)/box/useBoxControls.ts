@@ -98,6 +98,15 @@ export default function useBoxControls() {
     setMarkings(newMarkings)
   }
 
+  const moveMarkingToOtherPhase = (id: number): void => {
+    const mark = markings.find((m) => m.id === id)
+    if (mark) {
+      mark.phase = mark.phase === 1 ? 2 : 1
+      localStorage.setItem('box-markings', JSON.stringify(markings))
+      setMarkings([...markings])
+    }
+  }
+
   const applyChanges = () => {
     const width = widthRef.current?.valueAsNumber ?? 0
     const length = lengthRef.current?.valueAsNumber ?? 0
@@ -137,5 +146,6 @@ export default function useBoxControls() {
     updateMarkValue,
     updateMarkLabel,
     removeMarking,
+    moveMarkingToOtherPhase,
   }
 }
