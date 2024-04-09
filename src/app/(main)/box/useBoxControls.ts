@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { startTransition, useEffect, useRef, useState } from 'react'
 import { ImperativePanelHandle } from 'react-resizable-panels'
 
 export type LocalMarking = {
@@ -126,12 +126,24 @@ export default function useBoxControls() {
   }
 
   const applyChanges = () => {
-    // const width = widthRef.current?.valueAsNumber ?? 0
-    // const length = lengthRef.current?.valueAsNumber ?? 0
+    const width = widthRef.current?.valueAsNumber ?? 0
+    const length = lengthRef.current?.valueAsNumber ?? 0
     const height = heightRef.current?.valueAsNumber ?? 0
 
-    setDimKey(height)
+    const newContainerWidth = width + length
+    const newLeftPanelSize = (width / newContainerWidth) * 100
+    const newRightPanelSize = (length / newContainerWidth) * 100
+
+    localStorage.setItem('container__width', newContainerWidth.toString())
+    localStorage.setItem('left__panel__size', newLeftPanelSize.toString())
+    localStorage.setItem('right__panel__size', newRightPanelSize.toString())
+
     setHeight(height)
+    setContainerWidth(newContainerWidth)
+    setLeftPanelSize(newLeftPanelSize)
+    setRightPanelSize(newRightPanelSize)
+
+    setDimKey(height + width + length)
   }
 
   return {
