@@ -57,7 +57,10 @@ export default function DimensionControls(props: Props) {
       <Slider
         value={[props.controls.height]}
         max={1000}
-        onValueChange={(value) => props.controls.setHeight(value[0])}
+        onValueChange={(value) => {
+          props.controls.setHeight(value[0])
+          props.controls.setDimKey(value[0])
+        }}
         step={1}
         className='w-full'
       />

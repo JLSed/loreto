@@ -11,6 +11,7 @@ export type LocalMarking = {
 export default function useBoxControls() {
   // actual pixel
   const [height, setHeight] = useState(400)
+  const [dimKey, setDimKey] = useState(400)
   const [pixelWidth, setPixelWidth] = useState(0)
   const [pixelLength, setPixelLength] = useState(0)
 
@@ -94,6 +95,7 @@ export default function useBoxControls() {
     const length = lengthRef.current?.valueAsNumber ?? 0
     const height = heightRef.current?.valueAsNumber ?? 0
 
+    setDimKey(height)
     setHeight(height)
 
     const wPercent = (width / containerWidth) * 100
@@ -128,5 +130,7 @@ export default function useBoxControls() {
     updateMarkValue,
     updateMarkLabel,
     removeMarking,
+    dimKey,
+    setDimKey,
   }
 }
