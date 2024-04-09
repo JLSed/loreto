@@ -7,6 +7,7 @@ import {
   ResizablePanelGroup,
 } from '@/components/ui/resizable'
 import BoxMarking from '@/components/moveable/BoxMarking'
+import { cn } from '@/lib/utils'
 
 export default function Panels(props: {
   controls: ReturnType<typeof useBoxControls>
@@ -32,18 +33,23 @@ export default function Panels(props: {
       <div
         ref={entireBoxRef}
         style={{
-          width: '600px',
+          width: `${props.controls.containerWidth}px`,
           height: `${props.controls.height}px`,
           maxWidth: 'auto',
           maxHeight: 'auto',
+          transform: props.controls.dragTransform,
         }}
-        className='m-auto relative'
+        id='main-container'
+        className={cn('m-auto relative', {
+          hidden:
+            props.controls.containerWidth === 0 || props.controls.height === 0,
+        })}
       >
         <ResizablePanelGroup direction='horizontal'>
           {props.controls.markings.map(renderMarkings)}
           <ResizablePanel
             defaultSize={40}
-            className='bg-center bg-cover'
+            className='bg-center'
             style={{ backgroundImage: `url(${karton})` }}
           />
           <ResizableHandle
@@ -53,7 +59,7 @@ export default function Panels(props: {
           />
           <ResizablePanel
             defaultSize={60}
-            className='bg-center rotate-180 bg-cover'
+            className='bg-center'
             style={{ backgroundImage: `url(${karton})` }}
           />
         </ResizablePanelGroup>
@@ -67,18 +73,20 @@ export default function Panels(props: {
         keepRatio={false}
         throttleResize={1}
         draggable
-        renderDirections={['nw', 'n', 'ne', 'w', 'e', 'sw', 's', 'se']}
+        renderDirections={['n', 'w', 'e', 's']}
         origin={false}
         onResize={(e) => {
           e.target.style.width = `${e.width}px`
           e.target.style.height = `${e.height}px`
           e.target.style.transform = e.drag.transform
-
           props.controls.setHeight(e.height)
+          localStorage.setItem('container__width', e.width.toString())
         }}
         onDrag={(e) => {
           if (panelResizing.current) return
           e.target.style.transform = e.transform
+
+          localStorage.setItem('drag__transform', e.transform)
         }}
       />
     </div>

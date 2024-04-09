@@ -10,12 +10,17 @@ export type LocalMarking = {
 
 export default function useBoxControls() {
   // actual pixel
-  const [height, setHeight] = useState(400)
-  const [dimKey, setDimKey] = useState(400)
+  const [height, setHeight] = useState(0)
   const [pixelWidth, setPixelWidth] = useState(0)
   const [pixelLength, setPixelLength] = useState(0)
 
+  const [dimKey, setDimKey] = useState(0)
+
   const [containerWidth, setContainerWidth] = useState(0)
+
+  const [dragTransform, setDragTransform] = useState<string | undefined>(
+    undefined
+  )
 
   // percentage
   const [widthPercentage, setWidthPercentage] = useState(35)
@@ -34,6 +39,36 @@ export default function useBoxControls() {
   const [markings, setMarkings] = useState<LocalMarking[]>([])
 
   useEffect(() => {
+    if (height !== 0) localStorage.setItem('box__height', height.toString())
+  }, [height])
+
+  useEffect(() => {
+    const h = localStorage.getItem('box__height')
+
+    if (h) {
+      setHeight(+h)
+      setDimKey(+h)
+    } else {
+      setHeight(400)
+      setDimKey(400)
+    }
+
+    const dt = localStorage.getItem('drag__transform')
+    if (dt) {
+      setDragTransform(dt)
+    } else {
+      setDragTransform('translate(0px, 100px)')
+    }
+
+    const containerWidth = localStorage.getItem('container__width')
+    if (containerWidth) {
+      setContainerWidth(+containerWidth)
+      setDimKey(+containerWidth)
+    } else {
+      setContainerWidth(600)
+      setDimKey(600)
+    }
+
     const markings = localStorage.getItem('box-markings')
     if (markings) {
       setMarkings(JSON.parse(markings))
@@ -43,21 +78,13 @@ export default function useBoxControls() {
       {
         label: 'Serial No:',
         value: '123456',
-        phase: 1,
-        transform: 'translate(0, 0)',
+        transform: 'translate(50px, 100px)',
         id: 1,
       },
     ]
     setMarkings(newMarkings)
     localStorage.setItem('box-markings', JSON.stringify(newMarkings))
   }, [])
-
-  useEffect(() => {
-    const w = document.getElementById('main-container')?.clientWidth ?? 0
-    setContainerWidth(Math.round(w))
-    setPixelWidth(Math.round(w * (widthPercentage / 100)))
-    setPixelLength(Math.round(w * (lengthPercentage / 100)))
-  }, [lengthPercentage, widthPercentage])
 
   const addMarking = (marking: LocalMarking): boolean => {
     const newMarkings = [...markings, marking]
@@ -132,5 +159,7 @@ export default function useBoxControls() {
     removeMarking,
     dimKey,
     setDimKey,
+    dragTransform,
+    setDragTransform,
   }
 }

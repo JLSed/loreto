@@ -16,10 +16,10 @@ export default function MarkingsSidebar(props: Props) {
         Right click on a marking inside the box to edit.
       </div>
 
-      {props.controls.markings.map((m) => {
+      {props.controls.markings.map((m, index) => {
         return (
           <div
-            key={m.label.replaceAll(' ', '-')}
+            key={index}
             className='flex items-center justify-between'
           >
             <Label>{m.label}</Label>
