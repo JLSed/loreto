@@ -1,5 +1,14 @@
-import { startTransition, useEffect, useRef, useState } from 'react'
-import { ImperativePanelHandle } from 'react-resizable-panels'
+import { useEffect, useRef, useState } from 'react'
+
+// Local storage keys
+export enum LSKeys {
+  CONTAINER_WIDTH = 'container__width',
+  LEFT_PANEL_SIZE = 'left__panel__size',
+  RIGHT_PANEL_SIZE = 'right__panel__size',
+  BOX_HEIGHT = 'box__height',
+  DRAG_TRANSFORM = 'drag__transform',
+  BOX_MARKINGS = 'box-markings',
+}
 
 export type LocalMarking = {
   id: number
@@ -14,6 +23,7 @@ export default function useBoxControls() {
   const [pixelWidth, setPixelWidth] = useState(0)
   const [pixelLength, setPixelLength] = useState(0)
 
+  // used to update moveable borders
   const [dimKey, setDimKey] = useState(0)
 
   const [containerWidth, setContainerWidth] = useState(0)
@@ -31,11 +41,10 @@ export default function useBoxControls() {
   const lengthRef = useRef<HTMLInputElement>(null)
   const heightRef = useRef<HTMLInputElement>(null)
 
-  // markgins
   const [markings, setMarkings] = useState<LocalMarking[]>([])
 
   useEffect(() => {
-    if (height !== 0) localStorage.setItem('box__height', height.toString())
+    if (height !== 0) localStorage.setItem(LSKeys.BOX_HEIGHT, height.toString())
   }, [height])
 
   useEffect(() => {
@@ -44,15 +53,15 @@ export default function useBoxControls() {
   }, [containerWidth, leftPanelSize, rightPanelSize])
 
   useEffect(() => {
-    const l = localStorage.getItem('left__panel__size')
-    const r = localStorage.getItem('right__panel__size')
+    const l = localStorage.getItem(LSKeys.LEFT_PANEL_SIZE)
+    const r = localStorage.getItem(LSKeys.RIGHT_PANEL_SIZE)
 
     if (l && r) {
       setLeftPanelSize(+l)
       setRightPanelSize(+r)
     }
 
-    const h = localStorage.getItem('box__height')
+    const h = localStorage.getItem(LSKeys.BOX_HEIGHT)
     if (h) {
       setHeight(+h)
       setDimKey(+h)
@@ -61,14 +70,14 @@ export default function useBoxControls() {
       setDimKey(400)
     }
 
-    const dt = localStorage.getItem('drag__transform')
+    const dt = localStorage.getItem(LSKeys.DRAG_TRANSFORM)
     if (dt) {
       setDragTransform(dt)
     } else {
       setDragTransform('translate(0px, 100px)')
     }
 
-    const containerWidth = localStorage.getItem('container__width')
+    const containerWidth = localStorage.getItem(LSKeys.CONTAINER_WIDTH)
     if (containerWidth) {
       setContainerWidth(+containerWidth)
       setDimKey(+containerWidth)
@@ -77,7 +86,7 @@ export default function useBoxControls() {
       setDimKey(600)
     }
 
-    const markings = localStorage.getItem('box-markings')
+    const markings = localStorage.getItem(LSKeys.BOX_MARKINGS)
     if (markings) {
       setMarkings(JSON.parse(markings))
       return
@@ -91,12 +100,12 @@ export default function useBoxControls() {
       },
     ]
     setMarkings(newMarkings)
-    localStorage.setItem('box-markings', JSON.stringify(newMarkings))
+    localStorage.setItem(LSKeys.BOX_MARKINGS, JSON.stringify(newMarkings))
   }, [])
 
   const addMarking = (marking: LocalMarking): boolean => {
     const newMarkings = [...markings, marking]
-    localStorage.setItem('box-markings', JSON.stringify(newMarkings))
+    localStorage.setItem(LSKeys.BOX_MARKINGS, JSON.stringify(newMarkings))
     setMarkings(newMarkings)
     return true
   }
@@ -105,7 +114,7 @@ export default function useBoxControls() {
     const mark = markings.find((m) => m.id === marking.id)
     if (mark) {
       mark.value = marking.value
-      localStorage.setItem('box-markings', JSON.stringify(markings))
+      localStorage.setItem(LSKeys.BOX_MARKINGS, JSON.stringify(markings))
       setMarkings([...markings])
     }
   }
@@ -114,14 +123,14 @@ export default function useBoxControls() {
     const mark = markings.find((m) => m.id === marking.id)
     if (mark) {
       mark.label = marking.label
-      localStorage.setItem('box-markings', JSON.stringify(markings))
+      localStorage.setItem(LSKeys.BOX_MARKINGS, JSON.stringify(markings))
       setMarkings([...markings])
     }
   }
 
   const removeMarking = (marking: LocalMarking): void => {
     const newMarkings = markings.filter((m) => m.id !== marking.id)
-    localStorage.setItem('box-markings', JSON.stringify(newMarkings))
+    localStorage.setItem(LSKeys.BOX_MARKINGS, JSON.stringify(newMarkings))
     setMarkings(newMarkings)
   }
 
@@ -134,9 +143,9 @@ export default function useBoxControls() {
     const newLeftPanelSize = (width / newContainerWidth) * 100
     const newRightPanelSize = (length / newContainerWidth) * 100
 
-    localStorage.setItem('container__width', newContainerWidth.toString())
-    localStorage.setItem('left__panel__size', newLeftPanelSize.toString())
-    localStorage.setItem('right__panel__size', newRightPanelSize.toString())
+    localStorage.setItem(LSKeys.CONTAINER_WIDTH, newContainerWidth.toString())
+    localStorage.setItem(LSKeys.LEFT_PANEL_SIZE, newLeftPanelSize.toString())
+    localStorage.setItem(LSKeys.RIGHT_PANEL_SIZE, newRightPanelSize.toString())
 
     setHeight(height)
     setContainerWidth(newContainerWidth)

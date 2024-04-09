@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useRef } from 'react'
-import useBoxControls, { LocalMarking } from './useBoxControls'
+import useBoxControls, { LSKeys, LocalMarking } from './useBoxControls'
 import Moveable from 'react-moveable'
 import {
   ResizableHandle,
@@ -64,7 +64,7 @@ export default function Panels(props: {
             style={{ backgroundImage: `url(${karton})` }}
             onResize={(e) => {
               if (e === 40) return
-              localStorage.setItem('left__panel__size', e.toString())
+              localStorage.setItem(LSKeys.LEFT_PANEL_SIZE, e.toString())
               props.controls.setLeftPanelSize(e)
             }}
           />
@@ -80,7 +80,7 @@ export default function Panels(props: {
             style={{ backgroundImage: `url(${karton})` }}
             onResize={(e) => {
               if (e === 60) return
-              localStorage.setItem('right__panel__size', e.toString())
+              localStorage.setItem(LSKeys.RIGHT_PANEL_SIZE, e.toString())
               props.controls.setRightPanelSize(e)
             }}
           />
@@ -103,13 +103,12 @@ export default function Panels(props: {
           e.target.style.transform = e.drag.transform
           props.controls.setHeight(e.height)
           props.controls.setContainerWidth(e.width)
-          localStorage.setItem('container__width', e.width.toString())
+          localStorage.setItem(LSKeys.CONTAINER_WIDTH, e.width.toString())
         }}
         onDrag={(e) => {
           if (panelResizing.current) return
           e.target.style.transform = e.transform
-
-          localStorage.setItem('drag__transform', e.transform)
+          localStorage.setItem(LSKeys.DRAG_TRANSFORM, e.transform)
         }}
       />
     </div>

@@ -4,7 +4,10 @@ import { RefObject, useRef, useState } from 'react'
 
 import Moveable from 'react-moveable'
 import { flushSync } from 'react-dom'
-import useBoxControls, { LocalMarking } from '@/app/(main)/box/useBoxControls'
+import useBoxControls, {
+  LSKeys,
+  LocalMarking,
+} from '@/app/(main)/box/useBoxControls'
 import { Label } from '@/components/ui/label'
 
 import {
@@ -14,7 +17,6 @@ import {
 } from '@/components/ui/context-menu'
 
 import { Input } from '../ui/input'
-import { Tabs, TabsList, TabsTrigger } from '../ui/tabs'
 
 interface Props {
   containerRef: RefObject<HTMLDivElement>
@@ -45,7 +47,7 @@ export default function BoxMarking(props: Props) {
             onMouseUp={() => {
               props.onMouseUp()
               setTargetted(false)
-              const markings = localStorage.getItem('box-markings')
+              const markings = localStorage.getItem(LSKeys.BOX_MARKINGS)
               if (markings) {
                 const parsed = JSON.parse(markings) as LocalMarking[]
                 props.controls.setMarkings(parsed)
@@ -108,14 +110,14 @@ export default function BoxMarking(props: Props) {
         origin={false}
         onDrag={(e) => {
           e.target.style.transform = e.transform
-          const markings = localStorage.getItem('box-markings')
+          const markings = localStorage.getItem(LSKeys.BOX_MARKINGS)
           if (markings) {
             const parsed = JSON.parse(markings) as LocalMarking[]
             const index = parsed.findIndex(
               (m) => m.label === props.marking.label
             )
             parsed[index].transform = e.transform
-            localStorage.setItem('box-markings', JSON.stringify(parsed))
+            localStorage.setItem(LSKeys.BOX_MARKINGS, JSON.stringify(parsed))
           }
         }}
       />
