@@ -28,10 +28,16 @@ export default function BoxMarking(props: Props) {
   const targetRef = useRef<HTMLDivElement>(null)
 
   const [targetted, setTargetted] = useState(false)
+  const [totalChars, setTotalChars] = useState(0)
 
   return (
     <>
-      <ContextMenu onOpenChange={(open) => open == false && props.onMouseUp()}>
+      <ContextMenu
+        onOpenChange={(open) => {
+          if (!open) props.onMouseUp()
+          setTotalChars(props.marking.label.length + props.marking.value.length)
+        }}
+      >
         <ContextMenuTrigger asChild>
           <div
             onMouseDown={props.onMouseDown}
@@ -94,6 +100,7 @@ export default function BoxMarking(props: Props) {
       </ContextMenu>
 
       <Moveable
+        key={totalChars}
         draggable
         hideDefaultLines={!targetted}
         flushSync={flushSync}
