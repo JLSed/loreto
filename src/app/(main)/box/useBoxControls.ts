@@ -5,13 +5,12 @@ export type LocalMarking = {
   id: number
   label: string
   value: string
-  phase: number
   transform: string
 }
 
 export default function useBoxControls() {
   // actual pixel
-  const [height, setHeight] = useState(600)
+  const [height, setHeight] = useState(400)
   const [pixelWidth, setPixelWidth] = useState(0)
   const [pixelLength, setPixelLength] = useState(0)
 
@@ -60,14 +59,6 @@ export default function useBoxControls() {
   }, [lengthPercentage, widthPercentage])
 
   const addMarking = (marking: LocalMarking): boolean => {
-    const labelExistInPhase = markings.some(
-      (m) => m.label === marking.label && m.phase === marking.phase
-    )
-
-    if (labelExistInPhase) {
-      alert(`${marking.label} is already added in phase ${marking.phase}.`)
-      return false
-    }
     const newMarkings = [...markings, marking]
     localStorage.setItem('box-markings', JSON.stringify(newMarkings))
     setMarkings(newMarkings)
@@ -96,15 +87,6 @@ export default function useBoxControls() {
     const newMarkings = markings.filter((m) => m.id !== marking.id)
     localStorage.setItem('box-markings', JSON.stringify(newMarkings))
     setMarkings(newMarkings)
-  }
-
-  const moveMarkingToOtherPhase = (id: number): void => {
-    const mark = markings.find((m) => m.id === id)
-    if (mark) {
-      mark.phase = mark.phase === 1 ? 2 : 1
-      localStorage.setItem('box-markings', JSON.stringify(markings))
-      setMarkings([...markings])
-    }
   }
 
   const applyChanges = () => {
@@ -146,6 +128,5 @@ export default function useBoxControls() {
     updateMarkValue,
     updateMarkLabel,
     removeMarking,
-    moveMarkingToOtherPhase,
   }
 }

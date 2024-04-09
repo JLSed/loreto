@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import useBoxControls from '../useBoxControls'
 
 import AddMarking from './AddMarking'
@@ -10,19 +9,14 @@ interface Props {
   controls: ReturnType<typeof useBoxControls>
 }
 
-export default function Phase1Controls(props: Props) {
-  const markings = useMemo(
-    () => props.controls.markings.filter((m) => m.phase === 1),
-    [props.controls.markings]
-  )
-
+export default function MarkingsSidebar(props: Props) {
   return (
-    <div className='grid gap-4 px-4'>
-      <div className='text-sm text-balance text-center p-4 bg-muted rounded-md'>
+    <div className='grid px-4'>
+      <div className='text-sm text-balance text-center p-4 bg-muted rounded-md mb-2'>
         Right click on a marking inside the box to edit.
       </div>
 
-      {markings.map((m) => {
+      {props.controls.markings.map((m) => {
         return (
           <div
             key={m.label.replaceAll(' ', '-')}

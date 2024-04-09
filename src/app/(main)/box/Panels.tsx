@@ -1,119 +1,85 @@
+import { ReactNode, useRef } from 'react'
+import useBoxControls, { LocalMarking } from './useBoxControls'
+import Moveable from 'react-moveable'
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from '@/components/ui/resizable'
-
-import useBoxControls from './useBoxControls'
-import { cn } from '@/lib/utils'
-import { useState } from 'react'
-
-import Phase2 from './_markings/Phase2'
-import Phase1 from './_markings/Phase1'
+import BoxMarking from '@/components/moveable/BoxMarking'
 
 export default function Panels(props: {
   controls: ReturnType<typeof useBoxControls>
 }) {
-  const {
-    height,
-    pixelWidth,
-    pixelLength,
-    widthPercentage,
-    lengthPercentage,
-    setLengthPercentage,
-    setWidthPercentage,
-    wPanelRef,
-    lPanelRef,
-    containerWidth,
-  } = props.controls
+  const entireBoxRef = useRef<HTMLDivElement>(null)
+  const panelResizing = useRef(false)
 
-  const [leftMostPanelSize, setLeftMostPanelSize] = useState(10)
-  const [rightMostPanelSize, setRightMostPanelSize] = useState(10)
-
-  const computeWLabelPosition = () => {
-    const p = leftMostPanelSize + widthPercentage / 2
-    return containerWidth * (p / 100)
-  }
-  const computeLLabelPosition = () => {
-    const p = leftMostPanelSize + widthPercentage + lengthPercentage / 2
-    return containerWidth * (p / 100)
+  function renderMarkings(mark: LocalMarking, index: number): ReactNode {
+    return (
+      <BoxMarking
+        key={index}
+        containerRef={entireBoxRef}
+        controls={props.controls}
+        marking={mark}
+        onMouseDown={() => (panelResizing.current = true)}
+        onMouseUp={() => (panelResizing.current = false)}
+      />
+    )
   }
 
   return (
-    <ResizablePanelGroup
-      id={'main-container'}
-      direction='horizontal'
-      className='py-8 relative pb-10 m-auto'
-      style={{
-        height: `${height}px`,
-      }}
-    >
-      <div className='absolute bottom-0 pb-4 flex w-full'>
-        <div
-          hidden={pixelWidth === 0}
-          className='text-center small -translate-x-1/2 absolute bottom-3'
-          style={{
-            left: `${computeWLabelPosition()}px`,
-          }}
-        >
-          W - {pixelWidth}
-        </div>
-        <div
-          hidden={pixelLength === 0}
-          className='text-center small -translate-x-1/2 absolute bottom-3'
-          style={{
-            left: `${computeLLabelPosition()}px`,
-          }}
-        >
-          L - {pixelLength}
-        </div>
+    <div className='w-full h-[100vh]'>
+      <div
+        ref={entireBoxRef}
+        style={{
+          width: '600px',
+          height: `${props.controls.height}px`,
+          maxWidth: 'auto',
+          maxHeight: 'auto',
+        }}
+        className='m-auto relative'
+      >
+        <ResizablePanelGroup direction='horizontal'>
+          {props.controls.markings.map(renderMarkings)}
+          <ResizablePanel
+            defaultSize={40}
+            className='bg-center bg-cover'
+            style={{ backgroundImage: `url(${karton})` }}
+          />
+          <ResizableHandle
+            onMouseDown={() => (panelResizing.current = true)}
+            onMouseUp={() => (panelResizing.current = false)}
+            withHandle
+          />
+          <ResizablePanel
+            defaultSize={60}
+            className='bg-center rotate-180 bg-cover'
+            style={{ backgroundImage: `url(${karton})` }}
+          />
+        </ResizablePanelGroup>
       </div>
 
-      <ResizablePanel
-        defaultSize={leftMostPanelSize}
-        className='relative'
-        onResize={setLeftMostPanelSize}
-      >
-        <div className='absolute right-0 top-1/2 -translate-y-1/2 p-4 small'>
-          H - {height}
-        </div>
-      </ResizablePanel>
-
-      <ResizableHandle withHandle />
-
-      <ResizablePanel
-        ref={wPanelRef}
-        className={cn('bg-yellow-900/45 relative', {
-          'min-w-[25%]': pixelWidth === 0,
-        })}
-        defaultSize={widthPercentage}
-        onResize={setWidthPercentage}
-      >
-        <Phase1 controls={props.controls} />
-      </ResizablePanel>
-
-      <ResizableHandle withHandle />
-
-      <ResizablePanel
-        ref={lPanelRef}
-        className='bg-yellow-900/30 relative'
-        defaultSize={lengthPercentage}
-        onResize={setLengthPercentage}
-      >
-        <Phase2 controls={props.controls} />
-      </ResizablePanel>
-
-      <ResizableHandle withHandle />
-
-      <ResizablePanel
-        defaultSize={rightMostPanelSize}
-        onResize={setRightMostPanelSize}
-        className='relative'
-      >
-        <div className='absolute left-0 top-1/2 -translate-y-1/2 p-4 small'>
-          H - {height}
-        </div>
-      </ResizablePanel>
-    </ResizablePanelGroup>
+      <Moveable
+        target={entireBoxRef}
+        resizable
+        edgeDraggable={false}
+        keepRatio={false}
+        throttleResize={1}
+        draggable
+        renderDirections={['nw', 'n', 'ne', 'w', 'e', 'sw', 's', 'se']}
+        origin={false}
+        onResize={(e) => {
+          e.target.style.width = `${e.width}px`
+          e.target.style.height = `${e.height}px`
+          e.target.style.transform = e.drag.transform
+        }}
+        onDrag={(e) => {
+          if (panelResizing.current) return
+          e.target.style.transform = e.transform
+        }}
+      />
+    </div>
   )
 }
+
+const karton = 'https://img.freepik.com/free-photo/brown-texture_1253-152.jpg'

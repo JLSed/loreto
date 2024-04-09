@@ -19,30 +19,25 @@ import { Tabs, TabsList, TabsTrigger } from '../ui/tabs'
 interface Props {
   containerRef: RefObject<HTMLDivElement>
   controls: ReturnType<typeof useBoxControls>
-  parentWidth: number
   marking: LocalMarking
+  onMouseDown: () => void
+  onMouseUp: () => void
 }
 
 export default function BoxMarking(props: Props) {
   const targetRef = useRef<HTMLDivElement>(null)
 
   const [targetted, setTargetted] = useState(false)
-  const [totalChars, setTotalChars] = useState(
-    props.marking.label.length + props.marking.value.length
-  )
 
   return (
     <>
-      <ContextMenu>
+      <ContextMenu onOpenChange={(open) => open == false && props.onMouseUp()}>
         <ContextMenuTrigger asChild>
           <div
-            onMouseOver={() => {
-              setTargetted(true)
-              setTotalChars(
-                props.marking.label.length + props.marking.value.length
-              )
-            }}
+            onMouseDown={props.onMouseDown}
+            onMouseOver={() => setTargetted(true)}
             onMouseUp={() => {
+              props.onMouseUp()
               setTargetted(false)
               const markings = localStorage.getItem('box-markings')
               if (markings) {
@@ -52,7 +47,7 @@ export default function BoxMarking(props: Props) {
             }}
             onMouseLeave={() => setTargetted(false)}
             ref={targetRef}
-            className='p-2 cursor-move inline-block'
+            className='p-2 cursor-move inline-block absolute z-10'
             style={{
               transform: props.marking.transform,
             }}
@@ -94,32 +89,11 @@ export default function BoxMarking(props: Props) {
                 })
               }
             />
-            <Label
-              htmlFor='edit__marking__phase'
-              className='text-right'
-            >
-              Location
-            </Label>
-            <div>
-              <Tabs
-                defaultValue={props.marking.phase.toString()}
-                id='edit__marking__phase'
-                onValueChange={() =>
-                  props.controls.moveMarkingToOtherPhase(props.marking.id)
-                }
-              >
-                <TabsList className='grid w-full grid-cols-2'>
-                  <TabsTrigger value='1'>Phase 1</TabsTrigger>
-                  <TabsTrigger value='2'>Phase 2</TabsTrigger>
-                </TabsList>
-              </Tabs>
-            </div>
           </div>
         </ContextMenuContent>
       </ContextMenu>
 
       <Moveable
-        key={props.parentWidth + props.marking.id + totalChars}
         draggable
         hideDefaultLines={!targetted}
         flushSync={flushSync}

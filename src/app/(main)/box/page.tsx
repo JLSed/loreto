@@ -11,8 +11,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 
 import useBoxControls from './useBoxControls'
 import DimensionControls from './_controls/dimensions'
-import Phase1Controls from './_controls/Phase1Controls'
-import Phase2Controls from './_controls/Phase2Controls'
+import MarkingsSidebar from './_controls/MarkingsSidebar'
 import Panels from './Panels'
 
 export default function Home() {
@@ -36,18 +35,10 @@ export default function Home() {
           </AccordionItem>
           <AccordionItem value='phase-1'>
             <AccordionTrigger className='p-4 small text-muted-foreground'>
-              Phase 1 Markings
+              Markings
             </AccordionTrigger>
             <AccordionContent>
-              <Phase1Controls controls={controls} />
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value='phase-2'>
-            <AccordionTrigger className='p-4 small text-muted-foreground'>
-              Phase 2 Markings
-            </AccordionTrigger>
-            <AccordionContent>
-              <Phase2Controls controls={controls} />
+              <MarkingsSidebar controls={controls} />
             </AccordionContent>
           </AccordionItem>
         </Accordion>
