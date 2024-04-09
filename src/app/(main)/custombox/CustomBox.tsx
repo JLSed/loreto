@@ -20,7 +20,7 @@ export default function CustomBox() {
   const [transforming, setTransforming] = useState(false)
 
   return (
-    <>
+    <div>
       <TransformWrapper
         smooth
         pinch={{ step: 5 }}
@@ -31,81 +31,75 @@ export default function CustomBox() {
         limitToBounds={false}
         disablePadding
         centerOnInit
+        centerZoomedOut
+        wheel={{ step: 50 }}
       >
         {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
           <>
             <Controls />
             <TransformComponent
-              contentClass='absolute cursor-move'
+              contentClass='absolute cursor-move bg-red-200 transform__content'
               wrapperStyle={{
                 width: '100%',
                 height: '100vh',
+                cursor: 'grab',
+                backgroundSize: '40px 40px',
+                backgroundImage:
+                  ' linear-gradient(to right, lightgrey 1px, transparent 1px), linear-gradient(to bottom, lightgrey 1px, transparent 1px)',
               }}
             >
-              <div>
-                <div
-                  ref={entireBoxRef}
-                  style={{
-                    width: '400px',
-                    height: '400px',
-                    maxWidth: 'auto',
-                    maxHeight: 'auto',
-                  }}
-                  className='m-auto'
-                >
-                  <ResizablePanelGroup
-                    direction='horizontal'
-                    className='max-w-5xl'
-                  >
-                    <ResizablePanel
-                      className='bg-center bg-cover'
-                      style={{ backgroundImage: `url(${karton})` }}
-                    />
-                    <ResizableHandle
-                      onMouseDown={() => setTransforming(true)}
-                      onMouseUp={() => setTransforming(false)}
-                      withHandle
-                    />
-                    <ResizablePanel
-                      className='bg-center rotate-180 bg-cover'
-                      style={{ backgroundImage: `url(${karton})` }}
-                    />
-                  </ResizablePanelGroup>
-                </div>
-
-                <Moveable
-                  target={entireBoxRef}
-                  resizable
-                  keepRatio={false}
-                  throttleResize={1}
-                  renderDirections={[
-                    'nw',
-                    'n',
-                    'ne',
-                    'w',
-                    'e',
-                    'sw',
-                    's',
-                    'se',
-                  ]}
-                  origin={false}
-                  onResize={(e) => {
-                    e.target.style.width = `${e.width}px`
-                    e.target.style.height = `${e.height}px`
-                    e.target.style.transform = e.drag.transform
-                  }}
-                />
+              <div
+                ref={entireBoxRef}
+                style={{
+                  width: '600px',
+                  height: '400px',
+                  maxWidth: 'auto',
+                  maxHeight: 'auto',
+                }}
+                className='m-auto'
+              >
+                <ResizablePanelGroup direction='horizontal'>
+                  <ResizablePanel
+                    defaultSize={40}
+                    className='bg-center bg-cover'
+                    style={{ backgroundImage: `url(${karton})` }}
+                  />
+                  <ResizableHandle
+                    onMouseDown={() => setTransforming(true)}
+                    onMouseUp={() => setTransforming(false)}
+                    withHandle
+                  />
+                  <ResizablePanel
+                    defaultSize={60}
+                    className='bg-center rotate-180 bg-cover'
+                    style={{ backgroundImage: `url(${karton})` }}
+                  />
+                </ResizablePanelGroup>
               </div>
+
+              <Moveable
+                target={entireBoxRef}
+                resizable
+                keepRatio={false}
+                throttleResize={1}
+                renderDirections={['nw', 'n', 'ne', 'w', 'e', 'sw', 's', 'se']}
+                origin={false}
+                onResize={(e) => {
+                  e.target.style.width = `${e.width}px`
+                  e.target.style.height = `${e.height}px`
+                  e.target.style.transform = e.drag.transform
+                }}
+              />
             </TransformComponent>
           </>
         )}
       </TransformWrapper>
-    </>
+    </div>
   )
 }
 
 const Controls = () => {
-  const { zoomIn, zoomOut, centerView } = useControls()
+  const { zoomIn, zoomOut, centerView, resetTransform } = useControls()
   return (
     <div className='flex items-center gap-1 p-4 absolute right-0 top-0 z-10'>
       <Button
@@ -127,6 +121,12 @@ const Controls = () => {
         variant={'secondary'}
       >
         Center
+      </Button>
+      <Button
+        onClick={() => resetTransform()}
+        variant={'secondary'}
+      >
+        Reset
       </Button>
     </div>
   )
