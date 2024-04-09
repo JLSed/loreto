@@ -39,6 +39,11 @@ export default function useBoxControls() {
   }, [height])
 
   useEffect(() => {
+    setPixelWidth(Math.round(containerWidth * (leftPanelSize / 100)))
+    setPixelLength(Math.round(containerWidth * (rightPanelSize / 100)))
+  }, [containerWidth, leftPanelSize, rightPanelSize])
+
+  useEffect(() => {
     const l = localStorage.getItem('left__panel__size')
     const r = localStorage.getItem('right__panel__size')
 

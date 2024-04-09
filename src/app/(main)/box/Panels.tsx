@@ -65,6 +65,7 @@ export default function Panels(props: {
             onResize={(e) => {
               if (e === 40) return
               localStorage.setItem('left__panel__size', e.toString())
+              props.controls.setLeftPanelSize(e)
             }}
           />
           <ResizableHandle
@@ -80,6 +81,7 @@ export default function Panels(props: {
             onResize={(e) => {
               if (e === 60) return
               localStorage.setItem('right__panel__size', e.toString())
+              props.controls.setRightPanelSize(e)
             }}
           />
         </ResizablePanelGroup>
@@ -100,6 +102,7 @@ export default function Panels(props: {
           e.target.style.height = `${e.height}px`
           e.target.style.transform = e.drag.transform
           props.controls.setHeight(e.height)
+          props.controls.setContainerWidth(e.width)
           localStorage.setItem('container__width', e.width.toString())
         }}
         onDrag={(e) => {
