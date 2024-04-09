@@ -1,4 +1,4 @@
-import { ReactNode, useRef } from 'react'
+import { ReactNode, useEffect, useRef } from 'react'
 import useBoxControls, { LocalMarking } from './useBoxControls'
 import Moveable from 'react-moveable'
 import {
@@ -8,12 +8,22 @@ import {
 } from '@/components/ui/resizable'
 import BoxMarking from '@/components/moveable/BoxMarking'
 import { cn } from '@/lib/utils'
+import { ImperativePanelHandle } from 'react-resizable-panels'
 
 export default function Panels(props: {
   controls: ReturnType<typeof useBoxControls>
 }) {
   const entireBoxRef = useRef<HTMLDivElement>(null)
   const panelResizing = useRef(false)
+
+  // panel refs
+  const leftPanelRef = useRef<ImperativePanelHandle>(null)
+  const rightPanelRef = useRef<ImperativePanelHandle>(null)
+
+  useEffect(() => {
+    leftPanelRef.current?.resize(props.controls.leftPanelSize)
+    rightPanelRef.current?.resize(props.controls.rightPanelSize)
+  }, [props.controls.leftPanelSize, props.controls.rightPanelSize])
 
   function renderMarkings(mark: LocalMarking, index: number): ReactNode {
     return (
@@ -48,9 +58,14 @@ export default function Panels(props: {
         <ResizablePanelGroup direction='horizontal'>
           {props.controls.markings.map(renderMarkings)}
           <ResizablePanel
+            ref={leftPanelRef}
             defaultSize={40}
             className='bg-center'
             style={{ backgroundImage: `url(${karton})` }}
+            onResize={(e) => {
+              if (e === 40) return
+              localStorage.setItem('left__panel__size', e.toString())
+            }}
           />
           <ResizableHandle
             onMouseDown={() => (panelResizing.current = true)}
@@ -58,9 +73,14 @@ export default function Panels(props: {
             withHandle
           />
           <ResizablePanel
+            ref={rightPanelRef}
             defaultSize={60}
             className='bg-center'
             style={{ backgroundImage: `url(${karton})` }}
+            onResize={(e) => {
+              if (e === 60) return
+              localStorage.setItem('right__panel__size', e.toString())
+            }}
           />
         </ResizablePanelGroup>
       </div>

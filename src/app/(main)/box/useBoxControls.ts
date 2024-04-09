@@ -23,17 +23,13 @@ export default function useBoxControls() {
   )
 
   // percentage
-  const [widthPercentage, setWidthPercentage] = useState(35)
-  const [lengthPercentage, setLengthPercentage] = useState(45)
+  const [leftPanelSize, setLeftPanelSize] = useState(40)
+  const [rightPanelSize, setRightPanelSize] = useState(60)
 
   // controls refs
   const widthRef = useRef<HTMLInputElement>(null)
   const lengthRef = useRef<HTMLInputElement>(null)
   const heightRef = useRef<HTMLInputElement>(null)
-
-  // panel refs
-  const wPanelRef = useRef<ImperativePanelHandle>(null)
-  const lPanelRef = useRef<ImperativePanelHandle>(null)
 
   // markgins
   const [markings, setMarkings] = useState<LocalMarking[]>([])
@@ -43,8 +39,15 @@ export default function useBoxControls() {
   }, [height])
 
   useEffect(() => {
-    const h = localStorage.getItem('box__height')
+    const l = localStorage.getItem('left__panel__size')
+    const r = localStorage.getItem('right__panel__size')
 
+    if (l && r) {
+      setLeftPanelSize(+l)
+      setRightPanelSize(+r)
+    }
+
+    const h = localStorage.getItem('box__height')
     if (h) {
       setHeight(+h)
       setDimKey(+h)
@@ -118,18 +121,12 @@ export default function useBoxControls() {
   }
 
   const applyChanges = () => {
-    const width = widthRef.current?.valueAsNumber ?? 0
-    const length = lengthRef.current?.valueAsNumber ?? 0
+    // const width = widthRef.current?.valueAsNumber ?? 0
+    // const length = lengthRef.current?.valueAsNumber ?? 0
     const height = heightRef.current?.valueAsNumber ?? 0
 
     setDimKey(height)
     setHeight(height)
-
-    const wPercent = (width / containerWidth) * 100
-    const lPercent = (length / containerWidth) * 100
-
-    wPanelRef.current?.resize(wPercent)
-    lPanelRef.current?.resize(lPercent)
   }
 
   return {
@@ -141,16 +138,14 @@ export default function useBoxControls() {
     setPixelLength,
     containerWidth,
     setContainerWidth,
-    widthPercentage,
-    setWidthPercentage,
-    lengthPercentage,
-    setLengthPercentage,
+    leftPanelSize,
+    setLeftPanelSize,
+    rightPanelSize,
+    setRightPanelSize,
     widthRef,
     lengthRef,
     heightRef,
     applyChanges,
-    wPanelRef,
-    lPanelRef,
     markings,
     setMarkings,
     addMarking,
