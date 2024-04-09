@@ -47,9 +47,12 @@ model Box {
   status Int    @default(1)
 
   // diemnsions
-  length Float
-  width  Float
-  height Float
+  totalWidth     Float
+  height         Float
+  leftPanelSize  Float
+  rightPanelSize Float
+
+  dragTransform String
 
   // 1: single
   // 2: double
@@ -79,9 +82,7 @@ model BoxMarking {
   cssTransform String
   label        String
   value        String
-
-  // 1 or 2 only
-  phase Int
+  isUnderlined Boolean @default(false)
 
   Box   Box?    @relation(fields: [boxId], references: [id])
   boxId String?

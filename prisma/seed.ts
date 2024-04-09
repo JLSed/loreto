@@ -7,8 +7,6 @@ import {
   AuditAffectedTable,
   BookStatus,
   BoxOrderStatus,
-  BoxPlacement,
-  BoxThickness,
   ModeOfPayment,
   TransactionItemType,
   TransactionType,
@@ -140,28 +138,6 @@ async function main() {
       ),
     })
   }
-
-  const seedBoxes = () => {
-    return prisma.box.createMany({
-      data: Array.from({ length: 14 }).map(
-        () =>
-          ({
-            name: faker.commerce.productName(),
-            thickness: faker.helpers.enumValue(BoxThickness),
-            placement: faker.helpers.enumValue(BoxPlacement),
-            status: faker.helpers.enumValue(BoxOrderStatus),
-            height: faker.number.int({ min: 2, max: 7 }),
-            width: faker.number.int({ min: 2, max: 7 }),
-            length: faker.number.int({ min: 2, max: 7 }),
-            ownerId: faker.helpers.arrayElement(users).id,
-            phaseOneMarkings: {} as Prisma.JsonValue,
-            phaseTwoMarkings: {} as Prisma.JsonValue,
-          } as Prisma.BoxCreateManyInput)
-      ),
-    })
-  }
-
-  await seedBoxes()
 
   const boxes = await prisma.box.findMany()
 
