@@ -1,19 +1,16 @@
 import { Button } from '@/components/ui/button'
 import useBoxControls from '../useBoxControls'
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { PlusIcon } from '@radix-ui/react-icons'
 import { useState } from 'react'
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
 
 interface Props {
   controls: ReturnType<typeof useBoxControls>
@@ -37,11 +34,11 @@ export default function AddMarking(props: Props) {
   }
 
   return (
-    <Dialog
+    <Popover
       open={open}
       onOpenChange={(o) => setOpen(o)}
     >
-      <DialogTrigger asChild>
+      <PopoverTrigger asChild>
         <Button
           className='mt-2'
           variant='secondary'
@@ -50,14 +47,10 @@ export default function AddMarking(props: Props) {
           <PlusIcon className='w-4 h-4 mr-1' />
           New Marking
         </Button>
-      </DialogTrigger>
-      <DialogContent className='sm:max-w-[425px]'>
-        <DialogHeader>
-          <DialogTitle>New Marking</DialogTitle>
-          <DialogDescription>Add a new marking to the box.</DialogDescription>
-        </DialogHeader>
+      </PopoverTrigger>
+      <PopoverContent className='mx-4'>
         <div className='grid gap-4 py-4'>
-          <div className='grid grid-cols-4 items-center gap-4'>
+          <div className='grid grid-cols-[1fr_2fr] items-center gap-4'>
             <Label
               htmlFor='label'
               className='text-right'
@@ -66,13 +59,12 @@ export default function AddMarking(props: Props) {
             </Label>
             <Input
               id='label'
-              className='col-span-3'
-              placeholder='Enter the label name'
+              placeholder='Enter label'
               value={label}
               onChange={(e) => setLabel(e.target.value)}
             />
           </div>
-          <div className='grid grid-cols-4 items-center gap-4'>
+          <div className='grid grid-cols-[1fr_2fr] items-center gap-4'>
             <Label
               htmlFor='value'
               className='text-right'
@@ -81,22 +73,14 @@ export default function AddMarking(props: Props) {
             </Label>
             <Input
               id='value'
-              className='col-span-3'
-              placeholder='Enter the initial value'
+              placeholder='Enter value'
               value={value}
               onChange={(e) => setValue(e.target.value)}
             />
           </div>
+          <Button onClick={addMarking}>Add</Button>
         </div>
-        <DialogFooter>
-          <Button
-            onClick={addMarking}
-            type='submit'
-          >
-            Add
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+      </PopoverContent>
+    </Popover>
   )
 }
