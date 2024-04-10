@@ -8,16 +8,20 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import MaterialIcon from '@/components/ui/material-icon'
+import { MoonIcon, SunIcon } from '@radix-ui/react-icons'
 
 export function ThemeSwitcher() {
-  const { setTheme, theme } = useTheme()
+  const { setTheme, resolvedTheme } = useTheme()
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <DropdownMenuItem className='flex items-center gap-1'>
-          <MaterialIcon name={theme === 'dark' ? 'dark_mode' : 'light_mode'} />
+          {resolvedTheme === 'dark' ? (
+            <MoonIcon className='mr-1' />
+          ) : (
+            <SunIcon className='mr-1' />
+          )}
           Theme
         </DropdownMenuItem>
       </DropdownMenuTrigger>

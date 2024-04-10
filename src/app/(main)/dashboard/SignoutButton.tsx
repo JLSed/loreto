@@ -1,17 +1,20 @@
 'use client'
 
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu'
-import MaterialIcon from '@/components/ui/material-icon'
+import { ExitIcon } from '@radix-ui/react-icons'
 import { signOut } from 'next-auth/react'
-import React from 'react'
 
 export default function SignoutButton() {
   return (
     <DropdownMenuItem
       className='flex items-center gap-1'
-      onClick={() => signOut({ callbackUrl: '/', redirect: true })}
+      onClick={() => {
+        if (confirm('Are you sure you want to sign out?')) {
+          signOut({ callbackUrl: '/', redirect: true })
+        }
+      }}
     >
-      <MaterialIcon name='power_settings_new' />
+      <ExitIcon className='mr-1' />
       Sign out
     </DropdownMenuItem>
   )
