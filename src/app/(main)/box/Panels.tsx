@@ -7,8 +7,8 @@ import {
   ResizablePanelGroup,
 } from '@/components/ui/resizable'
 import BoxMarking from '@/components/moveable/BoxMarking'
-import { cn } from '@/lib/utils'
 import { ImperativePanelHandle } from 'react-resizable-panels'
+import { motion } from 'framer-motion'
 
 export default function Panels(props: {
   controls: ReturnType<typeof useBoxControls>
@@ -40,7 +40,9 @@ export default function Panels(props: {
 
   return (
     <div className='w-full h-[100vh]'>
-      <div
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
         ref={entireBoxRef}
         style={{
           width: `${props.controls.containerWidth}px`,
@@ -50,10 +52,7 @@ export default function Panels(props: {
           transform: props.controls.dragTransform,
         }}
         id='main-container'
-        className={cn('m-auto relative', {
-          hidden:
-            props.controls.containerWidth === 0 || props.controls.height === 0,
-        })}
+        className={'m-auto relative'}
       >
         <ResizablePanelGroup direction='horizontal'>
           {props.controls.markings.map(renderMarkings)}
@@ -86,7 +85,7 @@ export default function Panels(props: {
             }}
           />
         </ResizablePanelGroup>
-      </div>
+      </motion.div>
 
       <Moveable
         key={props.controls.dimKey}
