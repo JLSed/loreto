@@ -55,7 +55,7 @@ export default function BoxMarking(props: Props) {
             }}
             onMouseLeave={() => setTargetted(false)}
             ref={targetRef}
-            className='p-2 cursor-move inline-block absolute z-10'
+            className='p-2 cursor-move inline-block absolute z-10 text-black'
             style={{
               transform: props.marking.transform,
             }}

@@ -17,6 +17,9 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { signIn, useSession } from 'next-auth/react'
 import { Button } from '@/components/ui/button'
 import FloatingToolbar from './FloatingToolbar'
+import { Label } from '@/components/ui/label'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Input } from '@/components/ui/input'
 
 export default function Home() {
   const controls = useBoxControls()
@@ -25,6 +28,13 @@ export default function Home() {
   return (
     <main className='grid grid-cols-[250px_1fr] relative'>
       <ScrollArea className='h-screen border-r relative'>
+        {session.data?.user && (
+          <div className='p-4 grid gap-2 border-b'>
+            <Label>Box Name</Label>
+            <Input placeholder='Give it a name!' />
+          </div>
+        )}
+
         <Accordion
           type='multiple'
           className='w-full'
@@ -48,8 +58,48 @@ export default function Home() {
           </AccordionItem>
         </Accordion>
 
+        <div className='p-4 grid gap-2 border-b'>
+          <Label>Thickness</Label>
+          <Tabs defaultValue='1'>
+            <TabsList className='w-full'>
+              <TabsTrigger
+                value='1'
+                className='w-full'
+              >
+                Single
+              </TabsTrigger>
+              <TabsTrigger
+                value='2'
+                className='w-full'
+              >
+                Double
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </div>
+
+        <div className='p-4 grid gap-2'>
+          <Label>Placement</Label>
+          <Tabs defaultValue='1'>
+            <TabsList className='w-full'>
+              <TabsTrigger
+                value='1'
+                className='w-full'
+              >
+                Master
+              </TabsTrigger>
+              <TabsTrigger
+                value='2'
+                className='w-full'
+              >
+                Inner
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </div>
+
         {!session.data?.user && (
-          <div className='absolute bottom-0 left-0 right-0 p-4 bg-inherit'>
+          <div className='p-4 bg-inherit'>
             <Button
               onClick={() => [
                 signIn('google', {
@@ -66,7 +116,7 @@ export default function Home() {
         )}
 
         {session.data?.user && (
-          <div className='flex justify-between items-center p-4 pr-3 py-2 bg-inherit absolute bottom-0 left-0 right-0 border-t'>
+          <div className='flex justify-between items-center p-4 pr-3 py-2 bg-inherit border-t'>
             <div className='capitalize small'> {session.data.user.name} </div>
             <Avatar className='scale-75'>
               <AvatarImage
