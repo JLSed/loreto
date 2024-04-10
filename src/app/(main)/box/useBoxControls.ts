@@ -32,6 +32,8 @@ export default function useBoxControls() {
   const [pixelLength, setPixelLength] = useState(0)
   const [isSaving, setIsSaving] = useState(false)
   const [hideControls, setHideControls] = useState(false)
+  const [boxPlacement, setBoxPlacement] = useState(1)
+  const [boxThickness, setBoxThickness] = useState(1)
 
   // used to update moveable borders
   const [dimKey, setDimKey] = useState(0)
@@ -221,5 +223,9 @@ export default function useBoxControls() {
     boxNameRef,
     imageMarkings,
     setImageMarkings,
+    boxPlacement,
+    setBoxPlacement,
+    boxThickness,
+    setBoxThickness,
   }
 }

@@ -63,7 +63,8 @@ model Box {
   placement Int @default(1)
 
   // markings
-  markings BoxMarking[]
+  markings      BoxMarking[]
+  imageMarkings ImageMarking[]
 
   // owner
   owner   User   @relation(fields: [ownerId], references: [id])
@@ -72,6 +73,20 @@ model Box {
   orders BoxOrder[]
 
   @@index([ownerId])
+}
+
+model ImageMarking {
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  modifiedAt DateTime @updatedAt
+
+  width     Float
+  height    Float
+  src       String
+  transform String
+
+  Box   Box?    @relation(fields: [boxId], references: [id])
+  boxId String?
 }
 
 model BoxMarking {

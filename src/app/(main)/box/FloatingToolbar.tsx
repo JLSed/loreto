@@ -25,10 +25,11 @@ import {
 import { DownloadIcon, MoonIcon, SunIcon } from '@radix-ui/react-icons'
 import { Button } from '@/components/ui/button'
 import * as htmlToImage from 'html-to-image'
-import useBoxControls from './useBoxControls'
+import useBoxControls, { LSKeys } from './useBoxControls'
 import { signIn, useSession } from 'next-auth/react'
 import { useState } from 'react'
 import { toast } from 'sonner'
+import { saveBoxAction } from './actions'
 
 interface Props {
   controls: ReturnType<typeof useBoxControls>
@@ -62,7 +63,7 @@ export default function FloatingToolbar(props: Props) {
       })
   }
 
-  const saveDocument = () => {
+  const saveDocument = async () => {
     if (!session.data?.user) {
       props.controls.setHideControls(true)
       setIsSigninDialogOpen(true)
@@ -77,11 +78,32 @@ export default function FloatingToolbar(props: Props) {
       })
       return
     }
+
+    props.controls.setIsSaving(true)
+    const res = await saveBoxAction({
+      name: props.controls.boxNameRef.current.value,
+      dragTransform: localStorage.getItem(LSKeys.DRAG_TRANSFORM)!,
+      height: props.controls.height,
+      totalWidth: props.controls.containerWidth,
+      imageMarkings: props.controls.imageMarkings,
+      leftPanelSize: props.controls.leftPanelSize,
+      rightPanelSize: props.controls.rightPanelSize,
+      markings: props.controls.markings,
+      placement: props.controls.boxPlacement,
+      thickness: props.controls.boxThickness,
+    })
+    if (res.status === 200) {
+      toast.success('Box saved successfully!', { position: 'top-right' })
+    } else {
+      toast('Oops, something went wrong! Please try again.')
+    }
+    props.controls.setIsSaving(false)
   }
 
   return (
     <div className='absolute top-0 right-0 m-3 flex items-center gap-2'>
       <Button
+        loading={props.controls.isSaving}
         variant='secondary'
         onClick={saveDocument}
       >

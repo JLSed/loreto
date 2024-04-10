@@ -63,7 +63,10 @@ export default function BoxPage() {
 
         <div className='p-4 grid gap-2 border-b'>
           <Label>Thickness</Label>
-          <Tabs defaultValue='1'>
+          <Tabs
+            defaultValue={controls.boxThickness.toString()}
+            onValueChange={(v) => controls.setBoxThickness(+v)}
+          >
             <TabsList className='w-full'>
               <TabsTrigger
                 value='1'
@@ -83,7 +86,10 @@ export default function BoxPage() {
 
         <div className='p-4 grid gap-2'>
           <Label>Placement</Label>
-          <Tabs defaultValue='1'>
+          <Tabs
+            defaultValue={controls.boxPlacement.toString()}
+            onValueChange={(v) => controls.setBoxPlacement(+v)}
+          >
             <TabsList className='w-full'>
               <TabsTrigger
                 value='1'
