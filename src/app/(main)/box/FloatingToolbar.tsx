@@ -11,17 +11,33 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog'
+
 import { DownloadIcon, MoonIcon, SunIcon } from '@radix-ui/react-icons'
 import { Button } from '@/components/ui/button'
 import * as htmlToImage from 'html-to-image'
 import useBoxControls from './useBoxControls'
+import { signIn, useSession } from 'next-auth/react'
+import { useState } from 'react'
+import { toast } from 'sonner'
 
 interface Props {
   controls: ReturnType<typeof useBoxControls>
 }
 
 export default function FloatingToolbar(props: Props) {
+  const session = useSession()
   const { setTheme, resolvedTheme, theme } = useTheme()
+  const [isSignDialogOpen, setIsSignDialogOpen] = useState(false)
 
   const downloadAsImage = () => {
     const node = document
@@ -46,8 +62,32 @@ export default function FloatingToolbar(props: Props) {
       })
   }
 
+  const saveDocument = () => {
+    if (!session.data?.user) {
+      props.controls.setHideControls(true)
+      setIsSignDialogOpen(true)
+      return
+    }
+
+    if (!props.controls.boxNameRef.current?.value.trim()) {
+      props.controls.boxNameRef.current?.focus()
+      toast('Please give your box a name.', {
+        position: 'top-right',
+        duration: 1200,
+      })
+      return
+    }
+  }
+
   return (
     <div className='absolute top-0 right-0 m-3 flex items-center gap-2'>
+      <Button
+        variant='secondary'
+        onClick={saveDocument}
+      >
+        Save
+      </Button>
+
       <Button
         onClick={downloadAsImage}
         variant='secondary'
@@ -88,6 +128,35 @@ export default function FloatingToolbar(props: Props) {
           </DropdownMenuCheckboxItem>
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <AlertDialog
+        open={isSignDialogOpen}
+        onOpenChange={(open) => {
+          props.controls.setHideControls(open)
+          setIsSignDialogOpen(open)
+        }}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className='pb-0'>
+              Save this box for future use
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              Please sign in to save and access your boxes from anywhere.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className='mt-2'>
+            <AlertDialogAction
+              onClick={() => {
+                signIn('google', { callbackUrl: '/box' })
+              }}
+            >
+              Sign in
+            </AlertDialogAction>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   )
 }

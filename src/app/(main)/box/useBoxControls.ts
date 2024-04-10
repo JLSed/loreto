@@ -23,6 +23,7 @@ export default function useBoxControls() {
   const [pixelWidth, setPixelWidth] = useState(0)
   const [pixelLength, setPixelLength] = useState(0)
   const [isSaving, setIsSaving] = useState(false)
+  const [hideControls, setHideControls] = useState(false)
 
   // used to update moveable borders
   const [dimKey, setDimKey] = useState(0)
@@ -41,6 +42,7 @@ export default function useBoxControls() {
   const widthRef = useRef<HTMLInputElement>(null)
   const lengthRef = useRef<HTMLInputElement>(null)
   const heightRef = useRef<HTMLInputElement>(null)
+  const boxNameRef = useRef<HTMLInputElement>(null)
 
   const [markings, setMarkings] = useState<LocalMarking[]>([])
 
@@ -185,5 +187,8 @@ export default function useBoxControls() {
     setDragTransform,
     isSaving,
     setIsSaving,
+    hideControls,
+    setHideControls,
+    boxNameRef,
   }
 }

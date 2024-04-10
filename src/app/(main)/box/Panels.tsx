@@ -93,7 +93,7 @@ export default function Panels(props: {
         hideDefaultLines
         useAccuratePosition
         target={entireBoxRef}
-        resizable
+        resizable={!props.controls.hideControls}
         edgeDraggable={false}
         keepRatio={false}
         throttleResize={1}
