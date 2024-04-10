@@ -8,12 +8,20 @@ export enum LSKeys {
   BOX_HEIGHT = 'box__height',
   DRAG_TRANSFORM = 'drag__transform',
   BOX_MARKINGS = 'box-markings',
+  IMAGE_MARKINGS = 'image-markings',
 }
 
 export type LocalMarking = {
   id: number
   label: string
   value: string
+  transform: string
+}
+export type LocalImageMarking = {
+  id: number
+  width: number
+  height: number
+  imageSrc: string
   transform: string
 }
 
@@ -45,6 +53,7 @@ export default function useBoxControls() {
   const boxNameRef = useRef<HTMLInputElement>(null)
 
   const [markings, setMarkings] = useState<LocalMarking[]>([])
+  const [imageMarkings, setImageMarkings] = useState<LocalImageMarking[]>([])
 
   useEffect(() => {
     if (height !== 0) localStorage.setItem(LSKeys.BOX_HEIGHT, height.toString())
@@ -92,18 +101,38 @@ export default function useBoxControls() {
     const markings = localStorage.getItem(LSKeys.BOX_MARKINGS)
     if (markings) {
       setMarkings(JSON.parse(markings))
-      return
+    } else {
+      const newMarkings = [
+        {
+          label: 'Serial No:',
+          value: '123456',
+          transform: 'translate(50px, 200px)',
+          id: 1,
+        },
+      ]
+      setMarkings(newMarkings)
+      localStorage.setItem(LSKeys.BOX_MARKINGS, JSON.stringify(newMarkings))
     }
-    const newMarkings = [
-      {
-        label: 'Serial No:',
-        value: '123456',
-        transform: 'translate(50px, 100px)',
-        id: 1,
-      },
-    ]
-    setMarkings(newMarkings)
-    localStorage.setItem(LSKeys.BOX_MARKINGS, JSON.stringify(newMarkings))
+
+    const imageMarkings = localStorage.getItem(LSKeys.IMAGE_MARKINGS)
+    if (imageMarkings) {
+      setImageMarkings(JSON.parse(imageMarkings))
+    } else {
+      const newImageMarkings = [
+        {
+          id: 1,
+          imageSrc: '/logo.png',
+          transform: 'translate(97px, 133px)',
+          width: 50,
+          height: 50,
+        },
+      ]
+      setImageMarkings(newImageMarkings)
+      localStorage.setItem(
+        LSKeys.IMAGE_MARKINGS,
+        JSON.stringify(newImageMarkings)
+      )
+    }
   }, [])
 
   const addMarking = (marking: LocalMarking): boolean => {
@@ -190,5 +219,7 @@ export default function useBoxControls() {
     hideControls,
     setHideControls,
     boxNameRef,
+    imageMarkings,
+    setImageMarkings,
   }
 }

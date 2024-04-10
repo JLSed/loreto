@@ -13,7 +13,7 @@ export default function MarkingsSidebar(props: Props) {
   return (
     <div className='grid px-4'>
       <div className='text-sm text-balance text-center p-4 bg-muted rounded-md mb-2'>
-        Right click on a marking inside the box to edit.
+        Right click on a marking inside the box to edit. Click a logo to resize.
       </div>
 
       {props.controls.markings.map((m, index) => {

@@ -1,5 +1,9 @@
 import { ReactNode, useEffect, useRef } from 'react'
-import useBoxControls, { LSKeys, LocalMarking } from './useBoxControls'
+import useBoxControls, {
+  LSKeys,
+  LocalImageMarking,
+  LocalMarking,
+} from './useBoxControls'
 import Moveable from 'react-moveable'
 import {
   ResizableHandle,
@@ -9,6 +13,7 @@ import {
 import BoxMarking from '@/components/moveable/BoxMarking'
 import { ImperativePanelHandle } from 'react-resizable-panels'
 import { motion } from 'framer-motion'
+import ImageMarking from '@/components/moveable/ImageMarking'
 
 export default function Panels(props: {
   controls: ReturnType<typeof useBoxControls>
@@ -38,6 +43,22 @@ export default function Panels(props: {
     )
   }
 
+  function renderImageMarkings(
+    mark: LocalImageMarking,
+    index: number
+  ): ReactNode {
+    return (
+      <ImageMarking
+        key={index}
+        containerRef={entireBoxRef}
+        controls={props.controls}
+        marking={mark}
+        onMouseDown={() => (panelResizing.current = true)}
+        onMouseUp={() => (panelResizing.current = false)}
+      />
+    )
+  }
+
   return (
     <div className='w-full h-[100vh]'>
       <motion.div
@@ -52,10 +73,11 @@ export default function Panels(props: {
           transform: props.controls.dragTransform,
         }}
         id='main-container'
-        className={'m-auto relative'}
+        className={'m-auto relative cursor-grab'}
       >
         <ResizablePanelGroup direction='horizontal'>
           {props.controls.markings.map(renderMarkings)}
+          {props.controls.imageMarkings.map(renderImageMarkings)}
 
           <ResizablePanel
             ref={leftPanelRef}

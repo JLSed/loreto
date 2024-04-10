@@ -11,6 +11,7 @@ export default function ImageUpload(props: {
   inputName: string
   hidden?: boolean
   disabled?: boolean
+  hideReset?: boolean
 }) {
   const [imageSrc, setImageSrc] = useState(props.initialImageSrc)
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -61,21 +62,25 @@ export default function ImageUpload(props: {
             size={'sm'}
             type='button'
             variant={'outline'}
+            className='w-full'
             disabled={props.disabled}
             onClick={() => fileInputRef.current?.click()}
           >
             <UploadIcon className='mr-2' />
             Upload
           </Button>
-          <Button
-            size={'sm'}
-            type='button'
-            variant={'ghost'}
-            disabled={props.initialImageSrc === imageSrc || props.disabled}
-            onClick={() => setImageSrc(props.initialImageSrc)}
-          >
-            Reset
-          </Button>
+          {!props.hideReset && (
+            <Button
+              size={'sm'}
+              type='button'
+              variant={'ghost'}
+              className='w-full'
+              disabled={props.initialImageSrc === imageSrc || props.disabled}
+              onClick={() => setImageSrc(props.initialImageSrc)}
+            >
+              Reset
+            </Button>
+          )}
         </div>
       </div>
     </div>
