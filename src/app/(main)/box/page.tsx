@@ -83,7 +83,7 @@ export default function Home() {
 
       <Panels controls={controls} />
 
-      <FloatingToolbar />
+      <FloatingToolbar controls={controls} />
     </main>
   )
 }

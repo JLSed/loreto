@@ -22,6 +22,7 @@ export default function useBoxControls() {
   const [height, setHeight] = useState(0)
   const [pixelWidth, setPixelWidth] = useState(0)
   const [pixelLength, setPixelLength] = useState(0)
+  const [isSaving, setIsSaving] = useState(false)
 
   // used to update moveable borders
   const [dimKey, setDimKey] = useState(0)
@@ -182,5 +183,7 @@ export default function useBoxControls() {
     setDimKey,
     dragTransform,
     setDragTransform,
+    isSaving,
+    setIsSaving,
   }
 }

@@ -71,7 +71,7 @@ export default function Panels(props: {
           <ResizableHandle
             onMouseDown={() => (panelResizing.current = true)}
             onMouseUp={() => (panelResizing.current = false)}
-            withHandle
+            withHandle={!props.controls.isSaving}
           />
           <ResizablePanel
             ref={rightPanelRef}
@@ -118,4 +118,4 @@ export default function Panels(props: {
   )
 }
 
-const karton = 'https://img.freepik.com/free-photo/brown-texture_1253-152.jpg'
+const karton = '/karton.avif'

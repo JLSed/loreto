@@ -11,14 +11,51 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-import { MoonIcon, SunIcon } from '@radix-ui/react-icons'
+import { DownloadIcon, MoonIcon, SunIcon } from '@radix-ui/react-icons'
 import { Button } from '@/components/ui/button'
+import * as htmlToImage from 'html-to-image'
+import useBoxControls from './useBoxControls'
 
-export default function FloatingToolbar() {
+interface Props {
+  controls: ReturnType<typeof useBoxControls>
+}
+
+export default function FloatingToolbar(props: Props) {
   const { setTheme, resolvedTheme, theme } = useTheme()
+
+  const downloadAsImage = () => {
+    const node = document
+      .getElementById('main-container')
+      ?.getElementsByTagName('div')[0]
+    if (!node) return
+
+    props.controls.setIsSaving(true)
+    htmlToImage
+      .toPng(node, { quality: 1, skipAutoScale: true })
+      .then(function (dataUrl) {
+        var link = document.createElement('a')
+        link.download = 'loreto-box' + new Date().toISOString() + '.png'
+        link.href = dataUrl
+        link.click()
+        props.controls.setIsSaving(false)
+      })
+      .catch(function (error) {
+        console.error(error)
+        alert('Oops, something went wrong! Please try again.')
+        props.controls.setIsSaving(false)
+      })
+  }
 
   return (
     <div className='absolute top-0 right-0 m-3 flex items-center gap-2'>
+      <Button
+        onClick={downloadAsImage}
+        variant='secondary'
+        size={'icon'}
+      >
+        <DownloadIcon />
+      </Button>
+
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
