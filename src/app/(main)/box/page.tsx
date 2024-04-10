@@ -16,13 +16,14 @@ import Panels from './Panels'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { signIn, useSession } from 'next-auth/react'
 import { Button } from '@/components/ui/button'
+import FloatingToolbar from './FloatingToolbar'
 
 export default function Home() {
   const controls = useBoxControls()
   const session = useSession()
 
   return (
-    <main className='grid grid-cols-[250px_1fr]'>
+    <main className='grid grid-cols-[250px_1fr] relative'>
       <ScrollArea className='h-screen border-r relative'>
         <Accordion
           type='multiple'
@@ -81,6 +82,8 @@ export default function Home() {
       </ScrollArea>
 
       <Panels controls={controls} />
+
+      <FloatingToolbar />
     </main>
   )
 }
