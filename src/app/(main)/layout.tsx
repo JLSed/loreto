@@ -3,6 +3,9 @@ import { Inter } from 'next/font/google'
 import '../globals.css'
 import { ThemeProvider } from '@/components/shared/ThemeProvider'
 import { Toaster } from '@/components/ui/sonner'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/common/configs/auth'
+import ClientSessionProvider from './SessionProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -12,11 +15,13 @@ export const metadata: Metadata = {
   icons: ['/logo.png'],
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const session = await getServerSession(authOptions)
+
   return (
     <html
       lang='en'
@@ -29,7 +34,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <ClientSessionProvider session={session}>
+            {children}
+          </ClientSessionProvider>
           <Toaster />
         </ThemeProvider>
       </body>
