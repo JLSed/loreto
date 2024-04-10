@@ -82,7 +82,7 @@ export default function FloatingToolbar(props: Props) {
     props.controls.setIsSaving(true)
     const res = await saveBoxAction({
       name: props.controls.boxNameRef.current.value,
-      dragTransform: localStorage.getItem(LSKeys.DRAG_TRANSFORM)!,
+      dragTransform: localStorage.getItem(LSKeys.DRAG_TRANSFORM) ?? '',
       height: props.controls.height,
       totalWidth: props.controls.containerWidth,
       imageMarkings: props.controls.imageMarkings,
@@ -95,7 +95,7 @@ export default function FloatingToolbar(props: Props) {
     if (res.status === 200) {
       toast.success('Box saved successfully!', { position: 'top-right' })
     } else {
-      toast('Oops, something went wrong! Please try again.')
+      toast.error(res.error ?? 'Something went wrong. Please try again.')
     }
     props.controls.setIsSaving(false)
   }

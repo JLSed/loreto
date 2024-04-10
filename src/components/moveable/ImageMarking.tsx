@@ -8,7 +8,6 @@ import { flushSync } from 'react-dom'
 import useBoxControls, {
   LSKeys,
   LocalImageMarking,
-  LocalMarking,
 } from '@/app/(main)/box/useBoxControls'
 
 import {
@@ -18,7 +17,6 @@ import {
 } from '@/components/ui/context-menu'
 
 import ImageUpload from '../shared/ImageUpload'
-import { Button } from '../ui/button'
 
 interface Props {
   containerRef: RefObject<HTMLDivElement>
@@ -82,6 +80,7 @@ export default function ImageMarking(props: Props) {
                   LSKeys.IMAGE_MARKINGS,
                   JSON.stringify(parsed)
                 )
+                props.controls.setImageMarkings(parsed)
               }
             }}
             hideReset

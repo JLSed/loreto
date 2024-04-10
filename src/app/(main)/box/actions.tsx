@@ -30,6 +30,16 @@ export const saveBoxAction = async (params: SaveBoxParams) => {
     }
 
     return await prisma.$transaction(async (tx) => {
+      const nameExistWithUser = await tx.box.findFirst({
+        where: {
+          name: params.name,
+          ownerId: user.id,
+        },
+      })
+      if (nameExistWithUser) {
+        return { status: 409, error: 'Box with this name already exists.' }
+      }
+
       const box = await tx.box.create({
         data: {
           name: params.name,
@@ -39,8 +49,11 @@ export const saveBoxAction = async (params: SaveBoxParams) => {
           rightPanelSize: params.rightPanelSize,
           dragTransform: params.dragTransform,
           thickness: params.thickness,
-          placement: params.placement,
-          ownerId: user.id,
+          owner: {
+            connect: {
+              id: user.id,
+            },
+          },
         },
       })
 
@@ -67,6 +80,6 @@ export const saveBoxAction = async (params: SaveBoxParams) => {
     })
   } catch (error) {
     console.log(error)
-    return { status: 500 }
+    return { status: 500, error: 'Something went wrong. Please try again.' }
   }
 }
