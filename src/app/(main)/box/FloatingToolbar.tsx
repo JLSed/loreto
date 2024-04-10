@@ -28,7 +28,7 @@ export default function FloatingToolbar() {
             {resolvedTheme === 'dark' ? <MoonIcon /> : <SunIcon />}
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className='mx-4 bg-inherit'>
+        <DropdownMenuContent className='mx-4 backdrop-blur'>
           <DropdownMenuLabel>Theme</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuCheckboxItem

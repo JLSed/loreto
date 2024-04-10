@@ -57,6 +57,7 @@ export default function Panels(props: {
       >
         <ResizablePanelGroup direction='horizontal'>
           {props.controls.markings.map(renderMarkings)}
+
           <ResizablePanel
             ref={leftPanelRef}
             defaultSize={40}
@@ -89,6 +90,9 @@ export default function Panels(props: {
 
       <Moveable
         key={props.controls.dimKey}
+        hideChildMoveableDefaultLines
+        hideDefaultLines
+        useAccuratePosition
         target={entireBoxRef}
         resizable
         edgeDraggable={false}
