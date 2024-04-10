@@ -37,7 +37,7 @@ interface Props {
 export default function FloatingToolbar(props: Props) {
   const session = useSession()
   const { setTheme, resolvedTheme, theme } = useTheme()
-  const [isSignDialogOpen, setIsSignDialogOpen] = useState(false)
+  const [isSigninDialogOpen, setIsSigninDialogOpen] = useState(false)
 
   const downloadAsImage = () => {
     const node = document
@@ -65,7 +65,7 @@ export default function FloatingToolbar(props: Props) {
   const saveDocument = () => {
     if (!session.data?.user) {
       props.controls.setHideControls(true)
-      setIsSignDialogOpen(true)
+      setIsSigninDialogOpen(true)
       return
     }
 
@@ -130,10 +130,10 @@ export default function FloatingToolbar(props: Props) {
       </DropdownMenu>
 
       <AlertDialog
-        open={isSignDialogOpen}
+        open={isSigninDialogOpen}
         onOpenChange={(open) => {
           props.controls.setHideControls(open)
-          setIsSignDialogOpen(open)
+          setIsSigninDialogOpen(open)
         }}
       >
         <AlertDialogContent>

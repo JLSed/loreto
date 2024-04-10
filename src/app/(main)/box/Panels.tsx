@@ -79,6 +79,19 @@ export default function Panels(props: {
           {props.controls.markings.map(renderMarkings)}
           {props.controls.imageMarkings.map(renderImageMarkings)}
 
+          <div
+            className='absolute top-[-2rem] grid left-0 right-0'
+            style={{
+              gridTemplateColumns: `${props.controls.leftPanelSize}% ${props.controls.rightPanelSize}%`,
+            }}
+          >
+            <div className='text-center'>W - {props.controls.pixelWidth}</div>
+            <div className='text-center'>L - {props.controls.pixelLength}</div>
+          </div>
+          <div className='left-[-5rem] absolute top-0 bottom-0 grid place-items-center'>
+            H - {props.controls.height}
+          </div>
+
           <ResizablePanel
             ref={leftPanelRef}
             defaultSize={40}
@@ -89,7 +102,7 @@ export default function Panels(props: {
               localStorage.setItem(LSKeys.LEFT_PANEL_SIZE, e.toString())
               props.controls.setLeftPanelSize(e)
             }}
-          />
+          ></ResizablePanel>
           <ResizableHandle
             onMouseDown={() => (panelResizing.current = true)}
             onMouseUp={() => (panelResizing.current = false)}
