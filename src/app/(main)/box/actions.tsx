@@ -26,7 +26,7 @@ export const saveBoxAction = async (params: SaveBoxParams) => {
     const session = await getServerSession(authOptions)
     const user = session?.user
     if (!user) {
-      return { status: 401 }
+      return { status: 401, error: 'Unauthorized' }
     }
 
     return await prisma.$transaction(async (tx) => {
@@ -57,29 +57,33 @@ export const saveBoxAction = async (params: SaveBoxParams) => {
         },
       })
 
-      await tx.boxMarking.createMany({
-        data: params.markings.map((marking) => ({
-          boxId: box.id,
-          cssTransform: marking.transform,
-          label: marking.label,
-          value: marking.value,
-        })),
-      })
+      await Promise.all([
+        tx.boxMarking.createMany({
+          data: params.markings.map((marking) => ({
+            boxId: box.id,
+            cssTransform: marking.transform,
+            label: marking.label,
+            value: marking.value,
+          })),
+        }),
+        tx.imageMarking.createMany({
+          data: params.imageMarkings.map((marking) => ({
+            boxId: box.id,
+            src: marking.imageSrc,
+            height: marking.height,
+            width: marking.width,
+            transform: marking.transform,
+          })),
+        }),
+      ])
 
-      await tx.imageMarking.createMany({
-        data: params.imageMarkings.map((marking) => ({
-          boxId: box.id,
-          src: marking.imageSrc,
-          height: marking.height,
-          width: marking.width,
-          transform: marking.transform,
-        })),
-      })
-
-      return { status: 200 }
+      return { status: 20 }
     })
   } catch (error) {
-    console.log(error)
+    console.log(
+      'Error occured in saveBoxAction: src/app/(main)/box/actions.tsx',
+      error
+    )
     return { status: 500, error: 'Something went wrong. Please try again.' }
   }
 }

@@ -18,6 +18,7 @@ const icons = [
   'group',
   'more_horiz',
   'directions_car',
+  'add_shopping_cart',
 ] as const
 
 export type MaterialIconName = (typeof icons)[number]

@@ -41,9 +41,11 @@ export default async function Layout(props: { children: React.ReactNode }) {
           <div className='capitalize font-bold'>Hi, {user.name}</div>
         </div>
 
-        <div className='flex items-center gap-4'>
+        <div className='flex items-center gap-6'>
           <Link href={'/'}> Home </Link>
           <Link href={'/me/bookings'}> Bookings </Link>
+          <Link href={'/me/boxes'}> Boxes </Link>
+          <Link href={'/me/cart'}> Cart </Link>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
