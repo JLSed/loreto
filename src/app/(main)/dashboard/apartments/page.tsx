@@ -11,7 +11,12 @@ export default async function Page() {
         </Link>
       </header>
 
-      <main className='p-4'>No data yet</main>
+      <main className='p-4 text-center space-y-4 my-8'>
+        <h4>No apartments yet.</h4>
+        <Link href={'/dashboard/apartments/new'}>
+          <Button variant={'secondary'}>Add new apartment</Button>
+        </Link>
+      </main>
     </div>
   )
 }
