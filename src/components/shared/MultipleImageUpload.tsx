@@ -28,14 +28,24 @@ export default function MultipleImageUpload(props: Props) {
         id={props.inputName}
         accept='image/*'
         multiple={true}
-        onChange={(e) => {
+        onChange={async (e) => {
           const files = e.target.files
           if (!files) return
 
-          const urls = Array.from(files).map((file) =>
-            URL.createObjectURL(file)
+          const base64s = await Promise.all(
+            Array.from(files).map(async (file) => {
+              const base64 = await new Promise<string>((resolve) => {
+                const reader = new FileReader()
+                reader.onload = () => {
+                  resolve(reader.result as string)
+                }
+                reader.readAsDataURL(file)
+              })
+              return base64
+            })
           )
-          const newImages = [...images, ...urls]
+
+          const newImages = [...images, ...base64s]
           setImages(newImages)
           props.onImagesChange?.(newImages)
         }}

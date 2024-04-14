@@ -8,80 +8,55 @@ import { Input } from '@/components/ui/input'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
-
-const NewApartmentSchema = z.object({
-  address: z.string().trim().min(5, 'Please provide a complete address'),
-  area: z
-    .number({
-      required_error: 'Please provide the floor area',
-      invalid_type_error: 'Please provide the floor area',
-    })
-    .min(10, 'Please provide a realistic floor area'),
-  monthlyRentalPrice: z
-    .number({
-      required_error: 'Please provide the monthly rental price',
-      invalid_type_error: 'Please provide the monthly rental price',
-    })
-    .min(1000, 'Please provide a realistic rental price'),
-  maxOccupantsPerUnit: z
-    .number({
-      required_error: 'Please provide the maximum number of occupants',
-      invalid_type_error: 'Please provide the maximum number of occupants',
-    })
-    .min(1, 'Please provide a realistic number of occupants'),
-  bedrooms: z
-    .number({
-      required_error: 'How many bedrooms?',
-      invalid_type_error: 'How many bedrooms?',
-    })
-    .min(1, 'Please provide a realistic number of bedrooms'),
-  toiletAndBath: z
-    .number({
-      required_error: 'How many toilet and bath?',
-      invalid_type_error: 'How many toilet and bath?',
-    })
-    .min(1, 'Please provide a realistic number of toilet and bath'),
-  withMotorcycleParkingSpace: z.boolean({
-    required_error: 'Please specify the motorcycle parking space',
-    invalid_type_error: 'Please specify the motorcycle parking space',
-  }),
-  withCarParkingSpace: z.boolean({
-    required_error: 'Please specify the car parking space',
-    invalid_type_error: 'Please specify the car parking space',
-  }),
-  images: z
-    .array(z.string(), { required_error: 'Please provide at least two photos' })
-    .min(2, 'Please provide at least two photos'),
-})
-type NewApartment = z.infer<typeof NewApartmentSchema>
+import { NewApartment, NewApartmentSchema } from './new-apartment-schema'
+import { createNewApartment } from './actions'
+import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 export default function AddNewApartment() {
+  const [loading, setLoading] = useState(false)
+  const router = useRouter()
   const form = useForm<NewApartment>({
     resolver: zodResolver(NewApartmentSchema),
     defaultValues: {
       bedrooms: 1,
       toiletAndBath: 1,
     },
+    disabled: loading,
   })
   const errors = form.formState.errors
 
-  const submit = (data: NewApartment) => {
-    console.log(data)
+  const submit = async (data: NewApartment) => {
+    setLoading(true)
+    const res = await createNewApartment(data)
+    if (res.status === 200) {
+      form.reset()
+      router.back()
+      router.refresh()
+      toast.success('Apartment added successfully', {
+        position: 'top-right',
+      })
+    } else {
+      toast.error(res.message ?? 'Failed to add apartment', {
+        position: 'top-right',
+      })
+    }
+    setLoading(false)
   }
 
   return (
     <form onSubmit={form.handleSubmit(submit)}>
       <header className='p-4 flex items-center justify-between'>
         <h3>Add new apartment</h3>
-        <Button>Save</Button>
+        <Button loading={loading}>Save</Button>
       </header>
 
       <div className='max-w-[850px] m-auto p-4 grid grid-cols-[1.3fr_1fr] gap-4'>
         <div className='space-y-4'>
           <FormGroup groupTitle='Basic Information'>
             <FormItem
-              title={'Address'}
+              title={'Complete Address'}
               error={errors.address?.message}
             >
               <Input
@@ -220,6 +195,7 @@ export default function AddNewApartment() {
               error={errors.images?.message}
             >
               <MultipleImageUpload
+                disabled={loading}
                 inputName={'images'}
                 onImagesChange={(images) =>
                   form.setValue('images', images, { shouldValidate: true })
