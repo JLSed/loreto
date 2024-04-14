@@ -77,7 +77,7 @@ export const saveBoxAction = async (params: SaveBoxParams) => {
         }),
       ])
 
-      return { status: 20 }
+      return { status: 200 }
     })
   } catch (error) {
     console.log(

@@ -30,6 +30,7 @@ import { signIn, useSession } from 'next-auth/react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { saveBoxAction } from './actions'
+import { useRouter } from 'next/navigation'
 
 interface Props {
   controls: ReturnType<typeof useBoxControls>
@@ -37,6 +38,7 @@ interface Props {
 
 export default function FloatingToolbar(props: Props) {
   const session = useSession()
+  const router = useRouter()
   const { setTheme, resolvedTheme, theme } = useTheme()
   const [isSigninDialogOpen, setIsSigninDialogOpen] = useState(false)
 
@@ -94,6 +96,8 @@ export default function FloatingToolbar(props: Props) {
     })
     if (res.status === 200) {
       toast.success('Box saved successfully!', { position: 'top-right' })
+      router.back()
+      router.refresh()
     } else {
       toast.error(res.error ?? 'Something went wrong. Please try again.')
     }

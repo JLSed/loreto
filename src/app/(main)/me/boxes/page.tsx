@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button'
 import CustomerBoxes from './CustomerBoxes'
 import { getCustomerBoxes } from './actions'
+import Link from 'next/link'
 
 export type TCustomerBoxes = Awaited<ReturnType<typeof getCustomerBoxes>>
 
@@ -12,7 +13,12 @@ export default async function Page() {
       <div>
         <header className='p-4 space-y-4'>
           <h3>No boxes yet.</h3>
-          <Button>Create now!</Button>
+          <Link
+            href='/box'
+            className='inline-block'
+          >
+            <Button>Create now!</Button>
+          </Link>
         </header>
       </div>
     )
