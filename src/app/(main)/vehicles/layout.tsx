@@ -15,7 +15,7 @@ import Link from 'next/link'
 
 export default async function Layout(props: { children: ReactNode }) {
   return (
-    <div className='max-w-4xl m-auto'>
+    <div className='max-w-5xl m-auto'>
       <header className='p-4 py-5 flex items-center justify-between'>
         <h3>Book a vehicle</h3>
         <div className='flex items-center gap-3'>
