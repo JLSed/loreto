@@ -86,7 +86,7 @@ export default async function Page() {
             <Card className='mt-4 col-span-8'>
               <CardHeader className='small'>Most Recent Logs</CardHeader>
               <CardContent>
-                <ScrollArea className='max-h-[400px] overflow-y-visible'>
+                <ScrollArea className='max-h-[320px] overflow-y-visible'>
                   <ul>
                     {auditLogs.map((log) => {
                       const action =
