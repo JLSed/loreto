@@ -14,7 +14,7 @@ export default function CustomerBoxes(props: { boxes: TCustomerBoxes }) {
           >
             <div className='flex items-center justify-between'>
               <div className='font-bold mb-2 capitalize'>{b.name}</div>
-              <AddToCardButton />
+              <AddToCardButton boxId={b.id} />
             </div>
 
             <div className='flex divide-x'>

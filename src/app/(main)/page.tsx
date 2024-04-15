@@ -5,7 +5,7 @@ export default function Home() {
     <div>
       <Navbar />
 
-      <main className='max-w-4xl m-auto p-3 mt-4'>
+      <main className='max-w-5xl m-auto p-3 mt-4'>
         <div>
           <h1>Loreto Trading</h1>
           <p className='text-muted-foreground mt-3'>

@@ -1,16 +1,16 @@
-'use client'
-
 import { Button } from '@/components/ui/button'
 import MaterialIcon from '@/components/ui/material-icon'
+import Link from 'next/link'
 
-export default function AddToCardButton() {
+export default function AddToCardButton(props: { boxId: string }) {
   return (
-    <Button
-      size={'icon'}
-      variant={'secondary'}
-      onClick={() => alert('Add to cart feature is coming soon.')}
-    >
-      <MaterialIcon name='add_shopping_cart' />
-    </Button>
+    <Link href={`/me/cart/add?box=${props.boxId}`}>
+      <Button
+        size={'icon'}
+        variant={'secondary'}
+      >
+        <MaterialIcon name='add_shopping_cart' />
+      </Button>
+    </Link>
   )
 }
