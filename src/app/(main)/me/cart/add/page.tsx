@@ -32,6 +32,7 @@ export default async function AddToCartPage(props: Props) {
   const box = await prisma.box.findFirst({
     where: {
       id: props.searchParams.box,
+      ownerId: user.id,
     },
     include: {
       markings: true,
