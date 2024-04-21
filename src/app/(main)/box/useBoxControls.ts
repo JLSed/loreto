@@ -137,6 +137,22 @@ export default function useBoxControls() {
     }
   }, [])
 
+  const addImageMarking = () => {
+    const newMarkings = [
+      ...imageMarkings,
+      {
+        id: imageMarkings.length + 1,
+        imageSrc: '/logo.png',
+        transform: 'translate(0px, 0px)',
+        width: 50,
+        height: 50,
+      },
+    ]
+    localStorage.setItem(LSKeys.IMAGE_MARKINGS, JSON.stringify(newMarkings))
+    setImageMarkings(newMarkings)
+    console.log('newMarkings', newMarkings)
+  }
+
   const addMarking = (marking: LocalMarking): boolean => {
     const newMarkings = [...markings, marking]
     localStorage.setItem(LSKeys.BOX_MARKINGS, JSON.stringify(newMarkings))
@@ -166,6 +182,12 @@ export default function useBoxControls() {
     const newMarkings = markings.filter((m) => m.id !== marking.id)
     localStorage.setItem(LSKeys.BOX_MARKINGS, JSON.stringify(newMarkings))
     setMarkings(newMarkings)
+  }
+
+  const removeImageMarking = (marking: LocalImageMarking): void => {
+    const newMarkings = imageMarkings.filter((m) => m.id !== marking.id)
+    localStorage.setItem(LSKeys.IMAGE_MARKINGS, JSON.stringify(newMarkings))
+    setImageMarkings(newMarkings)
   }
 
   const applyChanges = () => {
@@ -227,5 +249,7 @@ export default function useBoxControls() {
     setBoxPlacement,
     boxThickness,
     setBoxThickness,
+    addImageMarking,
+    removeImageMarking,
   }
 }

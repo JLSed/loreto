@@ -3,7 +3,8 @@ import useBoxControls from '../useBoxControls'
 import AddMarking from './AddMarking'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
-import { Cross2Icon } from '@radix-ui/react-icons'
+import { Cross2Icon, PlusIcon } from '@radix-ui/react-icons'
+import Image from 'next/image'
 
 interface Props {
   controls: ReturnType<typeof useBoxControls>
@@ -35,6 +36,43 @@ export default function MarkingsSidebar(props: Props) {
       })}
 
       <AddMarking controls={props.controls} />
+
+      <div className='pt-4'>
+        <Label className='text-muted-foreground'>Image Markings</Label>
+        {props.controls.imageMarkings.map((m, index) => {
+          return (
+            <div
+              key={index}
+              className='flex items-center justify-between'
+            >
+              <Image
+                width={20}
+                height={20}
+                src={m.imageSrc}
+                alt=''
+                className='object-cover'
+              />
+              <Button
+                size={'icon'}
+                variant={'ghost'}
+                onClick={() => props.controls.removeImageMarking(m)}
+              >
+                <Cross2Icon className='w-3 h-3' />
+              </Button>
+            </div>
+          )
+        })}
+      </div>
+
+      <Button
+        className='mt-2'
+        variant='secondary'
+        size={'sm'}
+        onClick={() => props.controls.addImageMarking()}
+      >
+        <PlusIcon className='w-4 h-4 mr-1' />
+        New Image Marking
+      </Button>
     </div>
   )
 }
