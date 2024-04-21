@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge'
 import { CheckIcon, DotsHorizontalIcon } from '@radix-ui/react-icons'
 import { pesos } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -96,8 +97,12 @@ export const apartmentsColumn: ColumnDef<Apartment>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align='end'>
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem disabled>View details</DropdownMenuItem>
-            <DropdownMenuItem disabled>Edit</DropdownMenuItem>
+            <Link href={`/dashboard/apartments/${row.original.id}`}>
+              <DropdownMenuItem>View details</DropdownMenuItem>
+            </Link>
+            <Link href={`/dashboard/apartments/${row.original.id}?edit=true`}>
+              <DropdownMenuItem>Edit</DropdownMenuItem>
+            </Link>
           </DropdownMenuContent>
         </DropdownMenu>
       )

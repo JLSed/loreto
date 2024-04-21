@@ -46,9 +46,9 @@ export default async function Page(props: {
 
           return (
             <Card key={log.id}>
-              <CardHeader>
+              <CardHeader className='p-2'>
                 <CardTitle className='text-base flex items-center gap-3'>
-                  <Avatar>
+                  <Avatar className='scale-50'>
                     <AvatarImage
                       src={log.actor.photoUrl ?? ''}
                       alt=''
@@ -67,8 +67,8 @@ export default async function Page(props: {
                   </span>
                 </CardTitle>
               </CardHeader>
-              {log.action === AuditAction.Modification && (
-                <CardContent className='flex items-center gap-3'>
+              {log.action === AuditAction.Modification && log.columnName && (
+                <CardContent className='flex items-center gap-3 p-2'>
                   <Badge>{log.columnName}</Badge>
                   <Badge variant={'secondary'}>{log.from}</Badge>
                   <ArrowRightIcon />
