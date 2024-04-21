@@ -59,7 +59,7 @@ export default function NewVehicle() {
       if (res.status === 200) {
         router.back()
         router.refresh()
-        toast('Successfully added new vehicle')
+        toast.success('Successfully added new vehicle')
         return
       }
       toast.error('Something went wrong. Please try again')

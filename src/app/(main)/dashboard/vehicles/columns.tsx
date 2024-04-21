@@ -20,6 +20,7 @@ import Link from 'next/link'
 import { format } from 'date-fns'
 import StatusWithDot from '@/components/shared/StatusWithDot'
 import { VehicleStatusColor } from '@/common/constants/status-colors'
+import DeleteVehicle from './DeleteVehicle'
 
 export const vehiclesTableColumns: ColumnDef<Vehicle>[] = [
   {
@@ -120,6 +121,7 @@ export const vehiclesTableColumns: ColumnDef<Vehicle>[] = [
             <Link href={`/dashboard/vehicles/${vehicle.id}?action=edit`}>
               <DropdownMenuItem>Edit</DropdownMenuItem>
             </Link>
+            <DeleteVehicle id={vehicle.id} />
           </DropdownMenuContent>
         </DropdownMenu>
       )
