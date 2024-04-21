@@ -56,98 +56,101 @@ async function main() {
           firstName: 'Justinejames A.',
           lastName: 'Belluso',
         },
-        // ...Array.from({ length: numberOfUsers }).map(
-        //   () =>
-        //     ({
-        //       email: faker.internet.email(),
-        //       username: faker.person.fullName(),
-        //       role: faker.helpers.arrayElement([
-        //         UserRole.Customer,
-        //         UserRole.Staff,
-        //       ]),
-        //       verified: true,
-        //       firstName: faker.person.firstName(),
-        //       lastName: faker.person.lastName(),
-        //       contactNumber: faker.phone.number(),
-        //       joinedAt: faker.date.recent({ days: 100 }),
-        //     } as Prisma.UserCreateManyInput)
-        // ),
+        ...Array.from({ length: numberOfUsers }).map(
+          () =>
+            ({
+              email: faker.internet.email(),
+              username: faker.person.fullName(),
+              role: faker.helpers.arrayElement([
+                UserRole.Customer,
+                UserRole.Staff,
+              ]),
+              verified: true,
+              firstName: faker.person.firstName(),
+              lastName: faker.person.lastName(),
+              contactNumber: faker.phone.number(),
+              joinedAt: faker.date.recent({ days: 100 }),
+            } as Prisma.UserCreateManyInput)
+        ),
       ],
     })
   }
 
   await seedUsers()
 
-  // const seedVehicles = () => {
-  //   return prisma.vehicle.createMany({
-  //     data: [
-  //       {
-  //         model: 'MD F6',
-  //         name: 'Isuzu Truck ZXR',
-  //         photoUrl:
-  //           'https://res.cloudinary.com/dmwjwtg1g/image/upload/v1711165562/loreto/avh6qfq8dswpoomg6plw.jpg',
-  //         plateNumber: 'KJA-1234',
-  //         purchaseDate: new Date('2021-03-29'),
-  //         serviceFeePerHour: 500,
-  //         lastMaintenance: new Date('2022-03-29'),
-  //       },
-  //       {
-  //         model: 'H100',
-  //         name: 'Hyundai Truck',
-  //         photoUrl:
-  //           'https://res.cloudinary.com/dmwjwtg1g/image/upload/v1711165562/loreto/hfrls2roy2efj2k1yffo.webp',
-  //         plateNumber: 'HTA-1234',
-  //         purchaseDate: new Date('2021-01-29'),
-  //         serviceFeePerHour: 200,
-  //         lastMaintenance: new Date('2022-01-29'),
-  //       },
-  //     ],
-  //   })
-  // }
+  const seedVehicles = () => {
+    return prisma.vehicle.createMany({
+      data: [
+        {
+          model: 'MD F6',
+          name: 'Isuzu Truck ZXR',
+          photoUrl:
+            'https://res.cloudinary.com/dmwjwtg1g/image/upload/v1711165562/loreto/avh6qfq8dswpoomg6plw.jpg',
+          plateNumber: 'KJA-1234',
+          purchaseDate: new Date('2021-03-29'),
+          serviceFeePerHour: 500,
+          lastMaintenance: new Date('2022-03-29'),
+        },
+        {
+          model: 'H100',
+          name: 'Hyundai Truck',
+          photoUrl:
+            'https://res.cloudinary.com/dmwjwtg1g/image/upload/v1711165562/loreto/hfrls2roy2efj2k1yffo.webp',
+          plateNumber: 'HTA-1234',
+          purchaseDate: new Date('2021-01-29'),
+          serviceFeePerHour: 200,
+          lastMaintenance: new Date('2022-01-29'),
+        },
+      ],
+    })
+  }
 
-  // await Promise.all([seedUsers(), seedVehicles()])
+  await seedVehicles()
 
-  // const [users, vehicles] = await Promise.all([
-  //   prisma.user.findMany(),
-  //   prisma.vehicle.findMany(),
-  // ])
+  const [users, vehicles] = await Promise.all([
+    prisma.user.findMany(),
+    prisma.vehicle.findMany(),
+  ])
 
-  // const seedTransactions = () => {
-  //   const numberOfTransactions = 14
-  //   return prisma.transaction.createMany({
-  //     data: Array.from({ length: numberOfTransactions }).map(
-  //       () =>
-  //         ({
-  //           amount: +faker.finance.amount({ min: 1000, max: 10000 }),
-  //           fromUserId: faker.helpers.arrayElement(users).id,
-  //           itemType: faker.helpers.enumValue(TransactionItemType),
-  //           modeOfPayment: faker.helpers.enumValue(ModeOfPayment),
-  //           type: faker.helpers.enumValue(TransactionType),
-  //         } as Prisma.TransactionCreateManyInput)
-  //     ),
-  //   })
-  // }
+  const seedTransactions = () => {
+    const numberOfTransactions = 14
+    return prisma.transaction.createMany({
+      data: Array.from({ length: numberOfTransactions }).map(
+        () =>
+          ({
+            amount: +faker.finance.amount({ min: 1000, max: 10000 }),
+            fromUserId: faker.helpers.arrayElement(users).id,
+            itemType: faker.helpers.enumValue(TransactionItemType),
+            modeOfPayment: faker.helpers.enumValue(ModeOfPayment),
+            type: faker.helpers.enumValue(TransactionType),
+          } as Prisma.TransactionCreateManyInput)
+      ),
+    })
+  }
 
-  // await seedTransactions()
-  // const transactions = await prisma.transaction.findMany()
+  await seedTransactions()
+  const transactions = await prisma.transaction.findMany()
 
-  // const seedBookings = () => {
-  //   const numberOfBookings = 14
-  //   return prisma.booking.createMany({
-  //     data: Array.from({ length: numberOfBookings }).map(
-  //       () =>
-  //         ({
-  //           bookerId: faker.helpers.arrayElement(users).id,
-  //           vehicleId: faker.helpers.arrayElement(vehicles).id,
-  //           pickupDate: faker.date.soon({ days: 5 }),
-  //           pickUpLocation: faker.location.streetAddress(),
-  //           destination: faker.location.streetAddress(),
-  //           status: faker.helpers.enumValue(BookStatus),
-  //           transactionId: faker.helpers.arrayElement(transactions).id,
-  //         } as Prisma.BookingCreateManyInput)
-  //     ),
-  //   })
-  // }
+  const seedBookings = () => {
+    const numberOfBookings = 50
+    return prisma.booking.createMany({
+      data: Array.from({ length: numberOfBookings }).map(
+        () =>
+          ({
+            bookerId: faker.helpers.arrayElement(users).id,
+            vehicleId: faker.helpers.arrayElement(vehicles).id,
+            pickupDate: faker.date.soon({ days: 5 }),
+            pickUpLocation: faker.location.streetAddress(),
+            destination: faker.location.streetAddress(),
+            status: faker.helpers.enumValue(BookStatus),
+            transactionId: faker.helpers.arrayElement(transactions).id,
+            createdAt: faker.date.recent({ days: 7 }),
+          } as Prisma.BookingCreateManyInput)
+      ),
+    })
+  }
+
+  await seedBookings()
 
   // const boxes = await prisma.box.findMany()
 
@@ -160,7 +163,7 @@ async function main() {
   //             boxId: faker.helpers.arrayElement(boxes).id,
   //             userId: faker.helpers.arrayElement(users).id,
   //             status: BoxOrderStatus.InCart,
-  //             createdAt: faker.date.recent({ days: 30 }),
+  //             createdAt: faker.date.recent({ days: 7 }),
   //           } as Prisma.BoxOrderCreateManyInput)
   //       ),
   //       ...Array.from({ length: 10 }).map(
@@ -170,7 +173,7 @@ async function main() {
   //             userId: faker.helpers.arrayElement(users).id,
   //             status: BoxOrderStatus.OrderCompleted,
   //             completedAt: faker.date.recent({ days: 10 }),
-  //             createdAt: faker.date.recent({ days: 30 }),
+  //             createdAt: faker.date.recent({ days: 7 }),
   //           } as Prisma.BoxOrderCreateManyInput)
   //       ),
   //       ...Array.from({ length: 10 }).map(
@@ -180,7 +183,7 @@ async function main() {
   //             userId: faker.helpers.arrayElement(users).id,
   //             status: BoxOrderStatus.OrderReceived,
   //             receivedAt: faker.date.recent({ days: 10 }),
-  //             createdAt: faker.date.recent({ days: 30 }),
+  //             createdAt: faker.date.recent({ days: 7 }),
   //           } as Prisma.BoxOrderCreateManyInput)
   //       ),
   //       ...Array.from({ length: 10 }).map(
@@ -190,7 +193,7 @@ async function main() {
   //             userId: faker.helpers.arrayElement(users).id,
   //             status: BoxOrderStatus.OutForDelivery,
   //             outForDeliveryAt: new Date(),
-  //             createdAt: faker.date.recent({ days: 30 }),
+  //             createdAt: faker.date.recent({ days: 7 }),
   //           } as Prisma.BoxOrderCreateManyInput)
   //       ),
   //       ...Array.from({ length: 10 }).map(
@@ -200,7 +203,7 @@ async function main() {
   //             userId: faker.helpers.arrayElement(users).id,
   //             status: BoxOrderStatus.PaymentInfoConfirmed,
   //             paymentConfirmedAt: faker.date.recent({ days: 10 }),
-  //             createdAt: faker.date.recent({ days: 30 }),
+  //             createdAt: faker.date.recent({ days: 7 }),
   //           } as Prisma.BoxOrderCreateManyInput)
   //       ),
   //       ...Array.from({ length: 10 }).map(
@@ -210,7 +213,7 @@ async function main() {
   //             userId: faker.helpers.arrayElement(users).id,
   //             status: BoxOrderStatus.Placed,
   //             placedAt: faker.date.recent({ days: 2 }),
-  //             createdAt: faker.date.recent({ days: 30 }),
+  //             createdAt: faker.date.recent({ days: 7 }),
   //           } as Prisma.BoxOrderCreateManyInput)
   //       ),
   //       ...Array.from({ length: 10 }).map(
@@ -220,7 +223,7 @@ async function main() {
   //             userId: faker.helpers.arrayElement(users).id,
   //             status: BoxOrderStatus.ProcessingOrder,
   //             processingAt: faker.date.recent({ days: 3 }),
-  //             createdAt: faker.date.recent({ days: 30 }),
+  //             createdAt: faker.date.recent({ days: 7 }),
   //           } as Prisma.BoxOrderCreateManyInput)
   //       ),
   //       ...Array.from({ length: 5 }).map(
@@ -230,7 +233,7 @@ async function main() {
   //             userId: faker.helpers.arrayElement(users).id,
   //             status: BoxOrderStatus.cancelled,
   //             cancelledAt: faker.date.recent({ days: 10 }),
-  //             createdAt: faker.date.recent({ days: 30 }),
+  //             createdAt: faker.date.recent({ days: 7 }),
   //           } as Prisma.BoxOrderCreateManyInput)
   //       ),
   //     ],

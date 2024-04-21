@@ -6,6 +6,7 @@ import MaterialIcon, { MaterialIconName } from '@/components/ui/material-icon'
 import { Card } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { ReactNode } from 'react'
+import BookingsBarChart from './BookingsBarChart'
 
 export default async function Page() {
   const [boxOrders, bookings, transactions, activeCustomers, auditLogs] =
@@ -36,13 +37,13 @@ export default async function Page() {
 
   return (
     <div>
-      <header className='p-4 pb-0'>
+      <header className='p-4 px-8 pb-0'>
         <h2 className='border-b-0'>Dashboard</h2>
       </header>
 
       <Tabs
         defaultValue='overview'
-        className='p-4'
+        className='p-4 px-8'
       >
         <TabsList>
           <TabsTrigger value='overview'>Overview</TabsTrigger>
@@ -50,7 +51,7 @@ export default async function Page() {
         </TabsList>
 
         <TabsContent value='overview'>
-          <div className='grid grid-cols-12 gap-4 pt-2'>
+          <div className='grid grid-cols-12 gap-8 pt-4'>
             <CardOverviewItem
               label={'Orders'}
               value={boxOrders.length}
@@ -71,6 +72,12 @@ export default async function Page() {
               value={activeCustomers.length}
               materialIconName={'group'}
             />
+          </div>
+
+          <div className='grid grid-cols-2 gap-8'>
+            <div className='pt-8'>
+              <BookingsBarChart data={bookings} />
+            </div>
           </div>
         </TabsContent>
 
