@@ -66,7 +66,6 @@ both for custom, vehicle and apartment payment option and requirement: total vie
 - proof of identity
 - note and other details.
 
-
 ### Uploading Logic to Prevent Image Bloat up
 
 ```
@@ -77,3 +76,10 @@ both for custom, vehicle and apartment payment option and requirement: total vie
 // if saved successfully, delete the old photo from cloudinary
 // else delte the new uploaded photo from cloudinary
 ```
+
+> Notes:
+
+- Kapag nag sign in ng ibang account dapat marereset yung custom box `/box` High Prio
+- Maintain the aspect ratio of the image marking. Dont stick to square () Low Prio
+- Make the signout and theme switcher more accessible Low Prio
+- Create ERD
