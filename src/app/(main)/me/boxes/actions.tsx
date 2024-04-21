@@ -25,3 +25,11 @@ export async function getCustomerBoxes() {
     },
   })
 }
+
+export async function deleteBox(boxId: string) {
+  await prisma.box.delete({
+    where: {
+      id: boxId,
+    },
+  })
+}

@@ -2,6 +2,7 @@
 import { BoxPlacement, BoxThickness } from '@/common/enums/enums.db'
 import { TCustomerBoxes } from './page'
 import AddToCardButton from './AddToCardButton'
+import DeleteBox from './DeleteBox'
 
 export default function CustomerBoxes(props: { boxes: TCustomerBoxes }) {
   return (
@@ -14,7 +15,10 @@ export default function CustomerBoxes(props: { boxes: TCustomerBoxes }) {
           >
             <div className='flex items-center justify-between'>
               <div className='font-bold mb-2 capitalize'>{b.name}</div>
-              <AddToCardButton boxId={b.id} />
+              <div className='flex gap-2'>
+                <AddToCardButton boxId={b.id} />
+                <DeleteBox boxId={b.id} />
+              </div>
             </div>
 
             <div className='flex divide-x'>
