@@ -26,8 +26,14 @@ export default async function Page() {
 
   return (
     <div>
-      <header className='p-4 pb-0'>
+      <header className='p-4 pb-0 flex items-center justify-between'>
         <h3>Boxes</h3>
+        <Link
+          href='/box'
+          className='inline-block'
+        >
+          <Button variant={'secondary'}>Create another</Button>
+        </Link>
       </header>
       <CustomerBoxes boxes={boxes} />
     </div>

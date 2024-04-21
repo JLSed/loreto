@@ -1,10 +1,5 @@
-import PageUnderConstruction from '@/components/shared/PageUnderConstruction'
-import React from 'react'
+import { redirect } from 'next/navigation'
 
 export default function Page() {
-  return (
-    <main className='p-4'>
-      <PageUnderConstruction pageName='Customer Dashboard is' />
-    </main>
-  )
+  redirect('/me/boxes')
 }

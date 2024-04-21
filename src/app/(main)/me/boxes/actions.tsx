@@ -20,5 +20,8 @@ export async function getCustomerBoxes() {
       markings: true,
       imageMarkings: true,
     },
+    orderBy: {
+      createdAt: 'desc',
+    },
   })
 }
