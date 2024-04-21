@@ -14,6 +14,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import DeleteVehicle from './DeleteApartment'
 
 export const apartmentsColumn: ColumnDef<Apartment>[] = [
   {
@@ -103,6 +104,7 @@ export const apartmentsColumn: ColumnDef<Apartment>[] = [
             <Link href={`/dashboard/apartments/${row.original.id}?edit=true`}>
               <DropdownMenuItem>Edit</DropdownMenuItem>
             </Link>
+            <DeleteVehicle id={row.original.id} />
           </DropdownMenuContent>
         </DropdownMenu>
       )

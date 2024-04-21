@@ -1,8 +1,8 @@
 'use server'
 
 import { prisma } from '@/common/configs/prisma'
-import { NewApartment } from './new-apartment-schema'
-import { ModifyApartment } from '../[id]/ApartmentDetail'
+import { NewApartment } from './new/new-apartment-schema'
+import { ModifyApartment } from './[id]/ApartmentDetail'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/common/configs/auth'
 import { AuditAction, AuditAffectedTable } from '@/common/enums/enums.db'
@@ -71,4 +71,10 @@ export async function modifyApartment(
     )
     return { status: 500, message: 'Something went wrong. Please try again.' }
   }
+}
+
+export async function deleteApartment(id: string) {
+  await prisma.apartment.delete({
+    where: { id },
+  })
 }

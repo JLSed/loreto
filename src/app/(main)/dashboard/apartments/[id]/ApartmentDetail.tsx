@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 
-import { modifyApartment } from '../new/actions'
+import { modifyApartment } from '../actions'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'

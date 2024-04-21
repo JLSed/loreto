@@ -12,9 +12,10 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import { ReloadIcon } from '@radix-ui/react-icons'
-import { deleteVehicle } from './actions'
+
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
+import { deleteApartment } from './actions'
 
 export default function DeleteVehicle(props: { id: string }) {
   const [deleting, setDeleting] = useState(false)
@@ -25,7 +26,7 @@ export default function DeleteVehicle(props: { id: string }) {
     setDeleting(true)
 
     try {
-      await deleteVehicle(props.id)
+      await deleteApartment(props.id)
       router.refresh()
       setOpen(false)
     } catch (error) {
@@ -55,7 +56,7 @@ export default function DeleteVehicle(props: { id: string }) {
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
             This action cannot be undone. This will permanently delete this
-            vehicle and all of its data.
+            apartment and all of its data.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

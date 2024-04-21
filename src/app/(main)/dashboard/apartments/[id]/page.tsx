@@ -1,5 +1,5 @@
 import React from 'react'
-import { getApartmentById } from '../new/actions'
+import { getApartmentById } from '../actions'
 import { notFound } from 'next/navigation'
 import ApartmentDetail from './ApartmentDetail'
 
