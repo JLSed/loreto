@@ -8,5 +8,8 @@ export async function getBookings() {
       booker: true,
       vehicle: true,
     },
+    orderBy: {
+      createdAt: 'desc',
+    },
   })
 }

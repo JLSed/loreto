@@ -3,7 +3,11 @@ import { prisma } from '@/common/configs/prisma'
 import Apartments from './Apartments'
 
 export default async function Page() {
-  const apartments = await prisma.apartment.findMany()
+  const apartments = await prisma.apartment.findMany({
+    orderBy: {
+      createdAt: 'desc',
+    },
+  })
 
   return (
     <div>

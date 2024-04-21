@@ -19,7 +19,7 @@ import Link from 'next/link'
 export default async function Page() {
   const vehicles = await prisma.vehicle.findMany({
     orderBy: {
-      status: 'asc',
+      status: 'desc',
     },
     include: {
       _count: {

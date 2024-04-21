@@ -11,5 +11,8 @@ export async function getApartments(
   return await prisma.apartment.findMany({
     skip: (params.page - 1) * params.perPage,
     take: params.perPage,
+    orderBy: {
+      createdAt: 'desc',
+    },
   })
 }
