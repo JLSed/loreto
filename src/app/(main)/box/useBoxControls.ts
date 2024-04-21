@@ -9,6 +9,9 @@ export enum LSKeys {
   DRAG_TRANSFORM = 'drag__transform',
   BOX_MARKINGS = 'box-markings',
   IMAGE_MARKINGS = 'image-markings',
+  BOX_QUALITY = 'box-quality',
+  BOX_PLACEMENT = 'box-placement',
+  BOX_THICKNESS = 'box-thickness',
 }
 
 export type LocalMarking = {
@@ -34,6 +37,7 @@ export default function useBoxControls() {
   const [hideControls, setHideControls] = useState(false)
   const [boxPlacement, setBoxPlacement] = useState(1)
   const [boxThickness, setBoxThickness] = useState(1)
+  const [quality, setQuality] = useState('A')
 
   // used to update moveable borders
   const [dimKey, setDimKey] = useState(0)
@@ -134,6 +138,27 @@ export default function useBoxControls() {
         LSKeys.IMAGE_MARKINGS,
         JSON.stringify(newImageMarkings)
       )
+    }
+
+    const quality = localStorage.getItem(LSKeys.BOX_QUALITY)
+    if (quality) {
+      setQuality(quality)
+    } else {
+      setQuality('A')
+    }
+
+    const boxPlacement = localStorage.getItem(LSKeys.BOX_PLACEMENT)
+    if (boxPlacement) {
+      setBoxPlacement(+boxPlacement)
+    } else {
+      setBoxPlacement(1)
+    }
+
+    const boxThickness = localStorage.getItem(LSKeys.BOX_THICKNESS)
+    if (boxThickness) {
+      setBoxThickness(+boxThickness)
+    } else {
+      setBoxThickness(1)
     }
   }, [])
 
@@ -251,5 +276,7 @@ export default function useBoxControls() {
     setBoxThickness,
     addImageMarking,
     removeImageMarking,
+    quality,
+    setQuality,
   }
 }

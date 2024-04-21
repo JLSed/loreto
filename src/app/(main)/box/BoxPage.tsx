@@ -9,7 +9,7 @@ import {
 
 import { ScrollArea } from '@/components/ui/scroll-area'
 
-import useBoxControls from './useBoxControls'
+import useBoxControls, { LSKeys } from './useBoxControls'
 import DimensionControls from './_controls/dimensions'
 import MarkingsSidebar from './_controls/MarkingsSidebar'
 import Panels from './Panels'
@@ -64,8 +64,11 @@ export default function BoxPage() {
         <div className='p-4 grid gap-2 border-b'>
           <Label>Thickness</Label>
           <Tabs
-            defaultValue={controls.boxThickness.toString()}
-            onValueChange={(v) => controls.setBoxThickness(+v)}
+            value={controls.boxThickness.toString()}
+            onValueChange={(v) => {
+              controls.setBoxThickness(+v)
+              localStorage.setItem(LSKeys.BOX_THICKNESS, v)
+            }}
           >
             <TabsList className='w-full'>
               <TabsTrigger
@@ -87,8 +90,11 @@ export default function BoxPage() {
         <div className='p-4 grid gap-2'>
           <Label>Placement</Label>
           <Tabs
-            defaultValue={controls.boxPlacement.toString()}
-            onValueChange={(v) => controls.setBoxPlacement(+v)}
+            value={controls.boxPlacement.toString()}
+            onValueChange={(v) => {
+              controls.setBoxPlacement(+v)
+              localStorage.setItem(LSKeys.BOX_PLACEMENT, v)
+            }}
           >
             <TabsList className='w-full'>
               <TabsTrigger
@@ -102,6 +108,32 @@ export default function BoxPage() {
                 className='w-full'
               >
                 Inner
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </div>
+
+        <div className='p-4 grid gap-2'>
+          <Label>Quality</Label>
+          <Tabs
+            value={controls.quality}
+            onValueChange={(v) => {
+              controls.setQuality(v)
+              localStorage.setItem(LSKeys.BOX_QUALITY, v)
+            }}
+          >
+            <TabsList className='w-full'>
+              <TabsTrigger
+                value='A'
+                className='w-full'
+              >
+                Class A
+              </TabsTrigger>
+              <TabsTrigger
+                value='B'
+                className='w-full'
+              >
+                Class B
               </TabsTrigger>
             </TabsList>
           </Tabs>

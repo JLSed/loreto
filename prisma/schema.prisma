@@ -53,6 +53,7 @@ model Box {
   rightPanelSize Float
 
   dragTransform String
+  quality       String
 
   // 1: single
   // 2: double

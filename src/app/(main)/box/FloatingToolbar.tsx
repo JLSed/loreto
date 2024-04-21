@@ -93,6 +93,7 @@ export default function FloatingToolbar(props: Props) {
       markings: props.controls.markings,
       placement: props.controls.boxPlacement,
       thickness: props.controls.boxThickness,
+      quality: props.controls.quality,
     })
     if (res.status === 200) {
       toast.success('Box saved successfully!', { position: 'top-right' })
