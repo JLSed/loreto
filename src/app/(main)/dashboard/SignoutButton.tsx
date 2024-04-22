@@ -10,6 +10,7 @@ export default function SignoutButton() {
       className='flex items-center gap-1'
       onClick={() => {
         if (confirm('Are you sure you want to sign out?')) {
+          localStorage.clear()
           signOut({ callbackUrl: '/', redirect: true })
         }
       }}
