@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import Link from 'next/link'
 import { Toaster } from 'sonner'
+import SignOutButton from '../SignOutButton'
 
 export default async function Layout(props: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions)
@@ -35,6 +36,7 @@ export default async function Layout(props: { children: React.ReactNode }) {
           <Link href={'/me/bookings'}> Bookings </Link>
           <Link href={'/me/boxes'}> Boxes </Link>
           <Link href={'/me/orders'}> Orders </Link>
+          <SignOutButton iconOnly />
         </div>
       </header>
 
