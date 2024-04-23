@@ -52,7 +52,7 @@ export default function ImageMarking(props: Props) {
               props.onMouseUp()
             }}
             ref={targetRef}
-            className='cursor-move inline-block absolute z-10 text-black'
+            className='cursor-move absolute z-10 text-black grid place-items-center'
             style={{
               transform: props.marking.transform,
               width: `${props.marking.width}px`,
@@ -60,7 +60,7 @@ export default function ImageMarking(props: Props) {
             }}
           >
             <img
-              className='grayscale'
+              className='grayscale w-full'
               src={src}
               alt=''
             />
