@@ -79,7 +79,7 @@ both for custom, vehicle and apartment payment option and requirement: total vie
 
 > Notes:
 
-- Kapag nag sign in ng ibang account dapat marereset yung custom box `/box` High Prio
+- Order Form - High Prio
 - Maintain the aspect ratio of the image marking. Dont stick to square () Low Prio
 - Make the signout and theme switcher more accessible Low Prio
 - Create ERD

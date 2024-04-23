@@ -43,6 +43,9 @@ export default function CustomerBoxes(props: { boxes: TCustomerBoxes }) {
                 <div>
                   {b.placement === BoxPlacement.Master ? 'Master' : 'Inner'}
                 </div>
+
+                <div>Quality:</div>
+                <div>Class {b.quality}</div>
               </div>
             </div>
 

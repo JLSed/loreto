@@ -4,18 +4,7 @@ import { redirect } from 'next/navigation'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import Link from 'next/link'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { Button } from '@/components/ui/button'
-import { HamburgerMenuIcon } from '@radix-ui/react-icons'
-import { ThemeSwitcher } from '../dashboard/ThemeSwitcher'
-import SignoutButton from '../dashboard/SignoutButton'
+import { Toaster } from 'sonner'
 
 export default async function Layout(props: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions)
@@ -46,28 +35,11 @@ export default async function Layout(props: { children: React.ReactNode }) {
           <Link href={'/me/bookings'}> Bookings </Link>
           <Link href={'/me/boxes'}> Boxes </Link>
           <Link href={'/me/cart'}> Cart </Link>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant={'secondary'}
-                size={'icon'}
-              >
-                <HamburgerMenuIcon />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuLabel>Options</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuGroup>
-                <ThemeSwitcher />
-                <SignoutButton />
-              </DropdownMenuGroup>
-            </DropdownMenuContent>
-          </DropdownMenu>
         </div>
       </header>
 
       {props.children}
+      <Toaster />
     </div>
   )
 }

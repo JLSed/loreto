@@ -14,3 +14,36 @@ export async function getCustomerCartItems() {
     },
   })
 }
+
+export async function placeOrder(params: {
+  boxId: string
+  contactNumber: string
+  quantity: number
+}) {
+  const session = await getServerSession(authOptions)
+  const user = session!.user
+
+  try {
+    return await prisma.$transaction(async (tx) => {
+      await tx.user.update({
+        where: { id: user.id },
+        data: {
+          contactNumber: params.contactNumber,
+        },
+      })
+
+      await tx.boxOrder.create({
+        data: {
+          boxId: params.boxId,
+          userId: user.id,
+          quantity: params.quantity,
+        },
+      })
+
+      return { status: 201 }
+    })
+  } catch (error) {
+    console.log('Error placing order', error)
+    return { status: 500, message: 'An unknown error occurred' }
+  }
+}
