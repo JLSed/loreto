@@ -2,6 +2,7 @@
 
 import { authOptions } from '@/common/configs/auth'
 import { prisma } from '@/common/configs/prisma'
+import { BoxOrderStatus } from '@/common/enums/enums.db'
 import { getServerSession } from 'next-auth'
 
 export async function getCustomerCartItems() {
@@ -25,6 +26,20 @@ export async function placeOrder(params: {
 
   try {
     return await prisma.$transaction(async (tx) => {
+      const orderExists = await tx.boxOrder.findFirst({
+        where: {
+          userId: user.id,
+          boxId: params.boxId,
+          status: BoxOrderStatus.InCart,
+        },
+      })
+      if (orderExists) {
+        return {
+          status: 400,
+          message: 'You currently have an existing order of this box.',
+        }
+      }
+
       await tx.user.update({
         where: { id: user.id },
         data: {

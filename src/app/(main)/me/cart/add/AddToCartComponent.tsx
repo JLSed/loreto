@@ -55,7 +55,8 @@ export default function AddToCartComponent(props: Props) {
       router.refresh()
     } else {
       toast.error(
-        'An error occurred while placing your order. Please try again.',
+        res.message ??
+          'An error occurred while placing your order. Please try again.',
         {
           position: 'bottom-left',
         }
