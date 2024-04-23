@@ -118,7 +118,7 @@ model BoxOrder {
   // 5: Out for delivery
   // 6: order received
   // 7: order completed
-  status Int @default(1)
+  status Int @default(2)
 
   // dates
   cancelledAt        DateTime?

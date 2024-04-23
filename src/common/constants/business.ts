@@ -1,4 +1,9 @@
-import { BookingStatus, UserRole, VehicleStatus } from '../enums/enums.db'
+import {
+  BookingStatus,
+  BoxOrderStatus,
+  UserRole,
+  VehicleStatus,
+} from '../enums/enums.db'
 
 export const PRICE_PER_SQUAREFOOT = {
   SINGLE: 6,
@@ -25,4 +30,14 @@ export const BookingStatusTexts = {
   [BookingStatus.Confirmed]: 'Confirmed',
   [BookingStatus.OnTheRoad]: 'On the road',
   [BookingStatus.Completed]: 'Completed',
+}
+
+export const BoxOrdersStatusText: Record<number, string> = {
+  [BoxOrderStatus.InCart]: 'In Cart',
+  [BoxOrderStatus.Placed]: 'Placed',
+  [BoxOrderStatus.OrderCompleted]: 'Completed',
+  [BoxOrderStatus.OrderReceived]: 'Received',
+  [BoxOrderStatus.OutForDelivery]: 'Out for delivery',
+  [BoxOrderStatus.ProcessingOrder]: 'Processing',
+  [BoxOrderStatus.cancelled]: 'Cancelled',
 }

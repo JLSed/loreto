@@ -51,8 +51,7 @@ export default function AddToCartComponent(props: Props) {
       toast.success('Order placed successfully', {
         position: 'bottom-left',
       })
-      router.back()
-      router.refresh()
+      router.push('/me/orders')
     } else {
       toast.error(
         res.message ??
@@ -148,7 +147,7 @@ export default function AddToCartComponent(props: Props) {
               <FormItem title='Quantity'>
                 <Input
                   pattern='[0-9]*'
-                  value={quantity}
+                  value={quantity.toString()}
                   onChange={(e) => setquantity(e.target.valueAsNumber)}
                   min={1}
                   type='number'

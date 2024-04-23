@@ -34,7 +34,7 @@ export default async function Layout(props: { children: React.ReactNode }) {
           <Link href={'/'}> Home </Link>
           <Link href={'/me/bookings'}> Bookings </Link>
           <Link href={'/me/boxes'}> Boxes </Link>
-          <Link href={'/me/cart'}> Cart </Link>
+          <Link href={'/me/orders'}> Orders </Link>
         </div>
       </header>
 
