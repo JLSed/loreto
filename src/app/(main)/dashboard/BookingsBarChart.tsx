@@ -20,13 +20,17 @@ export default function BookingsBarChart(props: { data: Booking[] }) {
       width='100%'
       height='400px'
       data={[
-        ['Bookings', 'Date'],
+        ['Date', 'Bookings'],
         ...Object.entries(bookingsGroupedByCreatedAt).map(([date, count]) => [
           format(date, 'MMM dd yyyy'),
           count,
         ]),
       ]}
-      options={{ title: 'Bookings', colors: ['black'] }}
+      options={{
+        title: 'Bookings',
+        colors: ['black'],
+        legend: { position: 'none' },
+      }}
     />
   )
 }

@@ -76,6 +76,7 @@ export default async function Page() {
 
           <div className='grid grid-cols-2 gap-8'>
             <div className='pt-8'>
+              <div className='mb-4 font-medium'>Bookings</div>
               <BookingsBarChart data={bookings} />
             </div>
           </div>
