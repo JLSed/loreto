@@ -7,22 +7,12 @@ import BoxOrderStatusLabel from '@/components/shared/BoxOrderStatusLabel'
 import { BoxOrderStatus } from '@/common/enums/enums.db'
 import { format } from 'date-fns'
 import { Button } from '@/components/ui/button'
-import { DotsHorizontalIcon } from '@radix-ui/react-icons'
-
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
 
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog'
 
 import {
@@ -33,17 +23,36 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { useState } from 'react'
+import { updateOrderStatus } from './actions'
+import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 
 type Props = {
   orders: DashboardOrders
 }
 
 export default function OrdersTable(props: Props) {
+  const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [orderToUpdate, setOrderToUpdate] = useState<
     DashboardOrders[number] | undefined
   >()
   const [newStatus, setNewStatus] = useState<number | undefined>()
+
+  const handleSaveStatus = async (order?: DashboardOrders[number]) => {
+    if (!order || !newStatus) return
+    setLoading(true)
+    const res = await updateOrderStatus(order.id, order.status, newStatus)
+    if (res.status === 200) {
+      setOrderToUpdate(undefined)
+      setNewStatus(undefined)
+      router.refresh()
+      toast.success('Status updated successfully')
+    } else {
+      toast.error(res.message ?? 'Failed to update status')
+    }
+    setLoading(false)
+  }
 
   return (
     <>
@@ -113,31 +122,14 @@ export default function OrdersTable(props: Props) {
                     row.original.placedAt!,
                     'MMM dd yyyy'
                   )}`
+                case BoxOrderStatus.OrderReceived:
+                  return `Received on ${format(
+                    row.original.receivedAt!,
+                    'MMM dd yyyy'
+                  )}`
                 default:
                   break
               }
-            },
-          },
-          {
-            id: 'actions',
-            header: 'Actions',
-            cell: ({ row }) => {
-              return (
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      size={'icon'}
-                      variant={'ghost'}
-                    >
-                      <DotsHorizontalIcon />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              )
             },
           },
         ]}
@@ -190,7 +182,9 @@ export default function OrdersTable(props: Props) {
             </Select>
 
             <Button
+              loading={loading}
               disabled={!newStatus || orderToUpdate?.status === newStatus}
+              onClick={() => handleSaveStatus(orderToUpdate)}
             >
               Save
             </Button>

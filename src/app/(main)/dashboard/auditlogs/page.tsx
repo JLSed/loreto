@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { ArrowRightIcon } from '@radix-ui/react-icons'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import BoxOrderStatusLabel from '@/components/shared/BoxOrderStatusLabel'
 
 export default async function Page(props: {
   searchParams: {
@@ -28,6 +29,26 @@ export default async function Page(props: {
     },
     orderBy: { createdAt: 'desc' },
   })
+
+  const renderFromInfo = (log: (typeof logs)[0]) => {
+    if (
+      log.affectedTable === AuditAffectedTable.BoxOrder &&
+      log.columnName === 'status'
+    ) {
+      return <BoxOrderStatusLabel status={log.from ? +log.from : 0} />
+    }
+    return <Badge variant={'secondary'}>{log.from}</Badge>
+  }
+
+  const renderToInfo = (log: (typeof logs)[0]) => {
+    if (
+      log.affectedTable === AuditAffectedTable.BoxOrder &&
+      log.columnName === 'status'
+    ) {
+      return <BoxOrderStatusLabel status={log.to ? +log.to : 0} />
+    }
+    return <Badge variant={'secondary'}>{log.to}</Badge>
+  }
 
   return (
     <div>
@@ -70,9 +91,9 @@ export default async function Page(props: {
               {log.action === AuditAction.Modification && log.columnName && (
                 <CardContent className='flex items-center gap-3 p-2'>
                   <Badge>{log.columnName}</Badge>
-                  <Badge variant={'secondary'}>{log.from}</Badge>
+                  {renderFromInfo(log)}
                   <ArrowRightIcon />
-                  <Badge variant={'secondary'}>{log.to}</Badge>
+                  {renderToInfo(log)}
                 </CardContent>
               )}
             </Card>
