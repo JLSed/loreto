@@ -52,6 +52,7 @@ export async function placeOrder(params: {
           boxId: params.boxId,
           userId: user.id,
           quantity: params.quantity,
+          placedAt: new Date(),
         },
       })
 
