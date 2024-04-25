@@ -2,6 +2,7 @@
 
 import { BookingStatus } from '@/common/enums/enums.db'
 import { Booking } from '@prisma/client'
+import { useTheme } from 'next-themes'
 import { Chart } from 'react-google-charts'
 
 type Props = {
@@ -9,6 +10,9 @@ type Props = {
 }
 
 export default function BookingsDonutChart(props: Props) {
+  const { resolvedTheme } = useTheme()
+  const isDark = resolvedTheme === 'dark'
+
   const data = [
     ['Status', 'Bookings'],
     [
@@ -40,9 +44,16 @@ export default function BookingsDonutChart(props: Props) {
       height='400px'
       data={data}
       options={{
-        pieHole: 0.4,
+        pieHole: 0.5,
         is3D: false,
         colors: ['grey', 'orange', 'yellowgreen', 'dodgerblue', 'green'],
+        chartArea: { width: '90%', height: '100%' },
+        backgroundColor: 'transparent',
+        legend: {
+          textStyle: {
+            color: isDark ? 'white' : 'black',
+          },
+        },
       }}
     />
   )

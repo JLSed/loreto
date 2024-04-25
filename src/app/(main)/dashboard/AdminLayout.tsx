@@ -2,18 +2,8 @@ import { ReactNode } from 'react'
 import { UserRole } from '@/common/enums/enums.db'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { UserRoleLabel } from '@/common/constants/business'
-import MaterialIcon from '@/components/ui/material-icon'
-
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
 
 import { Session } from 'next-auth'
 import SignoutButton from './SignoutButton'
@@ -106,25 +96,9 @@ export default function AdminLayout(props: {
         </nav>
 
         <div className='flex items-center justify-between absolute bottom-0 right-0 left-0 p-4'>
-          <div className='text-muted-foreground text-sm'>Settings</div>
-
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant={'ghost'}
-                size={'icon'}
-              >
-                <MaterialIcon name='settings' />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuLabel className='text-xs'>
-                Settings
-              </DropdownMenuLabel>
-              <SignoutButton />
-              <ThemeSwitcher />
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <div className='text-muted-foreground text-sm mr-auto'>Settings</div>
+          <SignoutButton useButton />
+          <ThemeSwitcher useIcon />
         </div>
       </aside>
 
