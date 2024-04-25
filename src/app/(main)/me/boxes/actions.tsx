@@ -5,7 +5,7 @@ import { prisma } from '@/common/configs/prisma'
 import { getServerSession } from 'next-auth'
 import { notFound } from 'next/navigation'
 
-export async function getCustomerBoxes() {
+export async function getCustomerBoxes(boxId?: string) {
   const session = await getServerSession(authOptions)
 
   if (!session) {
@@ -15,6 +15,7 @@ export async function getCustomerBoxes() {
   return prisma.box.findMany({
     where: {
       ownerId: session.user.id,
+      id: boxId,
     },
     include: {
       markings: true,

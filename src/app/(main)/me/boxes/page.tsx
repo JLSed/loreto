@@ -5,8 +5,14 @@ import Link from 'next/link'
 
 export type TCustomerBoxes = Awaited<ReturnType<typeof getCustomerBoxes>>
 
-export default async function Page() {
-  const boxes = await getCustomerBoxes()
+interface Props {
+  searchParams: {
+    boxId?: string
+  }
+}
+
+export default async function Page(props: Props) {
+  const boxes = await getCustomerBoxes(props.searchParams.boxId)
 
   if (boxes.length === 0) {
     return (
