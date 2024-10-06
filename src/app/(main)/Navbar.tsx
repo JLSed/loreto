@@ -24,7 +24,15 @@ export default async function Navbar() {
   const session = await getServerSession(authOptions)
 
   const getAction = () => {
-    if (!session?.user) return <SignInButton />
+    if (!session?.user)
+      return (
+        <>
+          <SignInButton />
+          <Link href={'/signup'}>
+            <Button>Sign up</Button>
+          </Link>
+        </>
+      )
 
     if (session.user.role == UserRole.Admin) {
       return (
@@ -51,12 +59,7 @@ export default async function Navbar() {
         <Link href={'/vehicles/'}>Book a Vehicle</Link>
         <Link href={'/box'}>Custom Box</Link>
 
-        <div className='space-x-4'>
-          {getAction()}
-          <Link href={'/sign-up'}>
-            <Button>Sign up</Button>
-          </Link>
-        </div>
+        <div className='space-x-4'>{getAction()}</div>
       </div>
     </nav>
   )
