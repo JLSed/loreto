@@ -6,6 +6,7 @@ import { signIn } from 'next-auth/react'
 export default function SignInButton() {
   return (
     <Button
+      variant={'outline'}
       onClick={async () => {
         await signIn('google', {
           redirect: true,

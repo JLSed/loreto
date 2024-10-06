@@ -78,8 +78,3 @@ both for custom, vehicle and apartment payment option and requirement: total vie
 ```
 
 > Notes:
-
-- Order Form - High Prio
-- Maintain the aspect ratio of the image marking. Dont stick to square () Low Prio
-- Make the signout and theme switcher more accessible Low Prio
-- Create ERD

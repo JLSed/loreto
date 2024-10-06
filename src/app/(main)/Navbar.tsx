@@ -51,7 +51,12 @@ export default async function Navbar() {
         <Link href={'/vehicles/'}>Book a Vehicle</Link>
         <Link href={'/box'}>Custom Box</Link>
 
-        {getAction()}
+        <div className='space-x-4'>
+          {getAction()}
+          <Link href={'/sign-up'}>
+            <Button>Sign up</Button>
+          </Link>
+        </div>
       </div>
     </nav>
   )
