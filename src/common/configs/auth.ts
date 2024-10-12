@@ -1,6 +1,8 @@
 import { AuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
+import CredentialsProvider from 'next-auth/providers/credentials'
 import { prisma } from './prisma'
+import { verifyPassword } from '@/lib/server-only-utils'
 
 const googleClientId = process.env.GOOGLE_CLIENT_ID
 const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET
@@ -17,13 +19,48 @@ export const authOptions: AuthOptions = {
       clientId: googleClientId,
       clientSecret: googleClientSecret,
     }),
+    CredentialsProvider({
+      name: 'Credentials',
+      credentials: {
+        email: { label: 'Email', type: 'text' },
+        password: { label: 'Password', type: 'password' },
+      },
+      async authorize(credentials) {
+        if (!credentials?.password) return null
+
+        const user = await prisma.user.findUnique({
+          where: {
+            email: credentials?.email,
+          },
+        })
+
+        if (!user) return null
+        if (!user.password) return null
+
+        const passwordMatched = verifyPassword(
+          credentials.password,
+          user.password
+        )
+
+        if (!passwordMatched) return null
+
+        return {
+          id: user.id,
+          name: user.username,
+          email: user.email,
+          role: user.role,
+        }
+      },
+    }),
   ],
   session: {
     maxAge: 3600,
   },
   secret: nextAuthSecret,
   callbacks: {
-    signIn: async ({ user, profile }) => {
+    signIn: async ({ user, profile, account }) => {
+      if (account?.provider !== 'google') return true
+
       if (!user?.email || !user.name || !profile)
         return 'Unable to sign in. Missing profile email and profile name'
 
