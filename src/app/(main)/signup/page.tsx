@@ -191,8 +191,8 @@ export default function SignUpPage() {
               Your account has been verified 🎉
             </AlertDialogTitle>
             <AlertDialogDescription>
-              You will be redirected to home page. Click the Sign in button to
-              login.
+              You will be redirected to home page.{' '}
+              <strong>Click the Sign in button to login</strong>.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
