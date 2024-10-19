@@ -60,7 +60,7 @@ export async function createUser(input: NewUser, username: string) {
     const emailRecipient = newUserEntry.email
     const transporter = createTransport()
 
-    transporter.sendMail({
+    await transporter.sendMail({
       from: 'noreply@loretotrading',
       sender: 'noreply@loretotrading',
       cc: ['eechemane29@gmail.com'],
