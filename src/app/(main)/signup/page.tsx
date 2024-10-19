@@ -191,13 +191,12 @@ export default function SignUpPage() {
               Your account has been verified 🎉
             </AlertDialogTitle>
             <AlertDialogDescription>
-              You will be redirected to home page.{' '}
-              <strong>Click the Sign in button to login</strong>.
+              You may now login to your account.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogAction onClick={() => router.push('/')}>
-              Ok
+            <AlertDialogAction onClick={() => router.push('/?open=1')}>
+              Continue
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

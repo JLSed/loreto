@@ -15,10 +15,12 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { signIn } from 'next-auth/react'
 import Image from 'next/image'
+import { useSearchParams } from 'next/navigation'
 import { FormEvent, useState } from 'react'
 import { toast } from 'sonner'
 
 export default function SignInButton() {
+  const searchParams = useSearchParams()
   const [loggingIn, setLoggingIn] = useState(false)
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -54,7 +56,7 @@ export default function SignInButton() {
 
   return (
     <>
-      <AlertDialog>
+      <AlertDialog defaultOpen={searchParams.get('open') === '1'}>
         <AlertDialogTrigger asChild>
           <Button variant={'outline'}>Sign in</Button>
         </AlertDialogTrigger>

@@ -1,10 +1,12 @@
 import { Button } from '@/components/ui/button'
 import { getServerSession } from 'next-auth'
 import Link from 'next/link'
-import SignInButton from './SignInButton'
 import Image from 'next/image'
 import { UserRole } from '@/common/enums/enums.db'
 import { authOptions } from '@/common/configs/auth'
+import dynamic from 'next/dynamic'
+
+const SignInButton = dynamic(() => import('./SignInButton'), { ssr: false })
 
 const HomeLinkTitle = (
   <Link href={'/'}>
