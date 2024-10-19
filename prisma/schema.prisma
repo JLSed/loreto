@@ -20,6 +20,7 @@ model User {
   lastName      String
   contactNumber String?
   password      String?
+  randomOTP     String?
 
   // 1: admin
   // 2: staff

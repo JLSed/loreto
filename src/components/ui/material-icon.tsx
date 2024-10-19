@@ -20,6 +20,7 @@ const icons = [
   'directions_car',
   'add_shopping_cart',
   'delete',
+  'progress_activity',
 ] as const
 
 export type MaterialIconName = (typeof icons)[number]

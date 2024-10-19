@@ -28,9 +28,10 @@ export const authOptions: AuthOptions = {
       async authorize(credentials) {
         if (!credentials?.password) return null
 
-        const user = await prisma.user.findUnique({
+        const user = await prisma.user.findFirst({
           where: {
             email: credentials?.email,
+            verified: true,
           },
         })
 
@@ -71,6 +72,7 @@ export const authOptions: AuthOptions = {
           photoUrl: user.image,
           firstName: profile.given_name,
           lastName: profile.family_name,
+          verified: true,
         },
         create: {
           email: user.email,
@@ -78,6 +80,7 @@ export const authOptions: AuthOptions = {
           photoUrl: user.image,
           firstName: profile.given_name,
           lastName: profile.family_name,
+          verified: true,
         },
       })
 
