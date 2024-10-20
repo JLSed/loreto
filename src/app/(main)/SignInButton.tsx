@@ -15,6 +15,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { signIn } from 'next-auth/react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { FormEvent, useState } from 'react'
 import { toast } from 'sonner'
@@ -87,13 +88,21 @@ export default function SignInButton() {
                 required
               />
             </FormItem>
-            <Button
-              loading={loggingIn}
-              variant={'default'}
-              className='w-full'
-            >
-              Log in
-            </Button>
+            <div>
+              <Button
+                loading={loggingIn}
+                variant={'default'}
+                className='w-full'
+              >
+                Log in
+              </Button>
+              <Link
+                href='/forgot-password'
+                className='text-sm text-muted-foreground float-right mt-2'
+              >
+                Forgot password
+              </Link>
+            </div>
           </form>
           <div className='text-center'>or</div>
           <Button

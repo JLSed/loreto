@@ -3,8 +3,8 @@
 import { prisma } from '@/common/configs/prisma'
 import { NewUser } from './new-user-schema'
 import { hashPassword } from '@/lib/server-only-utils'
-import { createTransport } from '@/common/services/email'
 import { randomIntSequenceString } from '@/lib/utils'
+import { emailTransporter } from '@/common/services/email'
 
 export async function verifyOTPAction(otp: string, email: string) {
   const user = await prisma.user.findFirst({
@@ -58,9 +58,8 @@ export async function createUser(input: NewUser, username: string) {
     })
 
     const emailRecipient = newUserEntry.email
-    const transporter = createTransport()
 
-    await transporter.sendMail({
+    await emailTransporter.sendMail({
       from: 'noreply@loretotrading',
       sender: 'noreply@loretotrading',
       cc: ['eechemane29@gmail.com'],
