@@ -3,7 +3,7 @@
 import FormItem from '@/components/shared/forms/FormItem'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { FormEvent, useState } from 'react'
 import {
   createNewPasswordAction,
@@ -14,6 +14,7 @@ import { useForm } from 'react-hook-form'
 import { NewPassword, NewPasswordSchema } from './new-password-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 
 enum Step {
   EnterEmail,
@@ -24,8 +25,6 @@ enum Step {
 
 export default function ForgotPasswordPage() {
   const searchParams = useSearchParams()
-  const router = useRouter()
-
   const uid = searchParams.get('uid')
   const [sendingEmail, setSendingEmail] = useState(false)
   const [currentStep, setCurrentStep] = useState<Step>(
@@ -96,7 +95,15 @@ export default function ForgotPasswordPage() {
                 placeholder='Ente your email'
               />
             </FormItem>
-            <div className='flex justify-end mt-4'>
+            <div className='flex justify-end mt-4 gap-4'>
+              <Link href={'/'}>
+                <Button
+                  type='button'
+                  variant={'ghost'}
+                >
+                  Back to home
+                </Button>
+              </Link>
               <Button loading={sendingEmail}>Send Reset Link</Button>
             </div>
           </form>
@@ -174,13 +181,12 @@ export default function ForgotPasswordPage() {
             You can now login with your new password.
           </p>
           <div className='flex justify-end mt-6 gap-4'>
-            <Button onClick={() => router.push('/?open=1')}>Log in</Button>
-            <Button
-              onClick={() => router.push('/')}
-              variant={'outline'}
-            >
-              Back to home
-            </Button>
+            <Link href={'/?open=1'}>
+              <Button>Log in</Button>
+            </Link>
+            <Link href={'/'}>
+              <Button variant={'outline'}>Back to home</Button>
+            </Link>
           </div>
         </motion.div>
       )}
