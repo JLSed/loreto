@@ -29,7 +29,9 @@ export default function BookingDetails({ data }: { data: Booking }) {
       setLoading(true)
       const res = await updateBookingStatus(data.id, status)
       if (res.status === 201) {
-        toast.success('Status updated successfully')
+        toast.success('Status updated successfully', {
+          richColors: true,
+        })
         router.back()
         router.refresh()
         return

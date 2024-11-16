@@ -30,6 +30,7 @@ export const BookingStatusTexts = {
   [BookingStatus.Confirmed]: 'Confirmed',
   [BookingStatus.OnTheRoad]: 'On the road',
   [BookingStatus.Completed]: 'Completed',
+  [BookingStatus.Declined]: 'Declined',
 }
 
 export const BoxOrdersStatusText: Record<number, string> = {

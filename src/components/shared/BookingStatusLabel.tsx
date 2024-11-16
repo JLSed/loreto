@@ -30,6 +30,13 @@ export default function BookingStatusLabel(props: { status: BookingStatus }) {
       return (
         <StatusWithDot
           label={'On The Road'}
+          color='hotpink'
+        />
+      )
+    case BookingStatus.Declined:
+      return (
+        <StatusWithDot
+          label={'Declined'}
           color='red'
         />
       )

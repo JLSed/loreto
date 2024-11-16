@@ -35,6 +35,10 @@ export default function BookingsDonutChart(props: Props) {
       'Completed',
       props.data.filter((b) => b.status === BookingStatus.Completed).length,
     ],
+    [
+      'Declined',
+      props.data.filter((b) => b.status === BookingStatus.Declined).length,
+    ],
   ]
 
   return (
@@ -46,7 +50,7 @@ export default function BookingsDonutChart(props: Props) {
       options={{
         pieHole: 0.5,
         is3D: false,
-        colors: ['grey', 'orange', 'yellowgreen', 'dodgerblue', 'green'],
+        colors: ['grey', 'orange', 'yellowgreen', 'dodgerblue', 'green', 'red'],
         chartArea: { width: '90%', height: '100%' },
         backgroundColor: 'transparent',
         legend: {

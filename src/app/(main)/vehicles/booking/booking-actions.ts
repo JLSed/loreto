@@ -6,7 +6,11 @@ import {
   ModeOfPayment,
   TransactionItemType,
   TransactionType,
+  UserRole,
 } from '@/common/enums/enums.db'
+import { authOptions } from '@/common/configs/auth'
+import { getServerSession } from 'next-auth'
+import { signOut } from 'next-auth/react'
 
 export async function getVehicleById(id: string) {
   return await prisma.vehicle.findUnique({
@@ -65,4 +69,20 @@ export async function createBooking(input: VehicleBookingInput) {
     console.error(error)
     return { status: 500 }
   }
+}
+
+export async function getCurrentCustomer() {
+  const session = await getServerSession(authOptions)
+  if (!session?.user) {
+    signOut({
+      callbackUrl: '/',
+    })
+  }
+
+  return prisma.user.findUnique({
+    where: {
+      email: session?.user.email,
+      role: UserRole.Customer,
+    },
+  })
 }

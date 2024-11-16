@@ -93,4 +93,5 @@ export enum BookingStatus {
   Confirmed,
   OnTheRoad,
   Completed,
+  Declined,
 }

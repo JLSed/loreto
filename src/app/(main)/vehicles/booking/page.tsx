@@ -4,14 +4,17 @@ import { UserRole } from '@/common/enums/enums.db'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 import BookingForm from './BookingForm'
+import { getCurrentCustomer } from './booking-actions'
 
 export default async function Page(props: {
   searchParams: {
     vehicleId: string
   }
 }) {
-  const session = await getServerSession(authOptions)
-  const user = session?.user
+  const [session, user] = await Promise.all([
+    getServerSession(authOptions),
+    getCurrentCustomer(),
+  ])
 
   if (user?.role != UserRole.Customer) {
     redirect(
