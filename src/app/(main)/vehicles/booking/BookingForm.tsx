@@ -307,8 +307,8 @@ export default function BookingForm({
           </CardHeader>
           <CardContent className='space-y-4'>
             <div className='flex items-center justify-between'>
-              <Label>Vehicle Service Fee per hour</Label>
-              <div>{pesos(v.serviceFeePerHour)}</div>
+              <Label>Hourly Rate</Label>
+              <div>{pesos(v.serviceFeePerHour)}/Negotiable</div>
             </div>
           </CardContent>
         </Card>

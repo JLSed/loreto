@@ -37,7 +37,7 @@ export default function BookingCalendar({ bookings }: Props) {
               <div className='text-left ml-2 border rounded p-2'>
                 {/* booking header */}
                 <div className='flex items-center justify-between'>
-                  <div className='bg-slate-100 rounded inline-block p-2 min-w-8 text-center'>
+                  <div className='bg-slate-100 dark:bg-slate-800 rounded inline-block p-2 min-w-8 text-center'>
                     {date.getDate()}
                   </div>
                   {scheduledBookings.length > 0 && (

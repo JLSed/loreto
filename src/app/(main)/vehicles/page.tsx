@@ -65,9 +65,9 @@ export default async function Page() {
                 </div>
                 <div className='my-4 flex items-center justify-between'>
                   <div className='text-muted-foreground small'>
-                    Service Fee per hour:
+                    Hourly rate:
                   </div>
-                  <div>{pesos(v.serviceFeePerHour)}</div>
+                  <div>{pesos(v.serviceFeePerHour)}/Negotiable</div>
                 </div>
                 <div className='small mb-4'>
                   Recently booked by {v._count.Booking} people
