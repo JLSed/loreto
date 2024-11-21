@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import { format } from 'date-fns'
 
 type Booking = Awaited<ReturnType<typeof getBookingById>>
 
@@ -47,48 +48,65 @@ export default function BookingDetails({ data }: { data: Booking }) {
   }
 
   return (
-    <main className='max-w-md m-auto'>
-      <Card className='shadow-none'>
-        <CardHeader>
-          <CardTitle className='text-base'>Update status</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className='space-y-1'>
-            <Label>Status</Label>
-            <Select
-              disabled={loading}
-              defaultValue={data.status.toString()}
-              onValueChange={(value) => {
-                setStatus(+value)
-              }}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder='Status' />
-              </SelectTrigger>
-              <SelectContent>
-                {Object.entries(BookingStatusTexts).map(([key, value]) => (
-                  <SelectItem
-                    key={key}
-                    value={key}
-                  >
-                    <BookingStatusLabel status={+key} />
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+    <main className='max-w-3xl m-auto grid grid-cols-[1.5fr_1fr] gap-4'>
+      <div className='rounded-md border p-6'>
+        <div className='font-bold mb-4'>Details</div>
+        <div className='grid grid-cols-2 gap-4'>
+          <div>Pickup Date:</div>
+          <div>{format(data.pickupDate, 'dd MMMM yyyy')}</div>
+          <div>Pickup Location:</div>
+          <div>{data.pickUpLocation}</div>
+          <div>Destination:</div>
+          <div>{data.destination}</div>
+          <div>Booked on:</div>
+          <div>{format(data.createdAt, 'dd MMMM yyyy')}</div>
+          <div>Booked by:</div>
+          <div>{`${data.booker.firstName} ${data.booker.lastName}`}</div>
+        </div>
+      </div>
+      <div>
+        <Card className='shadow-none'>
+          <CardHeader>
+            <CardTitle className='text-base'>Update status</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className='space-y-1'>
+              <Label>Status</Label>
+              <Select
+                disabled={loading}
+                defaultValue={data.status.toString()}
+                onValueChange={(value) => {
+                  setStatus(+value)
+                }}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder='Status' />
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.entries(BookingStatusTexts).map(([key, value]) => (
+                    <SelectItem
+                      key={key}
+                      value={key}
+                    >
+                      <BookingStatusLabel status={+key} />
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
 
-          <div className='mt-8 flex justify-end'>
-            <Button
-              loading={loading}
-              onClick={save}
-              disabled={status === data.status || loading}
-            >
-              Save
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+            <div className='mt-8 flex justify-end'>
+              <Button
+                loading={loading}
+                onClick={save}
+                disabled={status === data.status || loading}
+              >
+                Save
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </main>
   )
 }
