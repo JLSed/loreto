@@ -1,6 +1,5 @@
 import { authOptions } from '@/common/configs/auth'
 import { prisma } from '@/common/configs/prisma'
-import { UserRole } from '@/common/enums/enums.db'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 import BookingForm from './BookingForm'
@@ -11,18 +10,17 @@ export default async function Page(props: {
     vehicleId: string
   }
 }) {
-  const [session, user] = await Promise.all([
-    getServerSession(authOptions),
-    getCurrentCustomer(),
-  ])
+  const session = await getServerSession(authOptions)
 
-  if (user?.role != UserRole.Customer) {
+  if (!session?.user) {
     redirect(
       encodeURI(
-        `/signin?redirect=/vehicles/booking?vehicleId=${props.searchParams.vehicleId}`
+        `/?open=1&redirect=/vehicles/booking?vehicleId=${props.searchParams.vehicleId}`
       )
     )
   }
+
+  const user = await getCurrentCustomer()
 
   const v = await prisma.vehicle.findUnique({
     where: {
@@ -40,7 +38,7 @@ export default async function Page(props: {
   return (
     <BookingForm
       v={v}
-      user={user}
+      user={user!}
       vehicleId={props.searchParams.vehicleId}
     />
   )
