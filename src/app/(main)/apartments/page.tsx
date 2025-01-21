@@ -13,7 +13,7 @@ export default async function Page() {
     <div>
       <Navbar />
 
-      <main className='max-w-5xl m-auto p-3 my-4'>
+      <main className='max-w-6xl m-auto p-3 my-4'>
         <h3 className='mb-4'>Apartments</h3>
 
         <Apartments apartments={apartments} />

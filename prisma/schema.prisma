@@ -282,6 +282,10 @@ model Apartment {
   bedrooms                   Int
   toiletAndBath              Int
 
+  availability_status Int @default(0)
+  // 0: Available
+  // 1: Occupied
+
   // square meters
   area Float
 }

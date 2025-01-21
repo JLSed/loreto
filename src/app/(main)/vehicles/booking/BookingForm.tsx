@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { pesos } from '@/lib/utils'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
@@ -36,9 +35,6 @@ const BookInputSchema = z.object({
     .string()
     .trim()
     .min(10, { message: 'Please enter the complete destination address' }),
-  travelType: z.enum(['1', '2', '3'], {
-    invalid_type_error: 'Please tell us the type of travel you want to book',
-  }),
   pickUpDate: z.string().trim().min(10, 'Please select an exact pick up date'),
   vehicleId: z.string(),
 })
@@ -68,7 +64,6 @@ export default function BookingForm({
     },
   })
   const errors = form.formState.errors
-  console.log(form.watch().travelType)
 
   if (!v) {
     return (
@@ -85,12 +80,6 @@ export default function BookingForm({
 
   const onSubmit = async (data: VehicleBookingInput) => {
     try {
-      if (!['1', '2', '3'].includes(form.getValues().travelType)) {
-        form.setError('travelType', {
-          message: 'Please select a valid travel type',
-        })
-        return
-      }
       setIsLoading(true)
       const res = await createBooking(data)
       if (res.status === 201) {
@@ -198,46 +187,6 @@ export default function BookingForm({
               {errors.destination && (
                 <div className='text-xs text-red-600'>
                   {errors.destination.message}
-                </div>
-              )}
-            </div>
-            <div className='space-y-2'>
-              <Label>Travel type</Label>
-              <RadioGroup className='flex justify-between'>
-                <div className='flex items-center space-x-2'>
-                  <RadioGroupItem
-                    value='1'
-                    id='r1'
-                    onClick={() => {
-                      form.setValue('travelType', '1')
-                    }}
-                  />
-                  <Label htmlFor='r1'>One way</Label>
-                </div>
-                <div className='flex items-center space-x-2'>
-                  <RadioGroupItem
-                    value='2'
-                    id='r2'
-                    onClick={() => {
-                      form.setValue('travelType', '2')
-                    }}
-                  />
-                  <Label htmlFor='r2'>Round trip</Label>
-                </div>
-                <div className='flex items-center space-x-2'>
-                  <RadioGroupItem
-                    value='3'
-                    id='r3'
-                    onClick={() => {
-                      form.setValue('travelType', '3')
-                    }}
-                  />
-                  <Label htmlFor='r3'>Hourly</Label>
-                </div>
-              </RadioGroup>
-              {errors.travelType && (
-                <div className='text-xs text-red-600'>
-                  {errors.travelType.message}
                 </div>
               )}
             </div>

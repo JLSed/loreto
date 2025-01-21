@@ -1,6 +1,5 @@
 'use client'
 
-import MultipleImageUpload from '@/components/shared/MultipleImageUpload'
 import FormGroup from '@/components/shared/forms/FormGroup'
 import FormItem from '@/components/shared/forms/FormItem'
 import { Button } from '@/components/ui/button'
@@ -16,6 +15,17 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
 import Link from 'next/link'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { Card } from '@/components/ui/card'
+import { Label } from '@/components/ui/label'
+import ApartmentStatusLabel from '@/components/shared/ApartmentStatusLabel'
+import { ApartmentAvailabilityStatusText } from '@/common/constants/business'
 
 const EditVehicleShema = z.object({
   address: z.string().trim().min(5, 'Please provide the complete address'),
@@ -60,6 +70,7 @@ const EditVehicleShema = z.object({
   images: z
     .array(z.string(), { required_error: 'Please provide at least two photos' })
     .min(2, 'Please provide at least two photos'),
+  availability_status: z.number(),
 })
 
 export type ModifyApartment = z.infer<typeof EditVehicleShema>
@@ -118,6 +129,10 @@ export default function ApartmentDetail(props: {
 
     if (data.withCarParkingSpace !== props.data.withCarParkingSpace) {
       payload.withCarParkingSpace = data.withCarParkingSpace
+    }
+
+    if (data.availability_status !== props.data.availability_status) {
+      payload.availability_status = data.availability_status
     }
 
     if (JSON.stringify(data.images) !== JSON.stringify(props.data.images)) {
@@ -326,6 +341,34 @@ export default function ApartmentDetail(props: {
                 />
               </div>
             </FormItem>
+            <Card className='shadow-none p-5'>
+              <div className='space-y-1'>
+                <Label>Status</Label>
+                <Select
+                  defaultValue={props.data.availability_status.toString()}
+                  disabled={!inEditMode}
+                  onValueChange={(value) =>
+                    form.setValue('availability_status', +value, {
+                      shouldDirty: true,
+                    })
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder='Status' />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {[0, 1].map((value) => (
+                      <SelectItem
+                        key={value}
+                        value={value.toString()}
+                      >
+                        <ApartmentStatusLabel availabilityStatus={+value} />
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </Card>
           </FormGroup>
 
           {/* <div className='mt-4'>

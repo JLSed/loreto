@@ -1,4 +1,5 @@
 import {
+  ApartmentAvailabilityStatus,
   BookingStatus,
   BoxOrderStatus,
   UserRole,
@@ -41,4 +42,9 @@ export const BoxOrdersStatusText: Record<number, string> = {
   [BoxOrderStatus.OutForDelivery]: 'Out for delivery',
   [BoxOrderStatus.ProcessingOrder]: 'Processing',
   [BoxOrderStatus.cancelled]: 'Cancelled',
+}
+
+export const ApartmentAvailabilityStatusText: Record<number, string> = {
+  [ApartmentAvailabilityStatus.Available]: 'Available',
+  [ApartmentAvailabilityStatus.Occupied]: 'Occupied',
 }

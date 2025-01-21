@@ -88,32 +88,6 @@ export default function BoxPage() {
         </div>
 
         <div className='p-4 grid gap-2'>
-          <Label>Placement</Label>
-          <Tabs
-            value={controls.boxPlacement.toString()}
-            onValueChange={(v) => {
-              controls.setBoxPlacement(+v)
-              localStorage.setItem(LSKeys.BOX_PLACEMENT, v)
-            }}
-          >
-            <TabsList className='w-full'>
-              <TabsTrigger
-                value='1'
-                className='w-full'
-              >
-                Master
-              </TabsTrigger>
-              <TabsTrigger
-                value='2'
-                className='w-full'
-              >
-                Inner
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
-        </div>
-
-        <div className='p-4 grid gap-2'>
           <Label>Quality</Label>
           <Tabs
             value={controls.quality}

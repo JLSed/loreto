@@ -95,3 +95,8 @@ export enum BookingStatus {
   Completed,
   Declined,
 }
+
+export enum ApartmentAvailabilityStatus {
+  Available,
+  Occupied,
+}

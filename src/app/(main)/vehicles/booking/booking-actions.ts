@@ -58,7 +58,6 @@ export async function createBooking(input: VehicleBookingInput) {
           pickupDate: new Date(input.pickUpDate).toISOString(),
           pickUpLocation: input.pickUpAddress,
           destination: input.destination,
-          travelType: +input.travelType,
           transactionId: transaction.id,
         },
       })

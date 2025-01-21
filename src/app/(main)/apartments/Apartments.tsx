@@ -14,10 +14,12 @@ import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
 import { CheckIcon } from '@radix-ui/react-icons'
 import { pesos } from '@/lib/utils'
+import { ReactNode } from 'react'
+import ApartmentStatusLabel from '@/components/shared/ApartmentStatusLabel'
 
 export default function Apartments(props: { apartments: Apartment[] }) {
   return (
-    <div className='gap-8 grid-cols-2 grid'>
+    <div className='gap-8 grid-cols-3 grid'>
       {props.apartments.map((a) => {
         return (
           <Card
@@ -50,7 +52,7 @@ export default function Apartments(props: { apartments: Apartment[] }) {
               </div>
 
               <div className='mt-8 space-y-2 px-8'>
-                <div className='grid grid-cols-[15ch_1fr] items-center gap-2'>
+                <div className='grid grid-cols-[15ch_1fr] items-center gap-2 gap-x-3'>
                   <Label>Floor Area</Label>
                   <div>
                     {a.area} m<sup>2</sup>
@@ -78,6 +80,10 @@ export default function Apartments(props: { apartments: Apartment[] }) {
                   <div>{pesos(a.monthlyRentalPrice)}</div>
                   <Label>Address</Label>
                   <div className='text-sm'>{a.address}</div>
+                  <Label>Availability Status</Label>
+                  <ApartmentStatusLabel
+                    availabilityStatus={a.availability_status}
+                  />
                 </div>
               </div>
             </CardContent>

@@ -91,7 +91,6 @@ export default function FloatingToolbar(props: Props) {
       leftPanelSize: props.controls.leftPanelSize,
       rightPanelSize: props.controls.rightPanelSize,
       markings: props.controls.markings,
-      placement: props.controls.boxPlacement,
       thickness: props.controls.boxThickness,
       quality: props.controls.quality,
     })

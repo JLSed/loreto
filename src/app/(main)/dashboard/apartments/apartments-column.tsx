@@ -15,6 +15,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import DeleteVehicle from './DeleteApartment'
+import ApartmentStatusLabel from '@/components/shared/ApartmentStatusLabel'
 
 export const apartmentsColumn: ColumnDef<Apartment>[] = [
   {
@@ -82,6 +83,15 @@ export const apartmentsColumn: ColumnDef<Apartment>[] = [
     accessorKey: 'monthlyRentalPrice',
     header: 'Monthly Rental Price',
     cell: ({ row }) => pesos(row.original.monthlyRentalPrice),
+  },
+  {
+    accessorKey: 'availability_status',
+    header: 'Availability Status',
+    cell: ({ row }) => (
+      <ApartmentStatusLabel
+        availabilityStatus={row.original.availability_status}
+      />
+    ),
   },
   {
     id: 'actions',

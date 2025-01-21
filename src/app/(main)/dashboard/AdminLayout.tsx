@@ -64,11 +64,11 @@ export default function AdminLayout(props: {
             materialIconName='directions_car'
           />
 
-          <AdminNavigationLink
+          {/* <AdminNavigationLink
             label='Box Packaging'
             href='/dashboard/box'
             materialIconName='package_2'
-          />
+          /> */}
 
           <AdminNavigationLink
             label='Manage Accounts'
@@ -82,11 +82,11 @@ export default function AdminLayout(props: {
             materialIconName='orders'
           />
 
-          <AdminNavigationLink
+          {/* <AdminNavigationLink
             label='Transactions'
             href='/dashboard/transactions'
             materialIconName='receipt_long'
-          />
+          /> */}
 
           <AdminNavigationLink
             label='Vehicles'
