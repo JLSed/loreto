@@ -9,12 +9,12 @@ import { UserRole } from '@/common/enums/enums.db'
 import { redirect } from 'next/navigation'
 import Image from 'next/image'
 
-import Box1 from '@/assets/box1.jpeg'
-import Box2 from '@/assets/box2.jpeg'
-import Box3 from '@/assets/box3_inside.jpeg'
-import Box4 from '@/assets/box3_top.jpeg'
-import Box5 from '@/assets/box3.jpeg'
-import Box6 from '@/assets/box3_inside2.jpeg'
+import Box1 from '@/assets/images/box1.jpeg'
+import Box2 from '@/assets/images/box2.jpeg'
+import Box3 from '@/assets/images/box3_inside.jpeg'
+import Box4 from '@/assets/images/box3_top.jpeg'
+import Box5 from '@/assets/images/box3.jpeg'
+import Box6 from '@/assets/images/box3_inside2.jpeg'
 
 export default async function Home() {
   const session = await getServerSession(authOptions)
