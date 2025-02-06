@@ -21,11 +21,11 @@ export function LoretoTradingAbout() {
       initial={{ opacity: 0 }}
       transition={{ delay: 0.5 }}
     >
-      We are a company that specializes in providing packaging solutions. Our
-      unique feature allows for the resizing of boxes and the addition of layout
-      markings. With our services, you can customize boxes to perfectly fit your
-      specific size requirements, complete with accurate markings for easy
-      assembly and organization.
+      We are a company that specializes in providing{' '}
+      <strong>packaging solutions</strong>. Our unique feature allows for the
+      resizing of boxes and the addition of layout markings. With our services,
+      you can customize boxes to perfectly fit your specific size requirements,
+      complete with accurate markings for easy assembly and organization.
     </motion.p>
   )
 }

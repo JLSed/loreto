@@ -21,3 +21,8 @@ export const randomIntSequenceString = (length: number): string => {
   }
   return otp
 }
+
+export function plural(noun: string, number: number, suffix = 's'): string {
+  if (number > 1) return noun + suffix
+  else return noun
+}

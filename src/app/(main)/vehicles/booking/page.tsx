@@ -20,26 +20,33 @@ export default async function Page(props: {
     )
   }
 
-  const user = await getCurrentCustomer()
-
-  const v = await prisma.vehicle.findUnique({
-    where: {
-      id: props.searchParams.vehicleId,
-    },
-    include: {
-      _count: {
-        select: {
-          Booking: true,
+  const [user, v, bookings] = await Promise.all([
+    getCurrentCustomer(),
+    prisma.vehicle.findUnique({
+      where: {
+        id: props.searchParams.vehicleId,
+      },
+      include: {
+        _count: {
+          select: {
+            Booking: true,
+          },
         },
       },
-    },
-  })
+    }),
+    prisma.booking.findMany({
+      orderBy: {
+        pickupDate: 'desc',
+      },
+    }),
+  ])
 
   return (
     <BookingForm
       v={v}
       user={user!}
       vehicleId={props.searchParams.vehicleId}
+      bookings={bookings}
     />
   )
 }

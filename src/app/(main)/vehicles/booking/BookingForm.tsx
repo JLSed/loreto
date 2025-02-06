@@ -15,7 +15,9 @@ import { useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
-import { User } from '@prisma/client'
+import { Booking, User } from '@prisma/client'
+import BookingDatePicker from './BookingDatePicker'
+import { formatDate } from 'date-fns'
 
 const BookInputSchema = z.object({
   firstName: z
@@ -45,10 +47,12 @@ export default function BookingForm({
   v,
   user,
   vehicleId,
+  bookings,
 }: {
   v: Awaited<ReturnType<typeof getVehicleById>>
   user: User
   vehicleId: string
+  bookings: Booking[]
 }) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
@@ -101,6 +105,14 @@ export default function BookingForm({
     } finally {
       setIsLoading(false)
     }
+  }
+
+  function hanldePickUpdatePick(date: Date): void {
+    form.setValue('pickUpDate', date.toString(), {
+      shouldDirty: true,
+      shouldValidate: true,
+      shouldTouch: true,
+    })
   }
 
   return (
@@ -200,11 +212,21 @@ export default function BookingForm({
           <CardContent className='grid grid-cols-2 gap-4'>
             <div className='space-y-1'>
               <Label>Pick up Date</Label>
-              <Input
-                className='w-auto'
-                type='date'
-                {...form.register('pickUpDate')}
+
+              <BookingDatePicker
+                bookings={bookings}
+                onPick={hanldePickUpdatePick}
+                pickedDate={form.watch('pickUpDate')}
               />
+              {form.watch('pickUpDate') && (
+                <div>
+                  You picked:{' '}
+                  <strong>
+                    {formatDate(form.watch('pickUpDate'), 'MMMM d, yyyy')}
+                  </strong>
+                </div>
+              )}
+
               {errors.pickUpDate && (
                 <div className='text-xs text-red-600'>
                   {errors.pickUpDate.message}
