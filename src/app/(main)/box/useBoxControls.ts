@@ -29,6 +29,11 @@ export type LocalImageMarking = {
 }
 
 export default function useBoxControls() {
+  // Inches
+  const DEFAULT_WIDTH = 38
+  const DEFAULT_HEIGHT = 24
+  const SCALE_FACTOR = 20
+
   // actual pixel
   const [height, setHeight] = useState(0)
   const [pixelWidth, setPixelWidth] = useState(0)
@@ -61,6 +66,8 @@ export default function useBoxControls() {
   const [markings, setMarkings] = useState<LocalMarking[]>([])
   const [imageMarkings, setImageMarkings] = useState<LocalImageMarking[]>([])
 
+  const [quotationOpen, setQuotationOpen] = useState(false)
+
   useEffect(() => {
     if (height !== 0) localStorage.setItem(LSKeys.BOX_HEIGHT, height.toString())
   }, [height])
@@ -84,8 +91,8 @@ export default function useBoxControls() {
       setHeight(+h)
       setDimKey(+h)
     } else {
-      setHeight(400)
-      setDimKey(400)
+      setHeight(DEFAULT_HEIGHT)
+      setDimKey(DEFAULT_HEIGHT)
     }
 
     const dt = localStorage.getItem(LSKeys.DRAG_TRANSFORM)
@@ -100,8 +107,8 @@ export default function useBoxControls() {
       setContainerWidth(+containerWidth)
       setDimKey(+containerWidth)
     } else {
-      setContainerWidth(600)
-      setDimKey(600)
+      setContainerWidth(DEFAULT_WIDTH)
+      setDimKey(DEFAULT_WIDTH)
     }
 
     const markings = localStorage.getItem(LSKeys.BOX_MARKINGS)
@@ -112,7 +119,7 @@ export default function useBoxControls() {
         {
           label: 'Serial No:',
           value: '123456',
-          transform: 'translate(50px, 200px)',
+          transform: 'translate(75px, 220px)',
           id: 1,
         },
       ]
@@ -128,9 +135,9 @@ export default function useBoxControls() {
         {
           id: 1,
           imageSrc: '/logo.png',
-          transform: 'translate(97px, 133px)',
-          width: 50,
-          height: 50,
+          transform: 'translate(110px, 133px)',
+          width: 4,
+          height: 4,
         },
       ]
       setImageMarkings(newImageMarkings)
@@ -169,8 +176,8 @@ export default function useBoxControls() {
         id: imageMarkings.length + 1,
         imageSrc: '/logo.png',
         transform: 'translate(0px, 0px)',
-        width: 50,
-        height: 50,
+        width: 4,
+        height: 4,
       },
     ]
     localStorage.setItem(LSKeys.IMAGE_MARKINGS, JSON.stringify(newMarkings))
@@ -278,5 +285,10 @@ export default function useBoxControls() {
     removeImageMarking,
     quality,
     setQuality,
+    // converts inch unit to fit the screen
+    SCALE_FACTOR,
+    //
+    quotationOpen,
+    setQuotationOpen,
   }
 }

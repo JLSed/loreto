@@ -31,6 +31,14 @@ import { useState } from 'react'
 import { toast } from 'sonner'
 import { saveBoxAction } from './actions'
 import { useRouter } from 'next/navigation'
+import dynamic from 'next/dynamic'
+
+const BoxQuotation = dynamic(
+  async () => (await import('./BoxQuotation')).default,
+  {
+    ssr: false,
+  }
+)
 
 interface Props {
   controls: ReturnType<typeof useBoxControls>
@@ -75,7 +83,7 @@ export default function FloatingToolbar(props: Props) {
     if (!props.controls.boxNameRef.current?.value.trim()) {
       props.controls.boxNameRef.current?.focus()
       toast('Please give your box a name.', {
-        position: 'top-right',
+        position: 'top-center',
         duration: 1200,
       })
       return
@@ -106,6 +114,8 @@ export default function FloatingToolbar(props: Props) {
 
   return (
     <div className='absolute top-0 right-0 m-3 flex items-center gap-2'>
+      <BoxQuotation controls={props.controls} />
+
       <Button
         loading={props.controls.isSaving}
         variant='secondary'

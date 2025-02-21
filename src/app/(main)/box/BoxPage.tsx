@@ -20,13 +20,18 @@ import FloatingToolbar from './FloatingToolbar'
 import { Label } from '@/components/ui/label'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Input } from '@/components/ui/input'
+import { cn } from '@/lib/utils'
 
 export default function BoxPage() {
   const controls = useBoxControls()
   const session = useSession()
 
   return (
-    <main className='grid grid-cols-[250px_1fr] relative'>
+    <main
+      className={cn('grid grid-cols-[250px_1fr]', {
+        blur: controls.quotationOpen,
+      })}
+    >
       <ScrollArea className='h-screen border-r relative'>
         {session.data?.user && (
           <div className='p-4 grid gap-2 border-b'>
@@ -45,7 +50,9 @@ export default function BoxPage() {
         >
           <AccordionItem value='dimensions'>
             <AccordionTrigger className='p-4 small text-muted-foreground'>
-              Dimensions
+              <span>
+                Dimensions <code>inch</code>
+              </span>
             </AccordionTrigger>
             <AccordionContent>
               <DimensionControls controls={controls} />

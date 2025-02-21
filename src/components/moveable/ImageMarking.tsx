@@ -55,8 +55,8 @@ export default function ImageMarking(props: Props) {
             className='cursor-move absolute z-10 text-black grid place-items-center'
             style={{
               transform: props.marking.transform,
-              width: `${props.marking.width}px`,
-              height: `${props.marking.height}px`,
+              width: `${props.marking.width * props.controls.SCALE_FACTOR}px`,
+              height: `${props.marking.height * props.controls.SCALE_FACTOR}px`,
             }}
           >
             <img
