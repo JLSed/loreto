@@ -3,11 +3,24 @@ import { BoxPlacement, BoxThickness } from '@/common/enums/enums.db'
 import { TCustomerBoxes } from './page'
 import AddToCardButton from './AddToCardButton'
 import DeleteBox from './DeleteBox'
+import { Render2DBox } from '../../box/BoxQuotation'
+import { computePrice, pesos } from '@/lib/utils'
 
 export default function CustomerBoxes(props: { boxes: TCustomerBoxes }) {
   return (
     <main className='px-4'>
       {props.boxes.map((b) => {
+        const pixelWidth = +(b.totalWidth * (b.leftPanelSize / 100)).toFixed(2)
+        const pixelLength = +(b.totalWidth * (b.rightPanelSize / 100)).toFixed(
+          2
+        )
+        const computation = computePrice({
+          height: b.height,
+          length: pixelLength,
+          width: pixelWidth,
+          thickness: b.thickness === 1 ? 'single' : 'double',
+        })
+
         return (
           <div
             key={b.id}
@@ -24,13 +37,33 @@ export default function CustomerBoxes(props: { boxes: TCustomerBoxes }) {
             <div className='flex divide-x'>
               <div className='grid gap-2 grid-cols-[10ch_1fr] mb-4 pr-4 place-content-start'>
                 <div>Width:</div>
-                <div>{Math.round(b.totalWidth * (b.leftPanelSize / 100))}</div>
+                <div>
+                  {Math.round(b.totalWidth * (b.leftPanelSize / 100))}
+                  <code>in</code>
+                </div>
 
                 <div>Length:</div>
-                <div>{Math.round(b.totalWidth * (b.rightPanelSize / 100))}</div>
+                <div>
+                  {Math.round(b.totalWidth * (b.rightPanelSize / 100))}
+                  <code>in</code>
+                </div>
 
                 <div>Height:</div>
-                <div>{b.height}</div>
+                <div>
+                  {b.height}
+                  <code>in</code>
+                </div>
+
+                <div>Total Area:</div>
+                <div>
+                  {computation.totalArea}
+                  <code>
+                    <sup>2</sup>in
+                  </code>
+                </div>
+
+                <div>Total Price:</div>
+                <div>{pesos(computation.totalPrice)}</div>
               </div>
 
               <div className='grid gap-2 grid-cols-[10ch_1fr] mb-4 px-4 place-content-start'>
@@ -49,52 +82,13 @@ export default function CustomerBoxes(props: { boxes: TCustomerBoxes }) {
               </div>
             </div>
 
-            <div
-              style={{
-                width: b.totalWidth + 'px',
-                height: b.height + 'px',
-                display: 'grid',
-                gridTemplateColumns: `${b.leftPanelSize}% ${b.rightPanelSize}%`,
-                backgroundImage: "url('/karton.avif')",
-              }}
-            >
-              <div className='border-r'></div>
-              <div></div>
-
-              {b.markings.map((m, i) => {
-                return (
-                  <div
-                    key={i}
-                    className='p-2 inline-block absolute text-black'
-                    style={{
-                      transform: m.cssTransform.trim(),
-                    }}
-                  >
-                    {m.label} {m.value}
-                  </div>
-                )
-              })}
-
-              {b.imageMarkings.map((m, i) => {
-                return (
-                  <div
-                    key={i}
-                    className='cursor-move inline-block absolute z-10 text-black'
-                    style={{
-                      transform: m.transform,
-                      width: `${m.width}px`,
-                      height: `${m.height}px`,
-                    }}
-                  >
-                    <img
-                      className='grayscale'
-                      src={m.src}
-                      alt=''
-                    />
-                  </div>
-                )
-              })}
-            </div>
+            <Render2DBox
+              width={pixelWidth}
+              length={pixelLength}
+              height={b.height}
+              thickness={b.thickness}
+              scaleFactor={8}
+            />
           </div>
         )
       })}

@@ -32,6 +32,7 @@ import { toast } from 'sonner'
 import { saveBoxAction } from './actions'
 import { useRouter } from 'next/navigation'
 import dynamic from 'next/dynamic'
+import Link from 'next/link'
 
 const BoxQuotation = dynamic(
   async () => (await import('./BoxQuotation')).default,
@@ -193,6 +194,15 @@ export default function FloatingToolbar(props: Props) {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <Link href={'/'}>
+        <Button
+          loading={props.controls.isSaving}
+          variant='secondary'
+        >
+          Return Home
+        </Button>
+      </Link>
     </div>
   )
 }
