@@ -14,8 +14,8 @@ import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
 import { CheckIcon } from '@radix-ui/react-icons'
 import { pesos } from '@/lib/utils'
-import { ReactNode } from 'react'
 import ApartmentStatusLabel from '@/components/shared/ApartmentStatusLabel'
+import { contact } from '@/lib/constants'
 
 export default function Apartments(props: { apartments: Apartment[] }) {
   return (
@@ -64,7 +64,7 @@ export default function Apartments(props: { apartments: Apartment[] }) {
                   <Label>Can be occupied by</Label>
                   <div>{a.maxOccupantsPerUnit} persons</div>
                   <Label>Parking Spaces</Label>
-                  <div className='flex gap-2'>
+                  <div className='flex flex-wrap gap-2'>
                     {a.withCarParkingSpace && (
                       <Badge variant={'secondary'}>
                         <CheckIcon className='mr-1' /> Car
@@ -84,6 +84,10 @@ export default function Apartments(props: { apartments: Apartment[] }) {
                   <ApartmentStatusLabel
                     availabilityStatus={a.availability_status}
                   />
+                  <Label>Contact Us</Label>
+                  <div className='text-sm'>
+                    <code>{contact}</code>
+                  </div>
                 </div>
               </div>
             </CardContent>

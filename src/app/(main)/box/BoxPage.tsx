@@ -60,7 +60,7 @@ export default function BoxPage() {
           </AccordionItem>
           <AccordionItem value='phase-1'>
             <AccordionTrigger className='p-4 small text-muted-foreground'>
-              Markings
+              Remarks
             </AccordionTrigger>
             <AccordionContent>
               <MarkingsSidebar controls={controls} />
@@ -118,6 +118,10 @@ export default function BoxPage() {
               </TabsTrigger>
             </TabsList>
           </Tabs>
+          <div className='grid grid-cols-2 text-center'>
+            <div className='text-xs'>2 sides only</div>
+            <div className='text-xs'>4 sides</div>
+          </div>
         </div>
 
         {!session.data?.user && (

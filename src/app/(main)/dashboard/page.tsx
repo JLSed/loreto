@@ -5,6 +5,7 @@ import { Card } from '@/components/ui/card'
 import { ReactNode } from 'react'
 import BookingsBarChart from './BookingsBarChart'
 import BookingsDonutChart from './BookingsDonutChart'
+import { cn } from '@/lib/utils'
 
 export default async function Page() {
   const [boxOrders, bookings, transactions, activeCustomers, auditLogs] =
@@ -44,21 +45,25 @@ export default async function Page() {
           label={'Orders'}
           value={boxOrders.length}
           materialIconName={'package_2'}
+          className='bg-rose-100'
         />
         <CardOverviewItem
           label={'Bookings'}
           value={bookings.length}
           materialIconName={'local_shipping'}
+          className='bg-green-100'
         />
         <CardOverviewItem
           label={'Transactions'}
           value={transactions.length}
           materialIconName={'receipt_long'}
+          className='bg-purple-100'
         />
         <CardOverviewItem
           label={'Active Customers'}
           value={activeCustomers.length}
           materialIconName={'group'}
+          className='bg-blue-100'
         />
       </div>
 
@@ -80,9 +85,10 @@ const CardOverviewItem = (props: {
   label: ReactNode
   value: ReactNode
   materialIconName: MaterialIconName
+  className?: string
 }) => {
   return (
-    <Card className='col-span-3 p-5'>
+    <Card className={cn('col-span-3 p-5', props.className)}>
       <div className='flex items-center justify-between mb-2'>
         <div className='text-sm capitalize'>{props.label}</div>
         <MaterialIcon name={props.materialIconName} />

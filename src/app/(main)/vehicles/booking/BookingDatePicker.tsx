@@ -76,13 +76,17 @@ export default function BookingDatePicker({
                 return (
                   <div
                     className={cn('text-left ml-2 border rounded p-2', {
-                      'cursor-not-allowed opacity-30':
+                      'cursor-not-allowed bg-rose-500':
                         scheduledBookings.length > 0,
                       'cursor-pointer hover:shadow hover:bg-rose-500 group':
                         scheduledBookings.length === 0,
                       'border-rose-600': pickedDate === date.toString(),
                     })}
-                    onClick={() => handlePick(date)}
+                    onClick={
+                      scheduledBookings.length === 0
+                        ? () => handlePick(date)
+                        : undefined
+                    }
                   >
                     {/* booking header */}
                     <div className='flex items-center justify-between'>
@@ -90,9 +94,10 @@ export default function BookingDatePicker({
                         {date.getDate()}
                       </div>
                       {scheduledBookings.length > 0 ? (
-                        <div>
-                          {scheduledBookings.length}{' '}
-                          {plural('Booking', scheduledBookings.length)}
+                        <div className='text-white'>
+                          Booked
+                          {/* {scheduledBookings.length}{' '}
+                          {plural('Booking', scheduledBookings.length)} */}
                         </div>
                       ) : (
                         <div className='text-muted-foreground group-hover:text-white'>

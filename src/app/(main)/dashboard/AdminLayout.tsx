@@ -31,10 +31,7 @@ export default function AdminLayout(props: {
             <div className='text-sm font-medium capitalize'>{user.name}</div>
             <div className='text-xs text-muted-foreground'>{user.email}</div>
           </div>
-          <Badge
-            variant={'secondary'}
-            className='ml-2 capitalize'
-          >
+          <Badge className='ml-2 capitalize'>
             {UserRoleLabel[user.role as UserRole]}
           </Badge>
         </div>
@@ -95,7 +92,7 @@ export default function AdminLayout(props: {
           />
         </nav>
 
-        <div className='flex items-center justify-between absolute bottom-0 right-0 left-0 p-4'>
+        <div className='flex items-center justify-between absolute bottom-0 right-0 left-0 p-4 border-t border-primary bg-red-50'>
           <div className='text-muted-foreground text-sm mr-auto'>Settings</div>
           <SignoutButton useButton />
           <ThemeSwitcher useIcon />
