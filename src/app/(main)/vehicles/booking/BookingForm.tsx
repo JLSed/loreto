@@ -18,6 +18,15 @@ import { useRouter } from 'next/navigation'
 import { Booking, User } from '@prisma/client'
 import BookingDatePicker from './BookingDatePicker'
 import { formatDate } from 'date-fns'
+import usePhAddressQuery from '@/common/hooks/usePhAddressQuery'
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 const BookInputSchema = z.object({
   firstName: z
@@ -68,6 +77,15 @@ export default function BookingForm({
     },
   })
   const errors = form.formState.errors
+
+  const ctrl = usePhAddressQuery({
+    onFullAddressChange(fullAddress) {
+      form.setValue('pickUpAddress', fullAddress, {
+        shouldDirty: true,
+        shouldTouch: true,
+      })
+    },
+  })
 
   if (!v) {
     return (
@@ -180,10 +198,98 @@ export default function BookingForm({
           <CardContent className='space-y-4'>
             <div className='space-y-1'>
               <Label>Pick up address</Label>
-              <Textarea
-                placeholder='Please tell us the complete address of the pick up point'
-                {...form.register('pickUpAddress')}
-              />
+              <div className='grid grid-cols-[min-content_1fr] gap-3 items-center'>
+                <div className='text-muted-foreground text-sm'>Region</div>
+                <Select
+                  disabled={ctrl.regionsQuery.isPending}
+                  value={ctrl.selectedRegion?.code}
+                  onValueChange={ctrl.setRegionByCode}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder='Select Region' />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {ctrl.regions.map((r) => (
+                      <SelectItem
+                        value={r.code}
+                        key={r.code}
+                      >
+                        {r.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <div className='text-muted-foreground text-sm'>City</div>
+                <Select
+                  disabled={ctrl.citiesQuery.isPending}
+                  value={ctrl.selectedCity?.code}
+                  onValueChange={ctrl.setCityByCode}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder='Select City' />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {ctrl.cities.map((c) => (
+                      <SelectItem
+                        value={c.code}
+                        key={c.code}
+                      >
+                        {c.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <div className='text-muted-foreground text-sm'>Brgy.</div>
+                <Select
+                  disabled={ctrl.brgysQuery.isPending}
+                  value={ctrl.selectedBarangay?.code}
+                  onValueChange={ctrl.setBrgyByCode}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder='Select Brgy.' />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {ctrl.barangays.map((b) => (
+                      <SelectItem
+                        value={b.code}
+                        key={b.code}
+                      >
+                        {b.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <div className='text-muted-foreground text-sm'>
+                  Subdivision/Village
+                </div>
+                <Input
+                  placeholder='Subdivision/Village'
+                  value={ctrl.subdivisionOrVillage}
+                  onChange={(e) => ctrl.setSubdivisionOrVillage(e.target.value)}
+                />
+
+                <div className='text-muted-foreground text-sm'>
+                  Street/Building
+                </div>
+                <Input
+                  placeholder='Street/Building'
+                  value={ctrl.streetOrBuilding}
+                  onChange={(e) => ctrl.setStreetOrBuilding(e.target.value)}
+                />
+
+                <div className='text-muted-foreground text-sm'>
+                  Lot/Block/Unit No:
+                </div>
+                <Input
+                  placeholder='Lot/Block/Unit No:'
+                  value={ctrl.lotOrUnitNumber}
+                  onChange={(e) => ctrl.setLotOrUnitNumber(e.target.value)}
+                />
+              </div>
+
               {errors.pickUpAddress && (
                 <div className='text-xs text-red-600'>
                   {errors.pickUpAddress.message}

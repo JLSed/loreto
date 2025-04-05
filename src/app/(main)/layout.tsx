@@ -6,6 +6,7 @@ import { Toaster } from '@/components/ui/sonner'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/common/configs/auth'
 import ClientSessionProvider from './SessionProvider'
+import ReactQueryProvider from './ReactQueryProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -34,9 +35,11 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ClientSessionProvider session={session}>
-            {children}
-          </ClientSessionProvider>
+          <ReactQueryProvider>
+            <ClientSessionProvider session={session}>
+              {children}
+            </ClientSessionProvider>
+          </ReactQueryProvider>
           <Toaster />
         </ThemeProvider>
       </body>
