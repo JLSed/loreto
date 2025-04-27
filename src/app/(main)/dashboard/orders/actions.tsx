@@ -12,8 +12,16 @@ import { getServerSession } from 'next-auth'
 export async function getDashboardOrders() {
   return prisma.boxOrder.findMany({
     include: {
-      box: true,
+      box: {
+        include: {
+          markings: true,
+          imageMarkings: true,
+        },
+      },
       user: true,
+    },
+    orderBy: {
+      createdAt: 'desc',
     },
   })
 }

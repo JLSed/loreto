@@ -78,9 +78,18 @@ export default function BookingForm({
   })
   const errors = form.formState.errors
 
-  const ctrl = usePhAddressQuery({
+  const pickupLocationCtrl = usePhAddressQuery({
     onFullAddressChange(fullAddress) {
       form.setValue('pickUpAddress', fullAddress, {
+        shouldDirty: true,
+        shouldTouch: true,
+      })
+    },
+  })
+
+  const destinationCtrl = usePhAddressQuery({
+    onFullAddressChange(fullAddress) {
+      form.setValue('destination', fullAddress, {
         shouldDirty: true,
         shouldTouch: true,
       })
@@ -201,15 +210,15 @@ export default function BookingForm({
               <div className='grid grid-cols-[min-content_1fr] gap-3 items-center'>
                 <div className='text-muted-foreground text-sm'>Region</div>
                 <Select
-                  disabled={ctrl.regionsQuery.isPending}
-                  value={ctrl.selectedRegion?.code}
-                  onValueChange={ctrl.setRegionByCode}
+                  disabled={pickupLocationCtrl.regionsQuery.isPending}
+                  value={pickupLocationCtrl.selectedRegion?.code}
+                  onValueChange={pickupLocationCtrl.setRegionByCode}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder='Select Region' />
                   </SelectTrigger>
                   <SelectContent>
-                    {ctrl.regions.map((r) => (
+                    {pickupLocationCtrl.regions.map((r) => (
                       <SelectItem
                         value={r.code}
                         key={r.code}
@@ -222,15 +231,15 @@ export default function BookingForm({
 
                 <div className='text-muted-foreground text-sm'>City</div>
                 <Select
-                  disabled={ctrl.citiesQuery.isPending}
-                  value={ctrl.selectedCity?.code}
-                  onValueChange={ctrl.setCityByCode}
+                  disabled={pickupLocationCtrl.citiesQuery.isPending}
+                  value={pickupLocationCtrl.selectedCity?.code}
+                  onValueChange={pickupLocationCtrl.setCityByCode}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder='Select City' />
                   </SelectTrigger>
                   <SelectContent>
-                    {ctrl.cities.map((c) => (
+                    {pickupLocationCtrl.cities.map((c) => (
                       <SelectItem
                         value={c.code}
                         key={c.code}
@@ -243,15 +252,15 @@ export default function BookingForm({
 
                 <div className='text-muted-foreground text-sm'>Brgy.</div>
                 <Select
-                  disabled={ctrl.brgysQuery.isPending}
-                  value={ctrl.selectedBarangay?.code}
-                  onValueChange={ctrl.setBrgyByCode}
+                  disabled={pickupLocationCtrl.brgysQuery.isPending}
+                  value={pickupLocationCtrl.selectedBarangay?.code}
+                  onValueChange={pickupLocationCtrl.setBrgyByCode}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder='Select Brgy.' />
                   </SelectTrigger>
                   <SelectContent>
-                    {ctrl.barangays.map((b) => (
+                    {pickupLocationCtrl.barangays.map((b) => (
                       <SelectItem
                         value={b.code}
                         key={b.code}
@@ -267,8 +276,10 @@ export default function BookingForm({
                 </div>
                 <Input
                   placeholder='Subdivision/Village'
-                  value={ctrl.subdivisionOrVillage}
-                  onChange={(e) => ctrl.setSubdivisionOrVillage(e.target.value)}
+                  value={pickupLocationCtrl.subdivisionOrVillage}
+                  onChange={(e) =>
+                    pickupLocationCtrl.setSubdivisionOrVillage(e.target.value)
+                  }
                 />
 
                 <div className='text-muted-foreground text-sm'>
@@ -276,8 +287,10 @@ export default function BookingForm({
                 </div>
                 <Input
                   placeholder='Street/Building'
-                  value={ctrl.streetOrBuilding}
-                  onChange={(e) => ctrl.setStreetOrBuilding(e.target.value)}
+                  value={pickupLocationCtrl.streetOrBuilding}
+                  onChange={(e) =>
+                    pickupLocationCtrl.setStreetOrBuilding(e.target.value)
+                  }
                 />
 
                 <div className='text-muted-foreground text-sm'>
@@ -285,8 +298,10 @@ export default function BookingForm({
                 </div>
                 <Input
                   placeholder='Lot/Block/Unit No:'
-                  value={ctrl.lotOrUnitNumber}
-                  onChange={(e) => ctrl.setLotOrUnitNumber(e.target.value)}
+                  value={pickupLocationCtrl.lotOrUnitNumber}
+                  onChange={(e) =>
+                    pickupLocationCtrl.setLotOrUnitNumber(e.target.value)
+                  }
                 />
               </div>
 
@@ -298,10 +313,103 @@ export default function BookingForm({
             </div>
             <div className='space-y-1'>
               <Label>Destination</Label>
-              <Textarea
-                placeholder='Please tell us the complete address of the destination'
-                {...form.register('destination')}
-              />
+              <div className='grid grid-cols-[min-content_1fr] gap-3 items-center'>
+                <div className='text-muted-foreground text-sm'>Region</div>
+                <Select
+                  disabled={destinationCtrl.regionsQuery.isPending}
+                  value={destinationCtrl.selectedRegion?.code}
+                  onValueChange={destinationCtrl.setRegionByCode}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder='Select Region' />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {destinationCtrl.regions.map((r) => (
+                      <SelectItem
+                        value={r.code}
+                        key={r.code}
+                      >
+                        {r.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <div className='text-muted-foreground text-sm'>City</div>
+                <Select
+                  disabled={destinationCtrl.citiesQuery.isPending}
+                  value={destinationCtrl.selectedCity?.code}
+                  onValueChange={destinationCtrl.setCityByCode}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder='Select City' />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {destinationCtrl.cities.map((c) => (
+                      <SelectItem
+                        value={c.code}
+                        key={c.code}
+                      >
+                        {c.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <div className='text-muted-foreground text-sm'>Brgy.</div>
+                <Select
+                  disabled={destinationCtrl.brgysQuery.isPending}
+                  value={destinationCtrl.selectedBarangay?.code}
+                  onValueChange={destinationCtrl.setBrgyByCode}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder='Select Brgy.' />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {destinationCtrl.barangays.map((b) => (
+                      <SelectItem
+                        value={b.code}
+                        key={b.code}
+                      >
+                        {b.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <div className='text-muted-foreground text-sm'>
+                  Subdivision/Village
+                </div>
+                <Input
+                  placeholder='Subdivision/Village'
+                  value={destinationCtrl.subdivisionOrVillage}
+                  onChange={(e) =>
+                    destinationCtrl.setSubdivisionOrVillage(e.target.value)
+                  }
+                />
+
+                <div className='text-muted-foreground text-sm'>
+                  Street/Building
+                </div>
+                <Input
+                  placeholder='Street/Building'
+                  value={destinationCtrl.streetOrBuilding}
+                  onChange={(e) =>
+                    destinationCtrl.setStreetOrBuilding(e.target.value)
+                  }
+                />
+
+                <div className='text-muted-foreground text-sm'>
+                  Lot/Block/Unit No:
+                </div>
+                <Input
+                  placeholder='Lot/Block/Unit No:'
+                  value={destinationCtrl.lotOrUnitNumber}
+                  onChange={(e) =>
+                    destinationCtrl.setLotOrUnitNumber(e.target.value)
+                  }
+                />
+              </div>
               {errors.destination && (
                 <div className='text-xs text-red-600'>
                   {errors.destination.message}

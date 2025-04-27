@@ -11,8 +11,10 @@ import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from '@/components/ui/dialog'
 
 import {
@@ -26,6 +28,8 @@ import { useState } from 'react'
 import { updateOrderStatus } from './actions'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
+import { PencilIcon } from 'lucide-react'
+import BoxView from './BoxView'
 
 type Props = {
   orders: DashboardOrders
@@ -68,7 +72,12 @@ export default function OrdersTable(props: Props) {
 
               return (
                 <div className='flex flex-col items-start gap-2'>
-                  <div className='font-bold capitalize'>{b.name}</div>
+                  <div className='font-bold capitalize flex items-center gap-2'>
+                    {b.name}
+                    <Badge variant={'outline'}>
+                      {b.thickness === 1 ? 'Single' : 'Double'}
+                    </Badge>
+                  </div>
                   <Badge
                     className='flex gap-2'
                     variant={'secondary'}
@@ -89,7 +98,12 @@ export default function OrdersTable(props: Props) {
             header: 'Customer',
             cell: ({ row }) => {
               const c = row.original.user
-              return <div className='capitalize'>{c.username}</div>
+              return (
+                <div className='capitalize'>
+                  <div>{c.username}</div>
+                  <div>{c.contactNumber}</div>
+                </div>
+              )
             },
           },
           {
@@ -106,6 +120,7 @@ export default function OrdersTable(props: Props) {
                   className='cursor-pointer'
                   onClick={() => setOrderToUpdate(row.original)}
                 >
+                  <PencilIcon className='w-3 h-3 mr-1' />
                   <BoxOrderStatusLabel status={s} />
                 </Badge>
               )
@@ -130,6 +145,32 @@ export default function OrdersTable(props: Props) {
                 default:
                   break
               }
+            },
+          },
+          {
+            id: 'action',
+            cell: ({ row }) => {
+              return (
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button
+                      variant={'secondary'}
+                      size={'sm'}
+                    >
+                      Preview Box
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className='sm:max-w-max'>
+                    <DialogHeader>
+                      <DialogTitle>Box Details</DialogTitle>
+                      <DialogDescription>
+                        This preview is just the length and width of the box.
+                      </DialogDescription>
+                      <BoxView box={row.original.box} />
+                    </DialogHeader>
+                  </DialogContent>
+                </Dialog>
+              )
             },
           },
         ]}
