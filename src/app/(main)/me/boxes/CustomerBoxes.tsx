@@ -5,9 +5,8 @@ import AddToCardButton from './AddToCardButton'
 import DeleteBox from './DeleteBox'
 import { Render2DBox } from '../../box/BoxQuotation'
 import { computePrice, pesos } from '@/lib/utils'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import BoxPreview from '../../box/preview/BoxPreview'
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 export default function CustomerBoxes(props: { boxes: TCustomerBoxes }) {
   return (
@@ -32,12 +31,18 @@ export default function CustomerBoxes(props: { boxes: TCustomerBoxes }) {
             <div className='flex items-center justify-between'>
               <div className='font-bold mb-2 capitalize'>{b.name}</div>
               <div className='flex gap-2'>
+                <Link
+                  passHref
+                  href={`/box/preview?box=${b.id}`}
+                >
+                  <Button>See Preview</Button>
+                </Link>
                 <AddToCardButton boxId={b.id} />
                 <DeleteBox boxId={b.id} />
               </div>
             </div>
 
-            <div className='flex divide-x'>
+            <div className='flex divide-x mb-4'>
               <div className='grid gap-2 grid-cols-[10ch_1fr] mb-4 pr-4 place-content-start'>
                 <div>Width:</div>
                 <div>
@@ -85,37 +90,13 @@ export default function CustomerBoxes(props: { boxes: TCustomerBoxes }) {
               </div>
             </div>
 
-            <Tabs
-              defaultValue='1'
-              className='w-full'
-            >
-              <TabsList>
-                <TabsTrigger value='1'>With Ruler</TabsTrigger>
-                <TabsTrigger value='2'>With Markings</TabsTrigger>
-              </TabsList>
-              <TabsContent value='1'>
-                <div className='pt-8'>
-                  <Render2DBox
-                    width={pixelWidth}
-                    length={pixelLength}
-                    height={b.height}
-                    thickness={b.thickness}
-                    scaleFactor={8}
-                  />
-                </div>
-              </TabsContent>
-              <TabsContent value='2'>
-                <ScrollArea>
-                  <BoxPreview
-                    box={b}
-                    markings={b.markings}
-                    imageMarkings={b.imageMarkings}
-                    rootClassName='h-[500px] w-full'
-                  />
-                  <ScrollBar orientation='horizontal' />
-                </ScrollArea>
-              </TabsContent>
-            </Tabs>
+            <Render2DBox
+              width={pixelWidth}
+              length={pixelLength}
+              height={b.height}
+              thickness={b.thickness}
+              scaleFactor={8}
+            />
           </div>
         )
       })}

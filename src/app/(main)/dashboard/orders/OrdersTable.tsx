@@ -28,6 +28,7 @@ import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { PencilIcon } from 'lucide-react'
 import Link from 'next/link'
+import { computePrice, pesos } from '@/lib/utils'
 
 type Props = {
   orders: DashboardOrders
@@ -76,16 +77,28 @@ export default function OrdersTable(props: Props) {
                       {b.thickness === 1 ? 'Single' : 'Double'}
                     </Badge>
                   </div>
-                  <Badge
-                    className='flex gap-2'
-                    variant={'secondary'}
-                  >
-                    <span>H: {b.height}</span>
-                    <span>x</span>
-                    <span>W: {width}</span>
-                    <span>x</span>
-                    <span>L: {length}</span>
-                  </Badge>
+                  <div className='flex items-center gap-2'>
+                    <Badge
+                      className='flex gap-2'
+                      variant={'secondary'}
+                    >
+                      <span>H: {b.height}</span>
+                      <span>x</span>
+                      <span>W: {width}</span>
+                      <span>x</span>
+                      <span>L: {length}</span>
+                    </Badge>
+                    <Badge variant={'outline'}>
+                      {pesos(
+                        computePrice({
+                          width: width,
+                          length: length,
+                          height: b.height,
+                          thickness: b.thickness === 1 ? 'single' : 'double',
+                        }).totalPrice
+                      )}
+                    </Badge>
+                  </div>
                 </div>
               )
             },
@@ -155,7 +168,7 @@ export default function OrdersTable(props: Props) {
                   target='_blank'
                 >
                   <Button
-                    variant={'secondary'}
+                    variant={'outline'}
                     size={'sm'}
                   >
                     Preview Box
