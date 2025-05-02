@@ -172,8 +172,8 @@ export default function AddToCartComponent(props: Props) {
           aria-label='box'
           style={{
             backgroundImage: 'url("/karton.avif")',
-            width: props.box.totalWidth + 'px',
-            height: props.box.height + 'px',
+            width: scale(props.box.totalWidth) + 'px',
+            height: scale(props.box.height) + 'px',
             display: 'grid',
             gridTemplateColumns: `${props.box.leftPanelSize}% 1fr ${props.box.rightPanelSize}%`,
           }}
@@ -202,8 +202,8 @@ export default function AddToCartComponent(props: Props) {
                 className='cursor-move inline-block absolute z-10 text-black'
                 style={{
                   transform: m.transform,
-                  width: `${m.width}px`,
-                  height: `${m.height}px`,
+                  width: `${scale(m.width)}px`,
+                  height: `${scale(m.height)}px`,
                 }}
               >
                 <img
@@ -218,4 +218,8 @@ export default function AddToCartComponent(props: Props) {
       </div>
     </div>
   )
+}
+
+const scale = (width: number, factor = 20) => {
+  return width * factor
 }

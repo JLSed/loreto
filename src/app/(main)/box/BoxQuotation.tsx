@@ -43,7 +43,7 @@ export default function BoxQuotation(props: Props) {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className='fixed top-0 left-0 w-full h-full bg-black/40'
+            className='fixed top-0 left-0 w-full h-screen bg-black/40'
           >
             <Button
               size={'icon'}
@@ -54,7 +54,7 @@ export default function BoxQuotation(props: Props) {
               <XIcon />
             </Button>
 
-            <div className='w-full h-full grid place-items-center'>
+            <div className='w-full h-full grid place-items-center overflow-y-auto'>
               <div className='bg-white shadow rounded p-8 text-black [&_code]:dark:text-white'>
                 <div className='flex items-start justify-between'>
                   <div className='font-bold'>Your Box Quotation</div>
@@ -97,9 +97,7 @@ export default function BoxQuotation(props: Props) {
                   </div>
                   <div>
                     <SlidingNumber
-                      value={
-                        +getPricePerInch(props.controls.boxThickness).toFixed(2)
-                      }
+                      value={+getPricePerInch(props.controls.boxThickness)}
                     />
                   </div>
 
@@ -216,7 +214,7 @@ export function Render2DBox(props: {
           }px`,
         }}
       >
-        {Array.from({ length: total2DLength + 5 }).map((_, n) => {
+        {Array.from({ length: total2DLength + 5 - 1 }).map((_, n) => {
           if (n % 5 !== 0) return null
           return (
             <div

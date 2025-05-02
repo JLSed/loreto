@@ -74,7 +74,7 @@ export default function AdminLayout(props: {
           />
 
           <AdminNavigationLink
-            label='Orders'
+            label='Box Orders'
             href='/dashboard/orders'
             materialIconName='orders'
           />

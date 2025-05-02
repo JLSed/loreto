@@ -5,6 +5,9 @@ import AddToCardButton from './AddToCardButton'
 import DeleteBox from './DeleteBox'
 import { Render2DBox } from '../../box/BoxQuotation'
 import { computePrice, pesos } from '@/lib/utils'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import BoxPreview from '../../box/preview/BoxPreview'
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 
 export default function CustomerBoxes(props: { boxes: TCustomerBoxes }) {
   return (
@@ -82,13 +85,37 @@ export default function CustomerBoxes(props: { boxes: TCustomerBoxes }) {
               </div>
             </div>
 
-            <Render2DBox
-              width={pixelWidth}
-              length={pixelLength}
-              height={b.height}
-              thickness={b.thickness}
-              scaleFactor={8}
-            />
+            <Tabs
+              defaultValue='1'
+              className='w-full'
+            >
+              <TabsList>
+                <TabsTrigger value='1'>With Ruler</TabsTrigger>
+                <TabsTrigger value='2'>With Markings</TabsTrigger>
+              </TabsList>
+              <TabsContent value='1'>
+                <div className='pt-8'>
+                  <Render2DBox
+                    width={pixelWidth}
+                    length={pixelLength}
+                    height={b.height}
+                    thickness={b.thickness}
+                    scaleFactor={8}
+                  />
+                </div>
+              </TabsContent>
+              <TabsContent value='2'>
+                <ScrollArea>
+                  <BoxPreview
+                    box={b}
+                    markings={b.markings}
+                    imageMarkings={b.imageMarkings}
+                    rootClassName='h-[500px] w-full'
+                  />
+                  <ScrollBar orientation='horizontal' />
+                </ScrollArea>
+              </TabsContent>
+            </Tabs>
           </div>
         )
       })}

@@ -27,8 +27,8 @@ export function plural(noun: string, number: number, suffix = 's'): string {
   else return noun
 }
 
-const SINGLE_PER_INCH = 0.2083333333
-const DOUBLE_PER_INCH = 0.3333333333
+const SINGLE_PER_INCH = 0.03
+const DOUBLE_PER_INCH = 0.054
 type inch = number
 type ComputePriceParams = {
   width: inch

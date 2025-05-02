@@ -24,7 +24,7 @@ export default function BoxView({ box }: Props) {
         {box.imageMarkings.map((m) => {
           return (
             <Image
-              className='absolute'
+              className='absolute grayscale'
               key={m.id}
               style={{ transform: m.transform }}
               src={m.src}

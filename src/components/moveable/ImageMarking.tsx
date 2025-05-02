@@ -17,6 +17,7 @@ import {
 } from '@/components/ui/context-menu'
 
 import ImageUpload from '../shared/ImageUpload'
+import Image from 'next/image'
 
 interface Props {
   containerRef: RefObject<HTMLDivElement>
@@ -59,8 +60,9 @@ export default function ImageMarking(props: Props) {
               height: `${props.marking.height * props.controls.SCALE_FACTOR}px`,
             }}
           >
-            <img
-              className='grayscale w-full'
+            <Image
+              fill
+              className='grayscale'
               src={src}
               alt=''
             />
@@ -117,8 +119,8 @@ export default function ImageMarking(props: Props) {
             const parsed = JSON.parse(markings) as LocalImageMarking[]
             const index = parsed.findIndex((m) => m.id === props.marking.id)
             parsed[index].transform = e.drag.transform.trim()
-            parsed[index].width = e.width
-            parsed[index].height = e.height
+            parsed[index].width = e.width / props.controls.SCALE_FACTOR
+            parsed[index].height = e.height / props.controls.SCALE_FACTOR
 
             localStorage.setItem(LSKeys.IMAGE_MARKINGS, JSON.stringify(parsed))
           }

@@ -11,10 +11,8 @@ import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog'
 
 import {
@@ -29,7 +27,7 @@ import { updateOrderStatus } from './actions'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { PencilIcon } from 'lucide-react'
-import BoxView from './BoxView'
+import Link from 'next/link'
 
 type Props = {
   orders: DashboardOrders
@@ -151,25 +149,18 @@ export default function OrdersTable(props: Props) {
             id: 'action',
             cell: ({ row }) => {
               return (
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button
-                      variant={'secondary'}
-                      size={'sm'}
-                    >
-                      Preview Box
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className='sm:max-w-max'>
-                    <DialogHeader>
-                      <DialogTitle>Box Details</DialogTitle>
-                      <DialogDescription>
-                        This preview is just the length and width of the box.
-                      </DialogDescription>
-                      <BoxView box={row.original.box} />
-                    </DialogHeader>
-                  </DialogContent>
-                </Dialog>
+                <Link
+                  passHref
+                  href={`/box/preview?box=${row.original.boxId}`}
+                  target='_blank'
+                >
+                  <Button
+                    variant={'secondary'}
+                    size={'sm'}
+                  >
+                    Preview Box
+                  </Button>
+                </Link>
               )
             },
           },
