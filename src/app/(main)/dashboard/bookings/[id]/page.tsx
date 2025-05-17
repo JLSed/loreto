@@ -11,7 +11,7 @@ export default async function Page(props: {
   return (
     <div>
       <header className='p-4'>
-        <h3>Edit Booking</h3>
+        <h3>Booking Details</h3>
       </header>
 
       <BookingDetails data={data} />

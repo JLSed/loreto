@@ -8,14 +8,16 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import { cn } from '@/lib/utils'
 import { Booking } from '@prisma/client'
 import Link from 'next/link'
 
 type Props = {
   bookings: Booking[]
+  bookingId?: string
 }
 
-export default function BookingCalendar({ bookings }: Props) {
+export default function BookingCalendar({ bookings, bookingId }: Props) {
   return (
     <div>
       <Calendar
@@ -33,11 +35,16 @@ export default function BookingCalendar({ bookings }: Props) {
                 new Date(booking.pickupDate).getFullYear() ===
                   date.getFullYear()
             )
+
             return (
               <div className='text-left ml-2 border rounded p-2'>
                 {/* booking header */}
                 <div className='flex items-center justify-between'>
-                  <div className='bg-slate-100 dark:bg-slate-800 rounded inline-block p-2 min-w-8 text-center'>
+                  <div
+                    className={cn(
+                      'bg-slate-100 dark:bg-slate-800 rounded inline-block p-2 min-w-8 text-center'
+                    )}
+                  >
                     {date.getDate()}
                   </div>
                   {scheduledBookings.length > 0 && (
@@ -53,7 +60,12 @@ export default function BookingCalendar({ bookings }: Props) {
                           <TooltipTrigger asChild>
                             <Link
                               href={`/dashboard/bookings/${b.id}`}
-                              className='line-clamp-1 text-ellipsis hover:underline'
+                              className={cn(
+                                'line-clamp-1 text-ellipsis hover:underline',
+                                {
+                                  'text-rose-500': bookingId === b.id,
+                                }
+                              )}
                             >
                               • {b.destination}
                             </Link>
