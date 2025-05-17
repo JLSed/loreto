@@ -16,6 +16,8 @@ import { CheckIcon } from '@radix-ui/react-icons'
 import { pesos } from '@/lib/utils'
 import ApartmentStatusLabel from '@/components/shared/ApartmentStatusLabel'
 import { contact } from '@/lib/constants'
+import { Button } from '@/components/ui/button'
+import ApartmentInquiry from './ApartmentInquiry'
 
 export default function Apartments(props: { apartments: Apartment[] }) {
   return (
@@ -88,6 +90,9 @@ export default function Apartments(props: { apartments: Apartment[] }) {
                   <div className='text-sm'>
                     <code>{contact}</code>
                   </div>
+                </div>
+                <div className='pt-4 flex justify-end'>
+                  <ApartmentInquiry apartment={a} />
                 </div>
               </div>
             </CardContent>
