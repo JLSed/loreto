@@ -8,9 +8,10 @@ import { Input } from '@/components/ui/input'
 import { Box, BoxMarking, ImageMarking, User } from '@prisma/client'
 import { ArrowLeftIcon } from '@radix-ui/react-icons'
 import { useRouter } from 'next/navigation'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { toast } from 'sonner'
 import { placeOrder } from '../actions'
+import { computePrice, pesos } from '@/lib/utils'
 
 type Props = {
   user: User
@@ -95,8 +96,6 @@ export default function AddToCartComponent(props: Props) {
             <div>
               {props.box.placement == BoxPlacement.Inner ? 'Inner' : 'Master'}
             </div>
-            <div>Quality:</div>
-            <div>Class {props.box.quality}</div>
           </div>
 
           <div className='grid grid-cols-[20ch_1fr] gap-2'>
@@ -157,6 +156,24 @@ export default function AddToCartComponent(props: Props) {
           </div>
         </div>
 
+        <div className='mb-4'>
+          Total Price:{' '}
+          {pesos(
+            computePrice({
+              width: computePercentage(
+                props.box.totalWidth,
+                props.box.leftPanelSize
+              ),
+              length: computePercentage(
+                props.box.totalWidth,
+                props.box.rightPanelSize
+              ),
+              height: props.box.height,
+              thickness: props.box.thickness === 1 ? 'single' : 'double',
+            }).totalPrice * quantity
+          )}
+        </div>
+
         <div className='border-b pb-8'>
           <Button
             loading={placingOrder}
@@ -165,61 +182,7 @@ export default function AddToCartComponent(props: Props) {
             Place Order
           </Button>
         </div>
-
-        <div className='my-4 font-bold'>Preview</div>
-
-        <div
-          aria-label='box'
-          style={{
-            backgroundImage: 'url("/karton.avif")',
-            width: scale(props.box.totalWidth) + 'px',
-            height: scale(props.box.height) + 'px',
-            display: 'grid',
-            gridTemplateColumns: `${props.box.leftPanelSize}% 1fr ${props.box.rightPanelSize}%`,
-          }}
-          className='relative'
-        >
-          <div className='border-r'></div>
-          <div></div>
-          {props.box.markings.map((m, i) => {
-            return (
-              <div
-                key={i}
-                className='p-2 inline-block absolute text-black'
-                style={{
-                  transform: m.cssTransform.trim(),
-                }}
-              >
-                {m.label} {m.value}
-              </div>
-            )
-          })}
-
-          {props.box.imageMarkings.map((m, i) => {
-            return (
-              <div
-                key={i}
-                className='cursor-move inline-block absolute z-10 text-black'
-                style={{
-                  transform: m.transform,
-                  width: `${scale(m.width)}px`,
-                  height: `${scale(m.height)}px`,
-                }}
-              >
-                <img
-                  className='grayscale'
-                  src={m.src}
-                  alt=''
-                />
-              </div>
-            )
-          })}
-        </div>
       </div>
     </div>
   )
-}
-
-const scale = (width: number, factor = 20) => {
-  return width * factor
 }

@@ -3,7 +3,6 @@ import { BoxPlacement, BoxThickness } from '@/common/enums/enums.db'
 import { TCustomerBoxes } from './page'
 import AddToCardButton from './AddToCardButton'
 import DeleteBox from './DeleteBox'
-import { Render2DBox } from '../../box/BoxQuotation'
 import { computePrice, pesos } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
@@ -70,7 +69,7 @@ export default function CustomerBoxes(props: { boxes: TCustomerBoxes }) {
                   </code>
                 </div>
 
-                <div>Total Price:</div>
+                <div>Unit Price:</div>
                 <div>{pesos(computation.totalPrice)}</div>
               </div>
 
@@ -84,19 +83,16 @@ export default function CustomerBoxes(props: { boxes: TCustomerBoxes }) {
                 <div>
                   {b.placement === BoxPlacement.Master ? 'Master' : 'Inner'}
                 </div>
-
-                <div>Quality:</div>
-                <div>Class {b.quality}</div>
               </div>
             </div>
 
-            <Render2DBox
+            {/* <Render2DBox
               width={pixelWidth}
               length={pixelLength}
               height={b.height}
               thickness={b.thickness}
               scaleFactor={8}
-            />
+            /> */}
           </div>
         )
       })}
