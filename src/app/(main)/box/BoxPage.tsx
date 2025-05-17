@@ -94,7 +94,7 @@ export default function BoxPage() {
           </Tabs>
         </div>
 
-        <div className='p-4 grid gap-2'>
+        {/* <div className='p-4 grid gap-2'>
           <Label>Quality</Label>
           <Tabs
             value={controls.quality}
@@ -122,7 +122,7 @@ export default function BoxPage() {
             <div className='text-xs'>2 sides only</div>
             <div className='text-xs'>4 sides</div>
           </div>
-        </div>
+        </div> */}
 
         {!session.data?.user && (
           <div className='p-4 bg-inherit'>

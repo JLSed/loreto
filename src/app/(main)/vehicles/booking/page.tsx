@@ -38,6 +38,9 @@ export default async function Page(props: {
       orderBy: {
         pickupDate: 'desc',
       },
+      where: {
+        vehicleId: props.searchParams.vehicleId,
+      },
     }),
   ])
 
