@@ -4,6 +4,7 @@ import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 import BookingForm from './BookingForm'
 import { getCurrentCustomer } from './booking-actions'
+import { BookingStatus } from '@/common/enums/enums.db'
 
 export default async function Page(props: {
   searchParams: {
@@ -40,6 +41,7 @@ export default async function Page(props: {
       },
       where: {
         vehicleId: props.searchParams.vehicleId,
+        status: BookingStatus.Confirmed,
       },
     }),
   ])
