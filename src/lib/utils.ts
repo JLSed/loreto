@@ -103,3 +103,16 @@ export function getPricePerInch(thickness: number) {
 export function withPesosSymbol(str: string | number) {
   return '₱' + str
 }
+
+export function getInquiryStatusText(status: number): string {
+  switch (status) {
+    case 0:
+      return 'Pending'
+    case 1:
+      return 'Responded'
+    case 2:
+      return 'Closed'
+    default:
+      return ''
+  }
+}

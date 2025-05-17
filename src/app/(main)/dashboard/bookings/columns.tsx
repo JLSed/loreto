@@ -5,17 +5,9 @@ import { format } from 'date-fns'
 import { getBookings } from './actions'
 import BookingStatusLabel from '@/components/shared/BookingStatusLabel'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
 
-import { Button } from '@/components/ui/button'
-import { DotsHorizontalIcon } from '@radix-ui/react-icons'
 import Link from 'next/link'
+import { Button, buttonVariants } from '@/components/ui/button'
 
 export type Booking = Awaited<ReturnType<typeof getBookings>>[number]
 
@@ -64,25 +56,17 @@ export const bookingsColumns: ColumnDef<Booking>[] = [
     id: 'actions',
     cell: ({ row }) => {
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant='ghost'
-              className='h-8 w-8 p-0'
-            >
-              <span className='sr-only'>Open menu</span>
-              <DotsHorizontalIcon className='h-4 w-4' />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align='end'>
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <Link href={`/dashboard/bookings/${row.original.id}`}>
-              <DropdownMenuItem>Update status</DropdownMenuItem>
-            </Link>
-            <DropdownMenuItem disabled>View details</DropdownMenuItem>
-            <DropdownMenuItem disabled>Edit</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <Link
+          href={`/dashboard/bookings/${row.original.id}`}
+          passHref
+        >
+          <Button
+            size={'sm'}
+            variant={'outline'}
+          >
+            View Details
+          </Button>
+        </Link>
       )
     },
   },

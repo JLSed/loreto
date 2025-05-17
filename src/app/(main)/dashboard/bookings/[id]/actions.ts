@@ -21,6 +21,7 @@ export async function getBookingById(id: string) {
     },
     include: {
       booker: true,
+      vehicle: true,
     },
   })
 

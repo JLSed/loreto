@@ -17,6 +17,7 @@ import { useState } from 'react'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { format } from 'date-fns'
+import Link from 'next/link'
 
 type Booking = Awaited<ReturnType<typeof getBookingById>>
 
@@ -62,6 +63,8 @@ export default function BookingDetails({ data }: { data: Booking }) {
           <div>{format(data.createdAt, 'dd MMMM yyyy')}</div>
           <div>Booked by:</div>
           <div>{`${data.booker.firstName} ${data.booker.lastName}`}</div>
+          <div>Vehicle:</div>
+          <div>{data.vehicle.name}</div>
         </div>
       </div>
       <div>
@@ -106,6 +109,19 @@ export default function BookingDetails({ data }: { data: Booking }) {
             </div>
           </CardContent>
         </Card>
+        <div className='mt-4'>
+          <Link
+            target='_blank'
+            href={`/dashboard/bookings/calendar?vehicleId=${data.vehicleId}&bookingId=${data.id}`}
+          >
+            <Button
+              variant={'outline'}
+              className='w-full'
+            >
+              View Calendar
+            </Button>
+          </Link>
+        </div>
       </div>
     </main>
   )

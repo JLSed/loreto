@@ -122,6 +122,26 @@ export default function OrdersTable(props: Props) {
             header: 'Quantity',
           },
           {
+            id: 'total price',
+            header: 'Total Price',
+            cell: ({ row }) => {
+              const box = row.original.box
+              const width = Math.round(
+                box.totalWidth * (box.leftPanelSize / 100)
+              )
+              const length = Math.round(
+                box.totalWidth * (box.rightPanelSize / 100)
+              )
+              const computation = computePrice({
+                height: box.height,
+                width,
+                length,
+                thickness: box.thickness === 1 ? 'single' : 'double',
+              })
+              return pesos(computation.totalPrice * row.original.quantity)
+            },
+          },
+          {
             accessorKey: 'status',
             header: 'Status',
             cell: ({ row }) => {

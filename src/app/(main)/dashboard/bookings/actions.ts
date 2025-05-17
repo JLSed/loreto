@@ -2,7 +2,7 @@
 
 import { prisma } from '@/common/configs/prisma'
 
-export async function getBookings() {
+export async function getBookings(vehicleId?: string) {
   return prisma.booking.findMany({
     include: {
       booker: true,
@@ -10,6 +10,9 @@ export async function getBookings() {
     },
     orderBy: {
       createdAt: 'desc',
+    },
+    where: {
+      vehicleId: vehicleId,
     },
   })
 }

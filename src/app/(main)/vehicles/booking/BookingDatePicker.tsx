@@ -9,9 +9,9 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
-import { cn, plural } from '@/lib/utils'
+import { cn } from '@/lib/utils'
 import { Booking } from '@prisma/client'
-import { formatDate } from 'date-fns'
+import { formatDate, isBefore } from 'date-fns'
 import { CalendarIcon } from 'lucide-react'
 import { useState } from 'react'
 
@@ -73,6 +73,8 @@ export default function BookingDatePicker({
                     new Date(booking.pickupDate).getFullYear() ===
                       date.getFullYear()
                 )
+                const isDateInThePast = isBefore(date, new Date())
+
                 return (
                   <div
                     className={cn('text-left ml-2 border rounded p-2', {
@@ -81,6 +83,7 @@ export default function BookingDatePicker({
                       'cursor-pointer hover:shadow hover:bg-rose-500 group':
                         scheduledBookings.length === 0,
                       'border-rose-600': pickedDate === date.toString(),
+                      'opacity-20 pointer-events-none': isDateInThePast,
                     })}
                     onClick={
                       scheduledBookings.length === 0
@@ -101,7 +104,7 @@ export default function BookingDatePicker({
                         </div>
                       ) : (
                         <div className='text-muted-foreground group-hover:text-white'>
-                          Available
+                          {isDateInThePast ? 'Not Available' : 'Available'}
                         </div>
                       )}
                     </div>

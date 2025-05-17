@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { BoxPlacement, BoxThickness } from '@/common/enums/enums.db'
+import { computePrice, pesos } from '@/lib/utils'
 
 export default async function Pages() {
   const orders = await getUserOrders()
@@ -22,6 +23,12 @@ export default async function Pages() {
       <h3>Your Box Orders</h3>
 
       {orders.map((order) => {
+        const width = Math.round(
+          order.box.totalWidth * (order.box.leftPanelSize / 100)
+        )
+        const length = Math.round(
+          order.box.totalWidth * (order.box.rightPanelSize / 100)
+        )
         return (
           <div
             key={order.id}
@@ -37,19 +44,9 @@ export default async function Pages() {
               >
                 <div>H: {order.box.height}</div>
                 <div>x</div>
-                <div>
-                  W:{' '}
-                  {Math.round(
-                    order.box.totalWidth * (order.box.leftPanelSize / 100)
-                  )}
-                </div>
+                <div>W: {width}</div>
                 <div>x</div>
-                <div>
-                  L:{' '}
-                  {Math.round(
-                    order.box.totalWidth * (order.box.rightPanelSize / 100)
-                  )}
-                </div>
+                <div>L: {length}</div>
               </Badge>
 
               <Badge variant={'outline'}>Class {order.box.quality}</Badge>
@@ -74,6 +71,20 @@ export default async function Pages() {
               <Badge>
                 <BoxOrderStatusLabel status={order.status} />
               </Badge>
+              <Badge variant={'default'}>
+                Total Price:{' '}
+                {pesos(
+                  order.quantity *
+                    computePrice({
+                      width: width,
+                      height: order.box.height,
+                      thickness:
+                        order.box.thickness === 1 ? 'single' : 'double',
+                      length: length,
+                    }).totalPrice
+                )}
+              </Badge>
+
               <Link
                 href={`/me/boxes?boxId=${order.box.id}`}
                 className='ml-auto'

@@ -288,4 +288,26 @@ model Apartment {
 
   // square meters
   area Float
+
+  ApartmentInquiry ApartmentInquiry[]
+}
+
+model ApartmentInquiry {
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  modifiedAt DateTime @updatedAt
+
+  firstName               String
+  lastName                String
+  email                   String
+  contactNumber           String
+  preferredVisitationDate DateTime
+  status                  Int      @default(0)
+  // 0 Pending
+  // 1 Responded
+  // 2 Closed
+  remarks                 String?
+
+  apartment   Apartment @relation(fields: [apartmentId], references: [id])
+  apartmentId String
 }
