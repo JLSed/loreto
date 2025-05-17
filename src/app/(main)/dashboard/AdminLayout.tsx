@@ -50,6 +50,12 @@ export default function AdminLayout(props: {
           />
 
           <AdminNavigationLink
+            label='Apartment Inquiries'
+            href='/dashboard/apartment-inquiries'
+            materialIconName='help_center'
+          />
+
+          <AdminNavigationLink
             label='Audit Logs'
             href='/dashboard/auditlogs'
             materialIconName='person_edit'
