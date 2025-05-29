@@ -10,6 +10,14 @@ export interface Region {
   psgc10DigitCode: string
 }
 
+export interface Province {
+  code: string
+  name: string
+  regionCode: string
+  islandGroupCode: string
+  psgc10DigitCode: string
+}
+
 export interface City {
   code: string
   name: string
@@ -36,6 +44,8 @@ export interface Barangay {
   psgc10DigitCode: string
 }
 
+const NCR_CODE = '130000000'
+
 interface Options {
   onFullAddressChange?: (fullAddress: string) => void
 }
@@ -57,13 +67,38 @@ export default function usePhAddressQuery(options: Options = {}) {
   const setRegionByCode = (code: string) =>
     setSelectedRegion(findRegionByCode(code))
 
-  const [selectedCity, setSelectedCity] = useState<City | undefined>(undefined)
-  const citiesQuery = useQuery({
-    queryKey: ['cities', selectedRegion?.code],
+  const [selectedProvice, setSelectedProvince] = useState<Province | undefined>(
+    undefined
+  )
+  const provinceQuery = useQuery({
+    queryKey: ['provinces', selectedRegion?.code],
     enabled: !!selectedRegion?.code,
     queryFn: () => {
+      return axios.get<Province[]>(
+        `https://psgc.gitlab.io/api/regions/${selectedRegion?.code}/provinces/`
+      )
+    },
+  })
+
+  const provinces = provinceQuery.data?.data ?? []
+  const findProvinceByCode = (code: string) =>
+    provinces.find((r) => r.code === code)
+  const setProvinceByCode = (code: string) =>
+    setSelectedProvince(findProvinceByCode(code))
+
+  const [selectedCity, setSelectedCity] = useState<City | undefined>(undefined)
+  const citiesQuery = useQuery({
+    queryKey: ['cities', selectedRegion?.code, selectedProvice?.code],
+    enabled: !!selectedRegion?.code,
+    queryFn: () => {
+      const code =
+        selectedRegion?.code === NCR_CODE
+          ? selectedRegion?.code
+          : selectedProvice?.code
       return axios.get<City[]>(
-        `https://psgc.gitlab.io/api/regions/${selectedRegion?.code}/cities`
+        `https://psgc.gitlab.io/api/${
+          selectedRegion?.code === NCR_CODE ? 'regions' : 'provinces'
+        }/${code}/cities`
       )
     },
   })
@@ -101,7 +136,9 @@ export default function usePhAddressQuery(options: Options = {}) {
       if (lotOrUnitNumber) fullAddress += lotOrUnitNumber + ' '
       if (streetOrBuilding) fullAddress += streetOrBuilding + ', '
       if (subdivisionOrVillage) fullAddress += subdivisionOrVillage + ' '
-      fullAddress += `Brgy. ${selectedBarangay.name}, ${selectedCity.name}, ${selectedRegion.name}`
+      fullAddress += `Brgy. ${selectedBarangay.name}, ${selectedCity.name},${
+        selectedProvice?.name ?? ''
+      } ${selectedRegion.name}`
       return fullAddress
     }
     return ''
@@ -142,5 +179,12 @@ export default function usePhAddressQuery(options: Options = {}) {
     setCityByCode,
     setBrgyByCode,
     fullAddress,
+    selectedProvice,
+    setSelectedProvince,
+    provinceQuery,
+    findProvinceByCode,
+    setProvinceByCode,
+    provinces,
+    NCR_CODE,
   }
 }

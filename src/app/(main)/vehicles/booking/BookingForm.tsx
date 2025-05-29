@@ -229,6 +229,34 @@ export default function BookingForm({
                   </SelectContent>
                 </Select>
 
+                {pickupLocationCtrl.selectedRegion?.code !==
+                  pickupLocationCtrl.NCR_CODE && (
+                  <>
+                    <div className='text-muted-foreground text-sm'>
+                      Province
+                    </div>
+                    <Select
+                      disabled={pickupLocationCtrl.provinceQuery.isPending}
+                      value={pickupLocationCtrl.selectedProvice?.code}
+                      onValueChange={pickupLocationCtrl.setProvinceByCode}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder='Select Province' />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {pickupLocationCtrl.provinces.map((r) => (
+                          <SelectItem
+                            value={r.code}
+                            key={r.code}
+                          >
+                            {r.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </>
+                )}
+
                 <div className='text-muted-foreground text-sm'>City</div>
                 <Select
                   disabled={pickupLocationCtrl.citiesQuery.isPending}
@@ -334,6 +362,34 @@ export default function BookingForm({
                     ))}
                   </SelectContent>
                 </Select>
+
+                {destinationCtrl.selectedRegion?.code !==
+                  destinationCtrl.NCR_CODE && (
+                  <>
+                    <div className='text-muted-foreground text-sm'>
+                      Province
+                    </div>
+                    <Select
+                      disabled={destinationCtrl.provinceQuery.isPending}
+                      value={destinationCtrl.selectedProvice?.code}
+                      onValueChange={destinationCtrl.setProvinceByCode}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder='Select Province' />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {destinationCtrl.provinces.map((r) => (
+                          <SelectItem
+                            value={r.code}
+                            key={r.code}
+                          >
+                            {r.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </>
+                )}
 
                 <div className='text-muted-foreground text-sm'>City</div>
                 <Select
