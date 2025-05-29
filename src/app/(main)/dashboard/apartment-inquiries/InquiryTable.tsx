@@ -5,6 +5,7 @@ import { Inquiry } from './page'
 import { format } from 'date-fns'
 
 import InquiryUpdateStatus from './inquiry-update-status'
+import Image from 'next/image'
 
 type Props = {
   inquiries: Inquiry[]
@@ -22,6 +23,7 @@ export default function InquiryTable({ inquiries }: Props) {
             return `${i.firstName} ${i.lastName}`
           },
         },
+
         {
           accessorKey: 'email',
           header: 'Email',
@@ -47,6 +49,21 @@ export default function InquiryTable({ inquiries }: Props) {
           header: 'Status',
           cell: ({ row }) => {
             return <InquiryUpdateStatus inquiry={row.original} />
+          },
+        },
+        {
+          id: 'unit',
+          header: 'Unit',
+          cell: ({ row }) => {
+            return (
+              <Image
+                src={row.original.apartment.images[0]}
+                alt=''
+                width={100}
+                height={100}
+                className='object-cover'
+              />
+            )
           },
         },
       ]}

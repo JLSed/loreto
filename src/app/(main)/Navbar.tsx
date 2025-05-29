@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { UserRole } from '@/common/enums/enums.db'
 import { authOptions } from '@/common/configs/auth'
 import dynamic from 'next/dynamic'
+import NavLink from './nav-link'
 
 const SignInButton = dynamic(() => import('./SignInButton'), { ssr: false })
 
@@ -17,7 +18,8 @@ const HomeLinkTitle = (
         width={30}
         height={30}
       />
-      <span>Loreto Trading</span>
+      {/* Intended tobe removed: May 29, 2025 */}
+      {/* <span>Loreto Trading</span> */}
     </div>
   </Link>
 )
@@ -57,10 +59,10 @@ export default async function Navbar() {
     <nav className='flex gap-4 items-center max-w-6xl m-auto p-3'>
       {HomeLinkTitle}
       <div className='gap-8 ml-auto flex items-center'>
-        <Link href={'/'}>Home</Link>
-        <Link href={'/apartments'}>Apartments</Link>
-        <Link href={'/vehicles/'}>Book a Vehicle</Link>
-        <Link href={'/box'}>Custom Box</Link>
+        <NavLink href={'/'}>Home</NavLink>
+        <NavLink href={'/apartments'}>Apartments</NavLink>
+        <NavLink href={'/vehicles/'}>Book a Vehicle</NavLink>
+        <NavLink href={'/box'}>Custom Box</NavLink>
 
         <div className='space-x-4'>{getAction()}</div>
       </div>
