@@ -7,6 +7,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/common/configs/auth'
 import ClientSessionProvider from './SessionProvider'
 import ReactQueryProvider from './ReactQueryProvider'
+import { NavbarProvider } from './navbar-context'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -37,7 +38,7 @@ export default async function RootLayout({
         >
           <ReactQueryProvider>
             <ClientSessionProvider session={session}>
-              {children}
+              <NavbarProvider>{children}</NavbarProvider>
             </ClientSessionProvider>
           </ReactQueryProvider>
           <Toaster />

@@ -30,7 +30,7 @@ export default function HomeBoxesCarousel() {
           {boxes.map((b) => (
             <CarouselItem
               key={b.src}
-              className='basis-1/3'
+              className='basis-1/2 md:basis-1/3'
             >
               <Image
                 alt=''

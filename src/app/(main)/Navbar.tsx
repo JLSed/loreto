@@ -5,7 +5,8 @@ import Image from 'next/image'
 import { UserRole } from '@/common/enums/enums.db'
 import { authOptions } from '@/common/configs/auth'
 import dynamic from 'next/dynamic'
-import NavLink from './nav-link'
+import NavLink, { NavbarToggleButton, NavLinksWrapper } from './nav-link'
+import { MenuIcon } from 'lucide-react'
 
 const SignInButton = dynamic(() => import('./SignInButton'), { ssr: false })
 
@@ -56,16 +57,17 @@ export default async function Navbar() {
   }
 
   return (
-    <nav className='flex gap-4 items-center max-w-6xl m-auto p-3'>
+    <nav className='flex gap-4 items-center max-w-6xl m-auto p-3 justify-between'>
       {HomeLinkTitle}
-      <div className='gap-8 ml-auto flex items-center'>
+      <NavLinksWrapper>
         <NavLink href={'/'}>Home</NavLink>
         <NavLink href={'/apartments'}>Apartments</NavLink>
         <NavLink href={'/vehicles/'}>Book a Vehicle</NavLink>
         <NavLink href={'/box'}>Custom Box</NavLink>
 
         <div className='space-x-4'>{getAction()}</div>
-      </div>
+      </NavLinksWrapper>
+      <NavbarToggleButton />
     </nav>
   )
 }

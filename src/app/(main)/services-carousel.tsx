@@ -41,7 +41,7 @@ export default function ServicesCarousel() {
     <section className='space-y-8 mt-16'>
       <h2 className='text-center'>Our Services</h2>
 
-      <div className='grid grid-cols-3 gap-8'>
+      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8'>
         {services.map((s) => (
           <div
             className='rounded-2xl flex flex-col gap-6 items-center text-center p-8 shadow-xl border'
