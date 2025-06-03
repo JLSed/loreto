@@ -100,3 +100,9 @@ export enum ApartmentAvailabilityStatus {
   Available,
   Occupied,
 }
+
+export enum TenantStatus {
+  Active,
+  InActive,
+  Archived,
+}

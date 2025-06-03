@@ -22,6 +22,7 @@ const icons = [
   'delete',
   'progress_activity',
   'help_center',
+  'location_home',
 ] as const
 
 export type MaterialIconName = (typeof icons)[number]

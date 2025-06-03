@@ -311,3 +311,21 @@ model ApartmentInquiry {
   apartment   Apartment @relation(fields: [apartmentId], references: [id])
   apartmentId String
 }
+
+model Tenant {
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  modifiedAt DateTime @updatedAt
+
+  firstName      String
+  lastName       String
+  contactNumber  String
+  moveInDate     DateTime
+  monthlyDueDate Int
+  monthlyPayment Float
+
+  status Int @default(0)
+  // Active
+  // Inactive
+  // Archived
+}

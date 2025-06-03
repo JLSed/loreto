@@ -96,6 +96,12 @@ export default function AdminLayout(props: {
             href='/dashboard/vehicles'
             materialIconName='local_shipping'
           />
+
+          <AdminNavigationLink
+            label='Tenants'
+            href='/dashboard/tenants'
+            materialIconName='location_home'
+          />
         </nav>
 
         <div className='flex items-center justify-between absolute bottom-0 right-0 left-0 p-4 border-t border-primary bg-red-50'>
