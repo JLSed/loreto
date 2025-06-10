@@ -4,6 +4,7 @@ import { prisma } from '@/common/configs/prisma'
 import { TenantStatus } from '@/common/enums/enums.db'
 import { Tenant } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
 
 export async function getTenants() {
   return await prisma.tenant.findMany({
@@ -55,6 +56,13 @@ export async function updateTenantInfo(
       data: input,
     })
   }
+  revalidatePath('/dashboard/tenants')
+}
+
+export async function deleteTenant(id: number) {
+  await prisma.tenant.delete({
+    where: { id },
+  })
   revalidatePath('/dashboard/tenants')
 }
 

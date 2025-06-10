@@ -25,7 +25,13 @@ export default function EditTenantForm(props: Props) {
 
   async function handleSubmit() {
     setIsLoading(true)
-    await updateTenantInfo(props.tenant.id, form.getValues())
+    const values = form.getValues()
+    await updateTenantInfo(props.tenant.id, {
+      ...values,
+      monthlyDueDate: values.monthlyDueDate
+        ? +values.monthlyDueDate
+        : values.monthlyDueDate,
+    })
     setIsLoading(false)
     router.back()
   }

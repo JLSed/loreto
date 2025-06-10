@@ -1,12 +1,13 @@
 'use client'
 
 import { DataTable } from '@/components/shared/DataTable'
-import { TGetTenants } from './tenants-action'
+import { deleteTenant, TGetTenants } from './tenants-action'
 import { format } from 'date-fns'
 import { pesos } from '@/lib/utils'
 import TenantStatusUpdater from './TenantStatus'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { Trash2Icon } from 'lucide-react'
 
 interface Props {
   tenants: TGetTenants
@@ -55,10 +56,27 @@ export default function TenantsTable(props: Props) {
           id: 'action',
           header: 'Action',
           cell: ({ row }) => {
+            const id = row.original.id
             return (
-              <Link href={`/dashboard/tenants/${row.original.id}`}>
-                <Button variant={'link'}>Edit</Button>
-              </Link>
+              <div className='flex items-center gap-3'>
+                <Link href={`/dashboard/tenants/${id}`}>
+                  <Button variant={'link'}>Edit</Button>
+                </Link>
+                <Button
+                  variant={'ghost'}
+                  size={'icon'}
+                  className='hover:text-red-500'
+                  onClick={() => {
+                    if (
+                      confirm('Are you sure you want to delete this tenant?')
+                    ) {
+                      deleteTenant(id)
+                    }
+                  }}
+                >
+                  <Trash2Icon className='w-4 h-4' />
+                </Button>
+              </div>
             )
           },
         },
