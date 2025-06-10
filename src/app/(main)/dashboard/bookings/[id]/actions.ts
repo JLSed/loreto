@@ -71,7 +71,6 @@ export async function updateBookingStatus(id: string, status: number) {
       await emailTransporter.sendMail({
         from: 'noreply@loretotrading',
         sender: 'noreply@loretotrading',
-        cc: ['eechemane29@gmail.com'],
         to: old.booker.email,
         subject: createSubject(),
         html: `

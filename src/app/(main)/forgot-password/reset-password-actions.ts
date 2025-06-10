@@ -22,7 +22,6 @@ export async function sendEmailResetPasswordLinkAction(email: string) {
   await emailTransporter.sendMail({
     from: 'noreply@loretotrading',
     sender: 'noreply@loretotrading',
-    cc: ['eechemane29@gmail.com'],
     to: user.email,
     subject: `Here's your password reset link`,
     html: `

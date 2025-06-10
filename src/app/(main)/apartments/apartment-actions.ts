@@ -70,7 +70,6 @@ function sendEmail(params: {
   return emailTransporter.sendMail({
     from: 'noreply@loretotrading',
     sender: 'noreply@loretotrading',
-    cc: ['eechemane29@gmail.com'],
     to: params.email,
     subject: `Thank you for sending us your inquiry.`,
     html: `

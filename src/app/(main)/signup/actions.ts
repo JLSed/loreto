@@ -62,7 +62,6 @@ export async function createUser(input: NewUser, username: string) {
     await emailTransporter.sendMail({
       from: 'noreply@loretotrading',
       sender: 'noreply@loretotrading',
-      cc: ['eechemane29@gmail.com'],
       to: emailRecipient,
       subject: `${randomOTP} is your verification code`,
       html: `
