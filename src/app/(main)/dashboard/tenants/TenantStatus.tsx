@@ -51,6 +51,7 @@ export default function TenantStatusUpdater(props: Props) {
         <SelectContent>
           <SelectItem value='0'>Active</SelectItem>
           <SelectItem value='1'>Inactive</SelectItem>
+          <SelectItem value='3'>Due</SelectItem>
           <SelectItem value='2'>Archived</SelectItem>
         </SelectContent>
       </Select>

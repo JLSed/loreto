@@ -31,6 +31,9 @@ export default function EditTenantForm(props: Props) {
       monthlyDueDate: values.monthlyDueDate
         ? +values.monthlyDueDate
         : values.monthlyDueDate,
+      monthlyPayment: values.monthlyPayment
+        ? +values.monthlyPayment
+        : values.monthlyPayment,
     })
     setIsLoading(false)
     router.back()
@@ -62,6 +65,12 @@ export default function EditTenantForm(props: Props) {
             <Input
               required
               {...form.register('contactNumber')}
+            />
+          </FormItem>
+          <FormItem title='Email Address'>
+            <Input
+              required
+              {...form.register('emailAddress')}
             />
           </FormItem>
         </FormGroup>

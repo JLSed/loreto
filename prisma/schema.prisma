@@ -323,9 +323,11 @@ model Tenant {
   moveInDate     DateTime
   monthlyDueDate Int
   monthlyPayment Float
+  emailAddress   String
 
   status Int @default(0)
-  // Active
-  // Inactive
-  // Archived
+  // 0 Active
+  // 1 Inactive
+  // 2 Archived
+  // 3 Due
 }

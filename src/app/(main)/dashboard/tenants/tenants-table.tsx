@@ -27,18 +27,33 @@ export default function TenantsTable(props: Props) {
           header: 'Last Name',
         },
         {
-          accessorKey: 'contactNumber',
-          header: 'Contact Number',
-        },
-        {
           accessorKey: 'moveInDate',
           header: 'Move-in Date',
           cell: ({ row }) => format(row.original.moveInDate, 'MMMM d, yyyy'),
         },
         {
+          accessorKey: 'contactNumber',
+          header: 'Contact',
+          cell: ({ row: { original: t } }) => {
+            return (
+              <div className='space-y-1 text-sm'>
+                <div>{t.emailAddress}</div>
+                <div>{t.contactNumber}</div>
+              </div>
+            )
+          },
+        },
+        {
           accessorKey: 'monthlyPayment',
           header: 'Monthly Payment',
-          cell: ({ row }) => pesos(row.original.monthlyPayment),
+          cell: ({ row }) => {
+            return (
+              <div className='space-y-1 text-sm'>
+                <div>{pesos(row.original.monthlyPayment)}</div>
+                <div>Due every {row.original.monthlyDueDate}</div>
+              </div>
+            )
+          },
         },
         {
           accessorKey: 'status',

@@ -105,4 +105,5 @@ export enum TenantStatus {
   Active,
   InActive,
   Archived,
+  Due,
 }

@@ -20,6 +20,7 @@ export default function NewTenantPage() {
       moveInDate: fd.get('movein_date') as string,
       monthlyDueDate: +(fd.get('monthly_due_date') as string),
       monthlyPayment: +(fd.get('monthly_payment') as string),
+      emailAddress: fd.get('email') as string,
     }
     const added = await addNewTenant(payload)
     if (!added) {
@@ -55,6 +56,12 @@ export default function NewTenantPage() {
             <Input
               required
               name='contact_number'
+            />
+          </FormItem>
+          <FormItem title='Email Address'>
+            <Input
+              required
+              name='email'
             />
           </FormItem>
         </FormGroup>

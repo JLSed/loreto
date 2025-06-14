@@ -75,4 +75,5 @@ export type TNewTenant = {
   moveInDate: string
   monthlyDueDate: number
   monthlyPayment: number
+  emailAddress: string
 }
