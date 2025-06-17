@@ -35,7 +35,7 @@ export async function GET() {
           'MMM d, yyyy'
         )
 
-        emailTransporter.sendMail({
+        await emailTransporter.sendMail({
           from: 'noreply@loretotrading',
           sender: 'noreply@loretotrading',
           to: tenant.emailAddress,
@@ -60,7 +60,7 @@ export async function GET() {
           },
         })
 
-        emailTransporter.sendMail({
+        await emailTransporter.sendMail({
           from: 'noreply@loretotrading',
           sender: 'noreply@loretotrading',
           to: tenant.emailAddress,
