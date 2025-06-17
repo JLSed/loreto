@@ -1,7 +1,7 @@
 import { prisma } from '@/common/configs/prisma'
 import { TenantStatus } from '@/common/enums/enums.db'
 import { emailTransporter } from '@/common/services/email'
-import { contact, TimeInSeconds } from '@/lib/constants'
+import { contact } from '@/lib/constants'
 import { formatDate } from 'date-fns'
 
 export const dynamic = 'force-dynamic'
@@ -59,7 +59,7 @@ export async function GET() {
         },
       })
 
-      await emailTransporter.sendMail({
+      const emailResponse = await emailTransporter.sendMail({
         from: 'noreply@loretotrading',
         sender: 'noreply@loretotrading',
         to: tenant.emailAddress,
@@ -73,6 +73,7 @@ export async function GET() {
               </div>
             `,
       })
+      console.log({ emailResponse })
     }
   })
 
