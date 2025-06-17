@@ -16,7 +16,6 @@ export async function GET() {
   })
 
   const dateToday = new Date().getDate()
-  let emailResponse
 
   activeTenants.forEach(async (tenant) => {
     const isTwoDaysBeforeDue = tenant.monthlyDueDate - dateToday === 2
@@ -60,7 +59,7 @@ export async function GET() {
         },
       })
 
-      emailResponse = await emailTransporter.sendMail({
+      const emailResponse = await emailTransporter.sendMail({
         from: 'noreply@loretotrading',
         sender: 'noreply@loretotrading',
         to: tenant.emailAddress,
@@ -74,6 +73,7 @@ export async function GET() {
               </div>
             `,
       })
+      console.log({ emailResponse })
     }
   })
 
@@ -81,6 +81,5 @@ export async function GET() {
     message: 'Notifications sent.',
     dateToday,
     activeTenants,
-    emailResponse,
   })
 }
