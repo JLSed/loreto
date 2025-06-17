@@ -74,6 +74,13 @@ export async function GET() {
             `,
       })
       console.log({ emailResponse })
+      return Response.json({
+        message: 'Notifications sent.',
+        dateToday,
+        emailResponse,
+        dueToday,
+        tenant,
+      })
     }
   })
 
