@@ -25,6 +25,7 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from '@/components/ui/input-otp'
+import { Eye, EyeOff } from 'lucide-react'
 
 export default function SignUpPage() {
   const router = useRouter()
@@ -36,6 +37,9 @@ export default function SignUpPage() {
   const [verifying, setVerifying] = useState(false)
   const [isVerification, setIsVerification] = useState(false)
   const [hasBeenVerified, setHasBeenVerified] = useState(false)
+
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   const submit = async (data: NewUser) => {
     const username = `${data.firstName} ${data.lastName}`
@@ -120,22 +124,50 @@ export default function SignUpPage() {
             />
           </FormItem>
           <FormItem
-            title='Create Password'
+            title='Create Password (minimum of 6 characters)'
             error={errors?.password?.message}
           >
-            <Input
-              type='password'
-              {...form.register('password')}
-            />
+            <div className='flex items-center gap-1'>
+              <Input
+                type={showPassword ? 'text' : 'password'}
+                {...form.register('password')}
+              />
+              <Button
+                onClick={() => setShowPassword((s) => !s)}
+                type='button'
+                variant={'outline'}
+                size={'icon'}
+              >
+                {showPassword ? (
+                  <Eye className='w-4 h-4' />
+                ) : (
+                  <EyeOff className='w-4 h-4' />
+                )}
+              </Button>
+            </div>
           </FormItem>
           <FormItem
             title='Confirm Password'
             error={errors?.confirmPassword?.message}
           >
-            <Input
-              type='password'
-              {...form.register('confirmPassword')}
-            />
+            <div className='flex items-center gap-1'>
+              <Input
+                type={showConfirmPassword ? 'text' : 'password'}
+                {...form.register('confirmPassword')}
+              />
+              <Button
+                onClick={() => setShowConfirmPassword((s) => !s)}
+                type='button'
+                variant={'outline'}
+                size={'icon'}
+              >
+                {showConfirmPassword ? (
+                  <Eye className='w-4 h-4' />
+                ) : (
+                  <EyeOff className='w-4 h-4' />
+                )}
+              </Button>
+            </div>
           </FormItem>
         </div>
 

@@ -21,6 +21,8 @@ export default function DimensionControls(props: Props) {
       <div className='flex items-center justify-between'>
         <Label htmlFor='Width'>Width</Label>
         <Input
+          min={5}
+          max={50}
           ref={props.controls.widthRef}
           id='Width'
           type='number'
@@ -33,6 +35,8 @@ export default function DimensionControls(props: Props) {
       <div className='flex items-center justify-between'>
         <Label htmlFor='Length'>Length</Label>
         <Input
+          min={5}
+          max={50}
           ref={props.controls.lengthRef}
           id='Length'
           type='number'
@@ -45,6 +49,8 @@ export default function DimensionControls(props: Props) {
       <div className='flex items-center justify-between'>
         <Label htmlFor='Height'>Height</Label>
         <Input
+          min={5}
+          max={50}
           ref={props.controls.heightRef}
           type='number'
           id='Height'

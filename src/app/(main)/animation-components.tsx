@@ -16,7 +16,7 @@ export default function LoretoTradingH1() {
 export function LoretoTradingAbout() {
   return (
     <motion.p
-      className='text-muted-foreground mt-3'
+      className='text-muted-foreground mt-4 max-w-[490px] text-justify'
       animate={{ opacity: 1 }}
       initial={{ opacity: 0 }}
       transition={{ delay: 0.5 }}

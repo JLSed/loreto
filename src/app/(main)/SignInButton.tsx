@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Eye, EyeOff } from 'lucide-react'
 import { signIn } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -23,6 +24,7 @@ import { toast } from 'sonner'
 export default function SignInButton() {
   const searchParams = useSearchParams()
   const [loggingIn, setLoggingIn] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -81,12 +83,26 @@ export default function SignInButton() {
               />
             </FormItem>
             <FormItem title={'Password'}>
-              <Input
-                name='password'
-                placeholder='Password'
-                type='password'
-                required
-              />
+              <div className='flex items-center gap-1'>
+                <Input
+                  name='password'
+                  placeholder='Password'
+                  type={showPassword ? 'text' : 'password'}
+                  required
+                />
+                <Button
+                  onClick={() => setShowPassword((s) => !s)}
+                  type='button'
+                  variant={'outline'}
+                  size={'icon'}
+                >
+                  {showPassword ? (
+                    <Eye className='w-4 h-4' />
+                  ) : (
+                    <EyeOff className='w-4 h-4' />
+                  )}
+                </Button>
+              </div>
             </FormItem>
             <div>
               <Button

@@ -15,6 +15,7 @@ import { NewPassword, NewPasswordSchema } from './new-password-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import { Eye, EyeOff } from 'lucide-react'
 
 enum Step {
   EnterEmail,
@@ -30,6 +31,9 @@ export default function ForgotPasswordPage() {
   const [currentStep, setCurrentStep] = useState<Step>(
     uid ? Step.CreateNewPassword : Step.EnterEmail
   )
+
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   const [creatingNewPassword, setCreatingNewPassword] = useState(false)
   const newPasswordForm = useForm<NewPassword>({
@@ -148,21 +152,49 @@ export default function ForgotPasswordPage() {
               title='New Password'
               error={errors?.password?.message}
             >
-              <Input
-                required
-                type='password'
-                {...newPasswordForm.register('password')}
-              />
+              <div className='flex items-center gap-1'>
+                <Input
+                  required
+                  type={showPassword ? 'text' : 'password'}
+                  {...newPasswordForm.register('password')}
+                />
+                <Button
+                  onClick={() => setShowPassword((s) => !s)}
+                  type='button'
+                  variant={'outline'}
+                  size={'icon'}
+                >
+                  {showPassword ? (
+                    <Eye className='w-4 h-4' />
+                  ) : (
+                    <EyeOff className='w-4 h-4' />
+                  )}
+                </Button>
+              </div>
             </FormItem>
             <FormItem
               title='Confirm Password'
               error={errors?.confirmPassword?.message}
             >
-              <Input
-                required
-                type='password'
-                {...newPasswordForm.register('confirmPassword')}
-              />
+              <div className='flex items-center gap-1'>
+                <Input
+                  required
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  {...newPasswordForm.register('confirmPassword')}
+                />
+                <Button
+                  onClick={() => setShowConfirmPassword((s) => !s)}
+                  type='button'
+                  variant={'outline'}
+                  size={'icon'}
+                >
+                  {showConfirmPassword ? (
+                    <Eye className='w-4 h-4' />
+                  ) : (
+                    <EyeOff className='w-4 h-4' />
+                  )}
+                </Button>
+              </div>
             </FormItem>
             <div className='flex justify-end pt-2'>
               <Button loading={creatingNewPassword}>Reset Password</Button>

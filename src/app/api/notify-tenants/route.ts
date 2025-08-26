@@ -43,7 +43,7 @@ export async function GET() {
           html: `
           <div style="margin: 2rem auto; max-width: 600px; padding: 1.5rem; font-family: sans-serif; border: 1px solid purple; border-radius: 2rem;">
             <h2>Hi, <span style="text-transform: capitalize">${tenant.firstName} ${tenant.lastName}</span> </h2>
-            <p>Your monthly due date is comming on ${formattedDueDate}. Please settle your monthly payment on or before the due date. Thank you.</p>
+            <p>Your monthly due date is coming on ${formattedDueDate}. Please settle your monthly payment on or before the due date. Thank you.</p>
             <div>Best Regards,</div>
             <div><strong>Loreto Trading</strong> - ${contact}</div>
           </div>
