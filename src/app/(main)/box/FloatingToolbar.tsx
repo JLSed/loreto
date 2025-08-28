@@ -89,6 +89,7 @@ export default function FloatingToolbar(props: Props) {
       })
       return
     }
+    console.log(props.controls.imageMarkings, props.controls.markings)
 
     props.controls.setIsSaving(true)
     const res = await saveBoxAction({
@@ -96,10 +97,10 @@ export default function FloatingToolbar(props: Props) {
       dragTransform: localStorage.getItem(LSKeys.DRAG_TRANSFORM) ?? '',
       height: props.controls.height,
       totalWidth: props.controls.containerWidth,
-      imageMarkings: props.controls.imageMarkings,
+      imageMarkings: JSON.parse(localStorage.getItem(LSKeys.IMAGE_MARKINGS)!),
       leftPanelSize: props.controls.leftPanelSize,
       rightPanelSize: props.controls.rightPanelSize,
-      markings: props.controls.markings,
+      markings: JSON.parse(localStorage.getItem(LSKeys.BOX_MARKINGS)!),
       thickness: props.controls.boxThickness,
       quality: props.controls.quality,
     })
@@ -107,6 +108,7 @@ export default function FloatingToolbar(props: Props) {
       toast.success('Box saved successfully!', { position: 'top-right' })
       router.back()
       router.refresh()
+      localStorage.clear()
     } else {
       toast.error(res.error ?? 'Something went wrong. Please try again.')
     }

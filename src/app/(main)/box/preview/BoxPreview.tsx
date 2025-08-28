@@ -1,9 +1,9 @@
 'use client'
 
-import { ReactNode } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { BoxDetails } from './page'
 import Image from 'next/image'
-import { cn, computePrice, pesos } from '@/lib/utils'
+import { adjustTranslateY, cn, computePrice, pesos } from '@/lib/utils'
 import { Box, BoxMarking, ImageMarking } from '@prisma/client'
 import { Replace } from 'lucide-react'
 
@@ -20,8 +20,12 @@ export default function BoxPreview({
   rootClassName,
   markings,
   imageMarkings,
-  scaleFactor = 20,
-}: Props) {
+}: // scaleFactor = 20,
+Props) {
+  const [scaleFactor, setscaleFactor] = useState(0)
+  useEffect(() => {
+    setscaleFactor(window.innerWidth * 0.01)
+  }, [])
   const leftWidth = box.totalWidth * (box.leftPanelSize / 100)
   const rightWidth = box.totalWidth * (box.rightPanelSize / 100)
   const coverHeight = leftWidth / 2
@@ -88,15 +92,15 @@ export default function BoxPreview({
           <Rectangle
             scaleFactor={scaleFactor}
             noBackground
-            width={box.totalWidth * 1.0025}
+            width={box.totalWidth}
             height={box.height}
             className='flex gap-0.5 flex-nowrap relative'
             nonGroup
           >
-            {imageMarkings.map((mark) => {
+            {imageMarkings.map((mark, index) => {
               return (
                 <Image
-                  key={mark.id}
+                  key={index}
                   src={mark.src}
                   alt=''
                   width={mark.width * scaleFactor}
@@ -111,7 +115,7 @@ export default function BoxPreview({
             {markings.map((mark) => {
               return (
                 <div
-                  className='absolute z-20'
+                  className='absolute z-20 ml-2'
                   key={mark.id}
                   style={{
                     transform: mark.cssTransform,
@@ -168,21 +172,25 @@ export default function BoxPreview({
             width={leftWidth}
             height={coverHeight}
             label={shortCoverLabel.replace('Top', 'Bottom')}
+            scaleFactor={scaleFactor}
           />
           <Rectangle
             width={rightWidth}
             height={coverHeight}
             label={longCoverLabel.replace('Top', 'Bottom')}
+            scaleFactor={scaleFactor}
           />
           <Rectangle
             width={leftWidth}
             height={coverHeight}
             label={shortCoverLabel.replace('Top', 'Bottom')}
+            scaleFactor={scaleFactor}
           />
           <Rectangle
             width={rightWidth}
             height={coverHeight}
             label={longCoverLabel.replace('Top', 'Bottom')}
+            scaleFactor={scaleFactor}
           />
         </div>
       </div>
