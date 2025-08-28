@@ -1,11 +1,9 @@
 'use client'
 
 import { ReactNode, useEffect, useState } from 'react'
-import { BoxDetails } from './page'
 import Image from 'next/image'
-import { adjustTranslateY, cn, computePrice, pesos } from '@/lib/utils'
+import { cn, computePrice, pesos } from '@/lib/utils'
 import { Box, BoxMarking, ImageMarking } from '@prisma/client'
-import { Replace } from 'lucide-react'
 
 interface Props {
   box: Box
