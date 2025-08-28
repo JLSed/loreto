@@ -32,7 +32,11 @@ export default function useBoxControls() {
   // Inches
   const DEFAULT_WIDTH = 38
   const DEFAULT_HEIGHT = 24
-  const SCALE_FACTOR = 20
+
+  const [scaleFactor, setScaleFactor] = useState(20)
+  useEffect(() => {
+    setScaleFactor(window.innerWidth * 0.01)
+  }, [])
 
   // actual pixel
   const [height, setHeight] = useState(0)
@@ -119,7 +123,7 @@ export default function useBoxControls() {
         {
           label: 'Serial No:',
           value: '123456',
-          transform: 'translate(75px, 220px)',
+          transform: 'translate(36px, 220px)',
           id: 1,
         },
       ]
@@ -135,7 +139,7 @@ export default function useBoxControls() {
         {
           id: 1,
           imageSrc: '/logo.png',
-          transform: 'translate(110px, 133px)',
+          transform: 'translate(80px, 133px)',
           width: 4,
           height: 4,
         },
@@ -286,7 +290,7 @@ export default function useBoxControls() {
     quality,
     setQuality,
     // converts inch unit to fit the screen
-    SCALE_FACTOR,
+    SCALE_FACTOR: scaleFactor,
     //
     quotationOpen,
     setQuotationOpen,
