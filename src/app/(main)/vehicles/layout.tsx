@@ -26,6 +26,9 @@ export default async function Layout(props: { children: ReactNode }) {
             <Link href='/me/bookings'>
               <Button variant={'secondary'}>My Bookings</Button>
             </Link>
+            <Link href={'/'}>
+              <Button variant='secondary'>Return Home</Button>
+            </Link>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button

@@ -25,7 +25,8 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from '@/components/ui/input-otp'
-import { Eye, EyeOff } from 'lucide-react'
+import { ArrowLeft, ChevronLeft, Eye, EyeOff } from 'lucide-react'
+import Link from 'next/link'
 
 export default function SignUpPage() {
   const router = useRouter()
@@ -42,6 +43,17 @@ export default function SignUpPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   const submit = async (data: NewUser) => {
+    const password = data.password
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{6,}$/
+
+    if (!passwordRegex.test(password)) {
+      form.setError('password', {
+        message:
+          'Password must contain uppercase, lowercase, number, and symbol.',
+      })
+      return
+    }
+
     const username = `${data.firstName} ${data.lastName}`
     try {
       setLoading(true)
@@ -88,7 +100,15 @@ export default function SignUpPage() {
 
   return (
     <div className='max-w-md m-auto p-4 border rounded my-14'>
-      <h2>Sign up</h2>
+      <div className='flex items-center justify-between gap-4 mb-2'>
+        <h2>Sign up</h2>
+        <Link href={'/'}>
+          <Button variant='secondary'>
+            <ArrowLeft className='h-5 w-5' />
+            Return
+          </Button>
+        </Link>
+      </div>
       <p className='mb-8'>Create an account to get started</p>
 
       <form

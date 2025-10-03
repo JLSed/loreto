@@ -57,7 +57,7 @@ export default async function Navbar() {
   }
 
   return (
-    <nav className='flex gap-4 items-center max-w-6xl m-auto p-3 justify-between'>
+    <nav className=' flex gap-4 items-center max-w-6xl m-auto p-3 justify-between'>
       {HomeLinkTitle}
       <NavLinksWrapper>
         <NavLink href={'/'}>Home</NavLink>

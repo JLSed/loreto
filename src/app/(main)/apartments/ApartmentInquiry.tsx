@@ -23,7 +23,7 @@ type Props = {
 
 export default function ApartmentInquiry(props: Props) {
   const [open, setOpen] = useState(false)
-
+  const isOccupied = props.apartment.availability_status === 1
   const handleSubmit = async (formData: FormData) => {
     const res = await createApartmentInquiry(formData, props.apartment.id)
     if (res.status === 500) {
@@ -44,7 +44,7 @@ export default function ApartmentInquiry(props: Props) {
       onOpenChange={setOpen}
     >
       <DialogTrigger asChild>
-        <Button>Inquire</Button>
+        <Button disabled={isOccupied}>Inquire</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -86,8 +86,12 @@ export default function ApartmentInquiry(props: Props) {
             <Label>Contact Number</Label>
             <Input
               required
+              maxLength={11}
+              minLength={11}
               name='contact_number'
               placeholder='Contact Number'
+              inputMode='numeric'
+              title='Contact number must be 11 digits'
             />
           </div>
           <div>
