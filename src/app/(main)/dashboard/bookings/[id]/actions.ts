@@ -32,7 +32,11 @@ export async function getBookingById(id: string) {
   return data
 }
 
-export async function updateBookingStatus(id: string, status: number) {
+export async function updateBookingStatus(
+  id: string,
+  status: number,
+  returnDate: Date | undefined
+) {
   try {
     const session = await getServerSession(authOptions)
 
@@ -52,7 +56,7 @@ export async function updateBookingStatus(id: string, status: number) {
 
       const updated = await tx.booking.update({
         where: { id },
-        data: { status },
+        data: { status, returnDate },
       })
 
       const createSubject = (): string => {

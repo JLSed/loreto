@@ -197,6 +197,7 @@ model Booking {
   id         String   @id @default(cuid())
   createdAt  DateTime @default(now())
   modifiedAt DateTime @updatedAt
+  paidAmount Float    @default(0)
 
   // 0: cancelled
   // 1: pending

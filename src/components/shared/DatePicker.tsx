@@ -20,8 +20,17 @@ export function DatePicker(props: {
   label?: string
   onSelect?: (date: Date | undefined) => void
   triggerClassName?: string
+  disabled?: boolean
+  minDate?: Date
 }) {
   const [date, setDate] = useState<Date | undefined>(props.defaultDate)
+
+  const handleSelect = (selected: Date | undefined) => {
+    setDate(selected)
+    if (props.onSelect) {
+      props.onSelect(selected)
+    }
+  }
 
   return (
     <Popover>
@@ -30,13 +39,14 @@ export function DatePicker(props: {
           variant={'outline'}
           className={cn(
             'justify-start text-left font-normal max-w-full w-full',
-            !props.defaultDate && 'text-muted-foreground',
+            !date && 'text-muted-foreground',
             props.triggerClassName
           )}
+          disabled={props.disabled}
         >
           <CalendarIcon className='mr-2 h-4 w-4' />
-          {props.defaultDate ? (
-            format(props.defaultDate, 'PPP')
+          {date ? (
+            format(date, 'PPP')
           ) : (
             <span>{props.label ?? 'Pick a date'}</span>
           )}
@@ -45,12 +55,18 @@ export function DatePicker(props: {
       <PopoverContent
         className='w-auto p-0'
         align='start'
+        style={{
+          pointerEvents: props.disabled ? 'none' : undefined,
+          opacity: props.disabled ? 0.5 : 1,
+        }}
       >
         <Calendar
           mode='single'
           selected={date}
-          onSelect={setDate}
+          onSelect={handleSelect}
           initialFocus
+          disabled={props.disabled}
+          fromDate={props.minDate}
         />
       </PopoverContent>
     </Popover>

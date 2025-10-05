@@ -44,6 +44,12 @@ export default function AdminLayout(props: {
           />
 
           <AdminNavigationLink
+            label='Sales Report'
+            href='/dashboard/sales-report'
+            materialIconName='bar_chart'
+          />
+
+          <AdminNavigationLink
             label='Apartments'
             href='/dashboard/apartments'
             materialIconName='other_houses'
