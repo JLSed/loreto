@@ -23,6 +23,7 @@ const icons = [
   'progress_activity',
   'help_center',
   'location_home',
+  'bar_chart',
 ] as const
 
 export type MaterialIconName = (typeof icons)[number]

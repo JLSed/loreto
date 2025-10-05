@@ -16,22 +16,26 @@ import { Button } from '@/components/ui/button'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
-import { format } from 'date-fns'
+import { format, set } from 'date-fns'
 import Link from 'next/link'
+import { DatePicker } from '@/components/shared/DatePicker'
 
 type Booking = Awaited<ReturnType<typeof getBookingById>>
 
 export default function BookingDetails({ data }: { data: Booking }) {
   const [loading, setLoading] = useState(false)
   const [status, setStatus] = useState(data.status)
+  const [returnDate, setReturnDate] = useState<Date | undefined>(
+    data.returnDate ? new Date(data.returnDate) : undefined
+  )
   const router = useRouter()
-
   async function save() {
     try {
       setLoading(true)
-      const res = await updateBookingStatus(data.id, status)
+      console.log({ returnDate })
+      const res = await updateBookingStatus(data.id, status, returnDate)
       if (res.status === 201) {
-        toast.success('Status updated successfully', {
+        toast.success('Status and return date updated successfully', {
           richColors: true,
         })
         router.back()
@@ -97,12 +101,19 @@ export default function BookingDetails({ data }: { data: Booking }) {
                 </SelectContent>
               </Select>
             </div>
-
+            <div className='space-y-1 mt-4'>
+              <Label>Return Date</Label>
+              <DatePicker
+                defaultDate={returnDate}
+                onSelect={setReturnDate}
+                disabled={status !== 4}
+                minDate={new Date(data.pickupDate)}
+              />
+            </div>
             <div className='mt-8 flex justify-end'>
               <Button
                 loading={loading}
                 onClick={save}
-                disabled={status === data.status || loading}
               >
                 Save
               </Button>
