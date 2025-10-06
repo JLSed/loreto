@@ -4,23 +4,26 @@ import { pesos } from '@/lib/utils'
 
 export const salesReportRentColumns: ColumnDef<TGetTenants>[] = [
   {
-    accessorKey: 'firstName',
+    accessorKey: 'from',
     header: 'Tenant',
-    cell: ({ row }: any) =>
-      `${row.original.firstName} ${row.original.lastName}`,
+    cell: ({ row }: any) => {
+      const from = row.original.from
+      return from ? `${from.firstName} ${from.lastName}` : '-'
+    },
   },
   {
-    accessorKey: 'emailAddress',
+    accessorKey: 'email',
     header: 'Email',
+    cell: ({ row }: any) => row.original.from?.email || '-',
   },
   {
-    accessorKey: 'monthlyPayment',
-    header: 'Monthly Payment',
-    cell: ({ row }: any) => pesos(row.original.monthlyPayment),
+    accessorKey: 'amount',
+    header: 'Amount',
+    cell: ({ row }: any) => `₱${row.original.amount?.toLocaleString()}`,
   },
   {
     accessorKey: 'createdAt',
-    header: 'Created At',
+    header: 'Paid At',
     cell: ({ row }: any) =>
       new Date(row.original.createdAt).toLocaleDateString(),
   },

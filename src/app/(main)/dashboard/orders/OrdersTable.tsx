@@ -23,7 +23,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { useState } from 'react'
-import { updateOrderStatus } from './actions'
+import { updateOrderStatus, createBoxOrderTransaction } from './actions'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { PencilIcon } from 'lucide-react'
@@ -47,6 +47,26 @@ export default function OrdersTable(props: Props) {
     setLoading(true)
     const res = await updateOrderStatus(order.id, order.status, newStatus)
     if (res.status === 200) {
+      // If status is being set to Completed, create a Transaction
+      if (newStatus === BoxOrderStatus.OrderCompleted) {
+        // Compute total price
+        const box = order.box
+        const width = Math.round(box.totalWidth * (box.leftPanelSize / 100))
+        const length = Math.round(box.totalWidth * (box.rightPanelSize / 100))
+        const computation = computePrice({
+          height: box.height,
+          width,
+          length,
+          thickness: box.thickness === 1 ? 'single' : 'double',
+        })
+        const totalPrice = computation.totalPrice * order.quantity
+
+        await createBoxOrderTransaction({
+          totalPrice,
+          userId: order.userId,
+          // add other fields if needed
+        })
+      }
       setOrderToUpdate(undefined)
       setNewStatus(undefined)
       router.refresh()
