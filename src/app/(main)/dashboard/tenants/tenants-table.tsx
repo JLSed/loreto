@@ -77,6 +77,9 @@ export default function TenantsTable(props: Props) {
                 <Link href={`/dashboard/tenants/${id}`}>
                   <Button variant={'link'}>Edit</Button>
                 </Link>
+                <Link href={`/dashboard/tenants/rent/${id}`}>
+                  <Button variant={'link'}>Rent Details</Button>
+                </Link>
                 <Button
                   variant={'ghost'}
                   size={'icon'}

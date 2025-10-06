@@ -17,7 +17,7 @@ export const salesReportBoxColumns = [
   {
     accessorKey: 'amount',
     header: 'Total Price',
-    cell: ({ row }: any) => `₱${row.original.amount?.toLocaleString()}`,
+    cell: ({ row }: any) => `${pesos(row.original.amount)}`,
   },
   {
     accessorKey: 'createdAt',
