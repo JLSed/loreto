@@ -9,6 +9,7 @@ import { useFormStatus } from 'react-dom'
 import { addNewTenant, TNewTenant } from '../tenants-action'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 export default function NewTenantPage() {
   const router = useRouter()
@@ -34,6 +35,9 @@ export default function NewTenantPage() {
     <div>
       <header className='p-4 flex items-center justify-between'>
         <h2>Add new tenant</h2>
+        <Link href={'/dashboard/tenants'}>
+          <Button variant='secondary'>Go Back</Button>
+        </Link>
       </header>
       <form
         className='mx-auto max-w-3xl grid grid-cols-2 gap-4'

@@ -25,6 +25,7 @@ import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import FormGroup from '@/components/shared/forms/FormGroup'
 import FormItem from '@/components/shared/forms/FormItem'
+import Link from 'next/link'
 
 const NewVehicleInputSchema = z.object({
   name: z.string().trim().min(1, 'Please enter a complete vehilc name'),
@@ -78,7 +79,12 @@ export default function NewVehicle() {
     >
       <header className='p-4 flex items-center justify-between'>
         <h3>New Vehicle</h3>
-        <Button loading={isSaving}>Save</Button>
+        <div className='flex items-center gap-2'>
+          <Button loading={isSaving}>Save</Button>
+          <Link href={'/dashboard/vehicles'}>
+            <Button variant='secondary'>Go Back</Button>
+          </Link>
+        </div>
       </header>
 
       <div className='grid grid-cols-12 p-4 gap-4 w-[850px] m-auto'>

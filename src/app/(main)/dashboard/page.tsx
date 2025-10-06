@@ -6,6 +6,7 @@ import { ReactNode } from 'react'
 import BookingsBarChart from './BookingsBarChart'
 import BookingsDonutChart from './BookingsDonutChart'
 import { cn } from '@/lib/utils'
+import EarningsDashboard from './earnings-dashboard'
 
 export default async function Page() {
   const [boxOrders, bookings, transactions, activeCustomers, auditLogs] =
@@ -66,7 +67,7 @@ export default async function Page() {
           className='bg-blue-100'
         />
       </div>
-
+      <EarningsDashboard />
       <div className='grid grid-cols-2 gap-8 p-8'>
         <div>
           <div className='mb-4 font-medium'>Recent Bookings</div>

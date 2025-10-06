@@ -78,3 +78,16 @@ export async function updateOrderStatus(
     return { status: 500, message: 'Internal server error' }
   }
 }
+
+export async function createBoxOrderTransaction(order: any) {
+  // You may want to adjust the order type for stricter typing
+  return prisma.transaction.create({
+    data: {
+      modeOfPayment: 1, // Set as needed, or get from order/payment info
+      type: 1, // 1: full payment
+      itemType: 1, // 1: box
+      amount: order.totalPrice, // Compute this as needed
+      fromUserId: order.userId,
+    },
+  })
+}

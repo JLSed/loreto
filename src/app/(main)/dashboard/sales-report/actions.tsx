@@ -1,69 +1,31 @@
 import { prisma } from '@/common/configs/prisma'
 
 export async function getSalesReport() {
-  const rent = await prisma.tenant.findMany({
-    select: {
-      id: true,
-      firstName: true,
-      lastName: true,
-      emailAddress: true,
-      monthlyPayment: true,
-      createdAt: true,
-    },
-    orderBy: { createdAt: 'desc' },
-  })
-
-  const box = await prisma.boxOrder.findMany({
-    where: { status: 7 },
+  // Fetch all transactions with user info
+  const transactions = await prisma.transaction.findMany({
     select: {
       id: true,
       createdAt: true,
-      quantity: true,
-      status: true,
-      user: {
+      modifiedAt: true,
+      modeOfPayment: true,
+      type: true,
+      itemType: true,
+      amount: true,
+      from: {
         select: {
           firstName: true,
           lastName: true,
           email: true,
         },
       },
-      box: {
-        select: {
-          id: true,
-          name: true,
-          totalWidth: true,
-          height: true,
-          leftPanelSize: true,
-          rightPanelSize: true,
-          thickness: true,
-        },
-      },
     },
     orderBy: { createdAt: 'desc' },
   })
 
-  const booking = await prisma.booking.findMany({
-    where: { status: 4 },
-    select: {
-      id: true,
-      createdAt: true,
-      pickupDate: true,
-      returnDate: true,
-      booker: {
-        select: {
-          firstName: true,
-          lastName: true,
-          email: true,
-        },
-      },
-      transaction: {
-        select: {
-          amount: true,
-        },
-      },
-    },
-    orderBy: { createdAt: 'desc' },
-  })
+  // Split transactions by itemType
+  const rent = transactions.filter((t) => t.itemType === 3)
+  const box = transactions.filter((t) => t.itemType === 1)
+  const booking = transactions.filter((t) => t.itemType === 2)
 
   return { rent, box, booking }
 }

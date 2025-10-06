@@ -11,6 +11,7 @@ import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { updateTenantInfo } from '../tenants-action'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 interface Props {
   tenant: Tenant
@@ -43,6 +44,9 @@ export default function EditTenantForm(props: Props) {
     <div>
       <header className='p-4 flex items-center justify-between'>
         <h2>Edit Tenant Details</h2>
+        <Link href={'/dashboard/tenants'}>
+          <Button variant='secondary'>Go Back</Button>
+        </Link>
       </header>
       <form
         className='mx-auto max-w-3xl grid grid-cols-2 gap-4'

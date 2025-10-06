@@ -24,6 +24,8 @@ const icons = [
   'help_center',
   'location_home',
   'bar_chart',
+  'inventory_2',
+  'payments',
 ] as const
 
 export type MaterialIconName = (typeof icons)[number]

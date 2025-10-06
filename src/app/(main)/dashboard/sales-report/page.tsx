@@ -1,7 +1,6 @@
+import EarningsDashboard from '../earnings-dashboard'
 import { getSalesReport } from './actions'
-import SalesReportTableRent from './sales-report-table-rent'
-import SalesReportTableBox from './sales-report-table-box'
-import SalesReportTableBooking from './sales-report-table-booking'
+import SalesReportTable from './sales-report-table'
 
 export default async function Page() {
   const { rent, box, booking } = await getSalesReport()
@@ -11,18 +10,31 @@ export default async function Page() {
       <header className='p-4 border-b flex items-center justify-between'>
         <h2>Sales Report</h2>
       </header>
+      <header className='p-4 px-8 pb-0'>
+        <h3 className='border-b-0'>Earnings Overview</h3>
+      </header>
+      <EarningsDashboard />
       <main className='p-4 space-y-8'>
         <section>
           <h3 className='text-lg font-semibold mb-2'>Sales by Rent</h3>
-          <SalesReportTableRent data={rent} />
+          <SalesReportTable
+            data={rent}
+            type='rent'
+          />
         </section>
         <section>
           <h3 className='text-lg font-semibold mb-2'>Sales by Box</h3>
-          <SalesReportTableBox data={box} />
+          <SalesReportTable
+            data={box}
+            type='box'
+          />
         </section>
         <section>
           <h3 className='text-lg font-semibold mb-2'>Sales by Booking</h3>
-          <SalesReportTableBooking data={booking} />
+          <SalesReportTable
+            data={booking}
+            type='booking'
+          />
         </section>
       </main>
     </div>
