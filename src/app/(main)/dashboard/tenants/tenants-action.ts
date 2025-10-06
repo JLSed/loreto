@@ -6,6 +6,33 @@ import { Tenant } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
+interface UtilityTransaction {
+  fromTenantId: number
+  modeOfPayment: number
+  type: number
+  itemType: number
+  amount: number
+}
+
+export async function createUtilityTransaction(data: UtilityTransaction) {
+  try {
+    const transaction = prisma.transaction.create({
+      data: {
+        fromTenantId: data.fromTenantId,
+        modeOfPayment: data.modeOfPayment,
+        fromUserId: null,
+        type: data.type, // 1: full payment
+        itemType: data.itemType, // 3: apartment/utilities
+        amount: data.amount,
+      },
+    })
+    return { status: 201, data: transaction }
+  } catch (error) {
+    console.error(error)
+    return { status: 500, message: 'Failed to create transaction' }
+  }
+}
+
 export async function getTenants() {
   return await prisma.tenant.findMany({
     orderBy: {

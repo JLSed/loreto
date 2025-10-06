@@ -164,9 +164,12 @@ model Transaction {
 
   amount Float
 
-  from       User      @relation(fields: [fromUserId], references: [id])
-  fromUserId String
-  Booking    Booking[]
+  from       User?   @relation(fields: [fromUserId], references: [id])
+  fromUserId String?
+
+  tenant       Tenant?   @relation(fields: [fromTenantId], references: [id])
+  fromTenantId Int?
+  Booking      Booking[]
 
   @@index([fromUserId])
 }
@@ -326,9 +329,10 @@ model Tenant {
   monthlyPayment Float
   emailAddress   String
 
-  status Int @default(0)
+  status      Int           @default(0)
   // 0 Active
   // 1 Inactive
   // 2 Archived
   // 3 Due
+  Transaction Transaction[]
 }
