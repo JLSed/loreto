@@ -4,15 +4,42 @@ import FormGroup from '@/components/shared/forms/FormGroup'
 import FormItem from '@/components/shared/forms/FormItem'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Loader2 } from 'lucide-react'
 import { useFormStatus } from 'react-dom'
 import { addNewTenant, TNewTenant } from '../tenants-action'
+import { getAvailableApartments } from '../../apartments/dashboard-apartment-actions'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
 export default function NewTenantPage() {
   const router = useRouter()
+  const [availableApartments, setAvailableApartments] = useState<
+    Array<{ id: string; address: string; monthlyRentalPrice: number }>
+  >([])
+  const [selectedApartment, setSelectedApartment] = useState<string>('')
+
+  useEffect(() => {
+    const fetchApartments = async () => {
+      try {
+        const apartments = await getAvailableApartments()
+        setAvailableApartments(apartments)
+      } catch (error) {
+        console.error('Failed to fetch apartments:', error)
+        toast.error('Failed to load available apartments')
+      }
+    }
+    fetchApartments()
+  }, [])
+
   const handleSubmit = async (fd: FormData) => {
     const payload: TNewTenant = {
       firstName: fd.get('first_name') as string,
@@ -20,7 +47,7 @@ export default function NewTenantPage() {
       contactNumber: fd.get('contact_number') as string,
       moveInDate: fd.get('movein_date') as string,
       monthlyDueDate: +(fd.get('monthly_due_date') as string),
-      monthlyPayment: +(fd.get('monthly_payment') as string),
+      apartmentId: fd.get('apartment_id') as string,
       emailAddress: fd.get('email') as string,
     }
     const added = await addNewTenant(payload)
@@ -71,11 +98,32 @@ export default function NewTenantPage() {
         </FormGroup>
 
         <FormGroup groupTitle='Tenancy Details'>
-          <FormItem title='Monthly Payment (PHP)'>
-            <Input
+          <FormItem title='Apartment Occupied'>
+            <Select
+              value={selectedApartment}
+              onValueChange={setSelectedApartment}
+              name='apartment_id'
               required
-              type='number'
-              name='monthly_payment'
+            >
+              <SelectTrigger>
+                <SelectValue placeholder='Select an available apartment' />
+              </SelectTrigger>
+              <SelectContent>
+                {availableApartments.map((apartment) => (
+                  <SelectItem
+                    key={apartment.id}
+                    value={apartment.id}
+                  >
+                    {apartment.address} - ₱
+                    {apartment.monthlyRentalPrice.toLocaleString()}/month
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <input
+              type='hidden'
+              name='apartment_id'
+              value={selectedApartment}
             />
           </FormItem>
           <FormItem title='Move in Date'>

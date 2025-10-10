@@ -42,14 +42,52 @@ export async function getTenants() {
 }
 
 export async function addNewTenant(input: TNewTenant) {
-  const added = await prisma.tenant.create({
-    data: { ...input, moveInDate: new Date(input.moveInDate) },
-  })
-  if (added) {
-    revalidatePath('/dashboard/tenants')
-    return true
+  try {
+    // Get the apartment to get its monthly rental price
+    const apartment = await prisma.apartment.findUnique({
+      where: { id: input.apartmentId },
+      select: { monthlyRentalPrice: true, availability_status: true }
+    })
+
+    if (!apartment) {
+      throw new Error('Apartment not found')
+    }
+
+    if (apartment.availability_status !== 0) {
+      throw new Error('Apartment is not available')
+    }
+
+    // Use a transaction to create tenant and update apartment
+    const result = await prisma.$transaction(async (tx) => {
+      // Create tenant with apartment's monthly rental price
+      const { apartmentId, ...tenantData } = input
+      const added = await tx.tenant.create({
+        data: { 
+          ...tenantData, 
+          moveInDate: new Date(input.moveInDate),
+          monthlyPayment: apartment.monthlyRentalPrice,
+        },
+      })
+
+      // Update apartment to mark as occupied
+      await tx.$executeRaw`
+        UPDATE "Apartment" 
+        SET availability_status = 1, "tenantId" = ${added.id}
+        WHERE id = ${input.apartmentId}
+      `
+
+      return added
+    })
+
+    if (result) {
+      revalidatePath('/dashboard/tenants')
+      return true
+    }
+    return false
+  } catch (error) {
+    console.error('Error adding new tenant:', error)
+    return false
   }
-  return false
 }
 
 export async function updateTenantStatus(params: {
@@ -101,6 +139,6 @@ export type TNewTenant = {
   contactNumber: string
   moveInDate: string
   monthlyDueDate: number
-  monthlyPayment: number
+  apartmentId: string
   emailAddress: string
 }
