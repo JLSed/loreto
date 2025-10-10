@@ -293,6 +293,9 @@ model Apartment {
   // square meters
   area Float
 
+  tenant   Tenant? @relation(fields: [tenantId], references: [id])
+  tenantId Int?
+
   ApartmentInquiry ApartmentInquiry[]
 }
 
@@ -335,4 +338,5 @@ model Tenant {
   // 2 Archived
   // 3 Due
   Transaction Transaction[]
+  Apartment   Apartment[]
 }

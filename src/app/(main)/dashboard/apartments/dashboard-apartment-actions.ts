@@ -16,3 +16,11 @@ export async function getApartments(
     },
   })
 }
+
+export async function getAvailableApartments() {
+  return prisma.apartment.findMany({
+    where: { availability_status: 0 },
+    select: { id: true, address: true, monthlyRentalPrice: true },
+    orderBy: { address: 'asc' },
+  })
+}

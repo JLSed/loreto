@@ -17,9 +17,11 @@ import { Button } from '@/components/ui/button'
 import { HamburgerMenuIcon } from '@radix-ui/react-icons'
 import { ThemeSwitcher } from '../dashboard/ThemeSwitcher'
 import SignoutButton from '../dashboard/SignoutButton'
+import { checkIfUserIsTenant } from './rent/rent-actions'
 
 export default async function Layout(props: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions)
+  const isUserTenant = await checkIfUserIsTenant()
 
   if (!session?.user) {
     redirect('/sigin?redirect=/me')
@@ -44,6 +46,7 @@ export default async function Layout(props: { children: React.ReactNode }) {
 
         <div className='flex items-center gap-6'>
           <Link href={'/'}> Home </Link>
+          {isUserTenant && <Link href={'/me/rent'}>Rent</Link>}
           <Link href={'/me/bookings'}> Bookings </Link>
           <Link href={'/me/boxes'}> Boxes </Link>
           <Link href={'/me/orders'}> Orders </Link>
