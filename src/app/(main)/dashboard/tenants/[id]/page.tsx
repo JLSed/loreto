@@ -16,5 +16,17 @@ export default async function Page(props: PageProps) {
   })
   if (!tenant) notFound()
 
-  return <EditTenantForm tenant={tenant} />
+  // Get the apartment associated with this tenant
+  const apartment = await prisma.apartment.findFirst({
+    where: {
+      tenantId: tenant.id,
+    },
+  })
+
+  return (
+    <EditTenantForm
+      tenant={tenant}
+      apartment={apartment}
+    />
+  )
 }
