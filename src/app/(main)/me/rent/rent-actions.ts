@@ -36,5 +36,17 @@ export async function getCurrentUserTenantDetails() {
     },
   })
 
-  return tenant
+  if (!tenant) return null
+
+  // Get the apartment associated with this tenant
+  const apartment = await prisma.apartment.findFirst({
+    where: {
+      tenantId: tenant.id,
+    },
+  })
+
+  return {
+    ...tenant,
+    apartment,
+  }
 }

@@ -324,13 +324,20 @@ model Tenant {
   createdAt  DateTime @default(now())
   modifiedAt DateTime @updatedAt
 
-  firstName      String
-  lastName       String
-  contactNumber  String
-  moveInDate     DateTime
-  monthlyDueDate Int
-  monthlyPayment Float
-  emailAddress   String
+  firstName        String
+  lastName         String
+  contactNumber    String
+  moveInDate       DateTime
+  monthlyDueDate   Int
+  monthlyPayment   Float
+  emailAddress     String
+  tenantSignature  String?
+  ownerSignature   String?
+  ownerName        String?
+  ownerContact     String?
+  witnesses        String[]
+  contractSigned   DateTime?
+  agreementCreated DateTime?
 
   status      Int           @default(0)
   // 0 Active
