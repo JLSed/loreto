@@ -90,6 +90,11 @@ export default function AdminLayout(props: {
             href='/dashboard/orders'
             materialIconName='orders'
           />
+          <AdminNavigationLink
+            label='Box Inventory'
+            href='/dashboard/inventory'
+            materialIconName='inventory'
+          />
 
           {/* <AdminNavigationLink
             label='Transactions'

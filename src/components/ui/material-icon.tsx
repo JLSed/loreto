@@ -26,6 +26,7 @@ const icons = [
   'bar_chart',
   'inventory_2',
   'payments',
+  'inventory',
 ] as const
 
 export type MaterialIconName = (typeof icons)[number]

@@ -347,3 +347,31 @@ model Tenant {
   Transaction Transaction[]
   Apartment   Apartment[]
 }
+
+model BoxInventory {
+  id             String  @id @default(cuid())
+  length         Int
+  width          Int
+  height         Int
+  thickness      Int     @default(0)
+  // 0 single
+  // 1 double
+  color          Int     @default(0)
+  // 0 white
+  // 1 yellow
+  quantity       Int
+  weightPerPiece Int
+  TotalWeight    Int
+  // Weight in lbs
+  cardboardType  Int     @default(0)
+  // 0 Brand New
+  // 1 Second Hand
+  type           BoxType @relation(fields: [boxType], references: [id])
+  boxType        Int
+}
+
+model BoxType {
+  id           Int            @id @default(autoincrement())
+  typeName     String
+  BoxInventory BoxInventory[]
+}

@@ -57,12 +57,14 @@ export enum AuditAffectedTable {
   Transaction,
   Vehicle,
   Bookings,
+  BoxInventory,
+  BoxType,
 }
 
 export enum AuditAction {
   Creation = 1,
   Modification,
-  // Deletion,
+  Deletion,
 }
 
 export enum BookStatus {
