@@ -22,7 +22,6 @@ export default async function Page() {
       <header className='p-4 border-b flex items-center justify-between'>
         <h2>Sales Report</h2>
         <ExportSalesPdfButton
-          month={month}
           summary={{
             total,
             rent: rentTotal,
