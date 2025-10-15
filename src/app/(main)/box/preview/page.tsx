@@ -26,10 +26,15 @@ export default async function Page(props: PageProps) {
   const box = await getBoxDetails(props.searchParams.box)
 
   return (
-    <BoxPreview
-      box={box}
-      markings={box.markings}
-      imageMarkings={box.imageMarkings}
-    />
+    <div className='min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-4'>
+      <div className='max-w-7xl mx-auto'>
+        <BoxPreview
+          box={box}
+          markings={box.markings}
+          imageMarkings={box.imageMarkings}
+          rootClassName='bg-white rounded-lg shadow-lg border border-gray-200'
+        />
+      </div>
+    </div>
   )
 }
