@@ -19,10 +19,36 @@ export default async function InventoryPage() {
   ])
 
   return (
-    <div className='space-y-6 p-6'>
-      <header className='flex items-center justify-between'>
-        <h1 className='text-3xl font-bold tracking-tight'>Box Inventory</h1>
-        <InventoryActions />
+    <div className='space-y-8 p-6 animate-in fade-in duration-500'>
+      <header className='flex items-center justify-between animate-in slide-in-from-top duration-300'>
+        <div className='flex items-center gap-4'>
+          <div className='p-3 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-100 border border-blue-200'>
+            <svg
+              className='w-6 h-6 text-blue-600'
+              fill='none'
+              stroke='currentColor'
+              viewBox='0 0 24 24'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth={2}
+                d='M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4'
+              />
+            </svg>
+          </div>
+          <div>
+            <h1 className='text-3xl font-bold tracking-tight text-gray-900'>
+              Box Inventory
+            </h1>
+            <p className='text-gray-600 mt-1'>
+              Manage your box inventory and types
+            </p>
+          </div>
+        </div>
+        <div className='animate-in slide-in-from-right duration-300 delay-200'>
+          <InventoryActions />
+        </div>
       </header>
 
       {/* Dashboard Cards */}

@@ -34,7 +34,7 @@ export function NavLinksWrapper(props: { children: ReactNode }) {
   return (
     <div
       className={cn(
-        'gap-4 p-3 pb-8 flex items-start bg-white flex-col absolute left-0 top-16 right-0 transition duration-300 opacity-0 pointer-events-none',
+        'gap-4 p-3 pb-8 flex items-start flex-col absolute left-0 top-16 right-0 transition duration-300 opacity-0 pointer-events-none',
         'lg:flex-row lg:pointer-events-auto lg:opacity-100 lg:relative lg:items-center lg:gap-8 lg:top-0 lg:p-0',
         {
           'opacity-100 shadow pointer-events-auto': navbar.isOpen,
