@@ -28,14 +28,19 @@ export default function BoxPage() {
 
   return (
     <main
-      className={cn('grid grid-cols-[280px_1fr] min-h-screen bg-gradient-to-br from-gray-50 to-blue-50', {
-        blur: controls.quotationOpen,
-      })}
+      className={cn(
+        'grid grid-cols-1 lg:grid-cols-[280px_1fr] min-h-screen bg-gradient-to-br from-gray-50 to-blue-50',
+        {
+          blur: controls.quotationOpen,
+        }
+      )}
     >
-      <ScrollArea className='h-screen border-r border-gray-200 bg-white/80 backdrop-blur-sm relative'>
+      <ScrollArea className='h-auto lg:h-screen border-r border-gray-200 bg-white/80 backdrop-blur-sm relative'>
         {session.data?.user && (
           <div className='p-4 grid gap-3 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-purple-50'>
-            <Label className='text-sm font-semibold text-gray-700'>Box Name</Label>
+            <Label className='text-sm font-semibold text-gray-700'>
+              Box Name
+            </Label>
             <Input
               ref={controls.boxNameRef}
               placeholder='Give it a name!'
@@ -49,12 +54,18 @@ export default function BoxPage() {
           className='w-full'
           defaultValue={['dimensions', 'phase-1', 'phase-2']}
         >
-          <AccordionItem value='dimensions' className='border-b border-gray-100'>
+          <AccordionItem
+            value='dimensions'
+            className='border-b border-gray-100'
+          >
             <AccordionTrigger className='p-4 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors duration-200'>
               <div className='flex items-center gap-2'>
                 <div className='w-2 h-2 bg-blue-500 rounded-full'></div>
                 <span>
-                  Dimensions <code className='bg-blue-100 text-blue-700 px-1 rounded text-xs'>inch</code>
+                  Dimensions{' '}
+                  <code className='bg-blue-100 text-blue-700 px-1 rounded text-xs'>
+                    inch
+                  </code>
                 </span>
               </div>
             </AccordionTrigger>
@@ -62,7 +73,10 @@ export default function BoxPage() {
               <DimensionControls controls={controls} />
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value='phase-1' className='border-b border-gray-100'>
+          <AccordionItem
+            value='phase-1'
+            className='border-b border-gray-100'
+          >
             <AccordionTrigger className='p-4 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors duration-200'>
               <div className='flex items-center gap-2'>
                 <div className='w-2 h-2 bg-green-500 rounded-full'></div>
@@ -78,7 +92,9 @@ export default function BoxPage() {
         <div className='p-4 grid gap-3 border-b border-gray-100 bg-gradient-to-r from-orange-50 to-red-50'>
           <div className='flex items-center gap-2'>
             <div className='w-2 h-2 bg-orange-500 rounded-full'></div>
-            <Label className='text-sm font-semibold text-gray-700'>Thickness</Label>
+            <Label className='text-sm font-semibold text-gray-700'>
+              Thickness
+            </Label>
           </div>
           <Tabs
             value={controls.boxThickness.toString()}

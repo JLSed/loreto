@@ -60,7 +60,7 @@ export default function Panels(props: {
   }
 
   return (
-    <div className='w-full h-[100vh]'>
+    <div className='w-full h-[100vh] overflow-auto'>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -70,12 +70,12 @@ export default function Panels(props: {
             props.controls.containerWidth * props.controls.SCALE_FACTOR
           }px`,
           height: `${props.controls.height * props.controls.SCALE_FACTOR}px`,
-          maxWidth: 'auto',
-          maxHeight: 'auto',
           transform: props.controls.dragTransform,
         }}
         id='main-container'
-        className={'m-auto relative cursor-grab'}
+        className={
+          'm-auto relative cursor-grab overflow-hidden max-w-[calc(100vw-40px)] lg:max-w-[calc(100vw-320px)] max-h-full'
+        }
       >
         <ResizablePanelGroup direction='horizontal'>
           {props.controls.markings.map(renderMarkings)}

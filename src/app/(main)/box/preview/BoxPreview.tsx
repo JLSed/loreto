@@ -22,7 +22,9 @@ export default function BoxPreview({
 Props) {
   const [scaleFactor, setscaleFactor] = useState(0)
   useEffect(() => {
-    setscaleFactor(window.innerWidth * 0.01)
+    // Calculate scale factor based on available content area (screen width - sidebar width)
+    const availableWidth = window.innerWidth - 280 - 32 // Subtract sidebar width and padding
+    setscaleFactor(Math.min(availableWidth * 0.008, 15)) // Cap maximum scale factor
   }, [])
   const leftWidth = box.totalWidth * (box.leftPanelSize / 100)
   const rightWidth = box.totalWidth * (box.rightPanelSize / 100)
@@ -36,29 +38,35 @@ Props) {
   )} x H: ${coverHeight.toFixed(0)})`
 
   return (
-    <div className='scale-90 h-full'>
-      <div className='mb-2'>
-        <div>Note: Hover to see the dimension of each portion.</div>
-        <div>
-          Cost:{' '}
-          {pesos(
-            computePrice({
-              width: leftWidth,
-              length: rightWidth,
-              height: box.height,
-              thickness: box.thickness === 1 ? 'single' : 'double',
-            }).totalPrice
-          )}{' '}
-          - Thickness: {box.thickness === 1 ? 'Single' : 'Double'}
+    <div className='w-full h-full max-w-full overflow-hidden'>
+      <div className='mb-4 p-4 bg-white/80 backdrop-blur-sm rounded-lg border border-gray-200'>
+        <div className='text-sm text-gray-600 mb-2'>
+          Note: Hover to see the dimension of each portion.
+        </div>
+        <div className='text-sm font-medium'>
+          <span className='text-green-600'>
+            Cost:{' '}
+            {pesos(
+              computePrice({
+                width: leftWidth,
+                length: rightWidth,
+                height: box.height,
+                thickness: box.thickness === 1 ? 'single' : 'double',
+              }).totalPrice
+            )}
+          </span>{' '}
+          <span className='text-gray-500'>
+            - Thickness: {box.thickness === 1 ? 'Single' : 'Double'}
+          </span>
         </div>
       </div>
       <div
         className={cn(
-          'w-screen h-[95vh] overflow-scroll space-y-0.5',
+          'w-full max-w-full h-[calc(100vh-200px)] overflow-auto space-y-0.5 p-4',
           rootClassName
         )}
       >
-        <div className='flex gap-0.5 flex-nowrap w-max'>
+        <div className='flex gap-0.5 flex-wrap lg:flex-nowrap w-full max-w-full overflow-x-auto'>
           <Rectangle
             width={leftWidth}
             height={coverHeight}
@@ -86,13 +94,13 @@ Props) {
           />
         </div>
 
-        <div className='flex gap-0.5 flex-nowrap w-max'>
+        <div className='flex gap-0.5 flex-wrap lg:flex-nowrap w-full max-w-full overflow-x-auto'>
           <Rectangle
             scaleFactor={scaleFactor}
             noBackground
             width={box.totalWidth}
             height={box.height}
-            className='flex gap-0.5 flex-nowrap relative'
+            className='flex gap-0.5 flex-nowrap relative min-w-0'
             nonGroup
           >
             {imageMarkings.map((mark, index) => {
@@ -165,7 +173,7 @@ Props) {
           />
         </div>
 
-        <div className='flex gap-0.5 flex-nowrap w-max'>
+        <div className='flex gap-0.5 flex-wrap lg:flex-nowrap w-full max-w-full overflow-x-auto'>
           <Rectangle
             width={leftWidth}
             height={coverHeight}
