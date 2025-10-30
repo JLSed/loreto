@@ -16,8 +16,8 @@ const HomeLinkTitle = (
       <Image
         src={'/logo.png'}
         alt=''
-        width={30}
-        height={30}
+        width={50}
+        height={50}
       />
       {/* Intended tobe removed: May 29, 2025 */}
       {/* <span>Loreto Trading</span> */}
@@ -34,9 +34,7 @@ export default async function Navbar() {
         <>
           <SignInButton />
           <Link href={'/signup'}>
-            <Button className='bg-gradient-to-r from-red-700 to-primary hover:from-primary hover:to-red-600 text-white shadow-md'>
-              Sign up
-            </Button>
+            <Button>Sign up</Button>
           </Link>
         </>
       )
@@ -59,7 +57,7 @@ export default async function Navbar() {
   }
 
   return (
-    <nav className='flex gap-4 items-center max-w-6xl m-auto p-4 rounded-lg justify-between bg-white/80 backdrop-blur-sm border-b border-gray-100 sticky top-0 z-50'>
+    <nav className=' flex gap-4 items-center max-w-6xl m-auto p-3 justify-between'>
       {HomeLinkTitle}
       <NavLinksWrapper>
         <NavLink href={'/'}>Home</NavLink>
@@ -67,7 +65,7 @@ export default async function Navbar() {
         <NavLink href={'/vehicles/'}>Book a Vehicle</NavLink>
         <NavLink href={'/box'}>Custom Box</NavLink>
 
-        <div className='space-x-3 flex items-center'>{getAction()}</div>
+        <div className='space-x-4'>{getAction()}</div>
       </NavLinksWrapper>
       <NavbarToggleButton />
     </nav>

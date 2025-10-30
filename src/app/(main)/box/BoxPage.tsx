@@ -28,23 +28,17 @@ export default function BoxPage() {
 
   return (
     <main
-      className={cn(
-        'grid grid-cols-1 lg:grid-cols-[280px_1fr] min-h-screen bg-gradient-to-br from-gray-50 to-blue-50',
-        {
-          blur: controls.quotationOpen,
-        }
-      )}
+      className={cn('grid grid-cols-[250px_1fr]', {
+        blur: controls.quotationOpen,
+      })}
     >
-      <ScrollArea className='h-auto lg:h-screen border-r border-gray-200 bg-white/80 backdrop-blur-sm relative'>
+      <ScrollArea className='h-screen border-r relative'>
         {session.data?.user && (
-          <div className='p-4 grid gap-3 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-purple-50'>
-            <Label className='text-sm font-semibold text-gray-700'>
-              Box Name
-            </Label>
+          <div className='p-4 grid gap-2 border-b'>
+            <Label>Box Name</Label>
             <Input
               ref={controls.boxNameRef}
               placeholder='Give it a name!'
-              className='border-2 border-gray-200 focus:border-blue-400 transition-colors duration-200'
             />
           </div>
         )}
@@ -54,48 +48,28 @@ export default function BoxPage() {
           className='w-full'
           defaultValue={['dimensions', 'phase-1', 'phase-2']}
         >
-          <AccordionItem
-            value='dimensions'
-            className='border-b border-gray-100'
-          >
-            <AccordionTrigger className='p-4 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors duration-200'>
-              <div className='flex items-center gap-2'>
-                <div className='w-2 h-2 bg-blue-500 rounded-full'></div>
-                <span>
-                  Dimensions{' '}
-                  <code className='bg-blue-100 text-blue-700 px-1 rounded text-xs'>
-                    inch
-                  </code>
-                </span>
-              </div>
+          <AccordionItem value='dimensions'>
+            <AccordionTrigger className='p-4 small text-muted-foreground'>
+              <span>
+                Dimensions <code>inch</code>
+              </span>
             </AccordionTrigger>
-            <AccordionContent className='bg-gradient-to-b from-blue-50/50 to-white'>
+            <AccordionContent>
               <DimensionControls controls={controls} />
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem
-            value='phase-1'
-            className='border-b border-gray-100'
-          >
-            <AccordionTrigger className='p-4 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors duration-200'>
-              <div className='flex items-center gap-2'>
-                <div className='w-2 h-2 bg-green-500 rounded-full'></div>
-                <span>Remarks</span>
-              </div>
+          <AccordionItem value='phase-1'>
+            <AccordionTrigger className='p-4 small text-muted-foreground'>
+              Remarks
             </AccordionTrigger>
-            <AccordionContent className='bg-gradient-to-b from-green-50/50 to-white'>
+            <AccordionContent>
               <MarkingsSidebar controls={controls} />
             </AccordionContent>
           </AccordionItem>
         </Accordion>
 
-        <div className='p-4 grid gap-3 border-b border-gray-100 bg-gradient-to-r from-orange-50 to-red-50'>
-          <div className='flex items-center gap-2'>
-            <div className='w-2 h-2 bg-orange-500 rounded-full'></div>
-            <Label className='text-sm font-semibold text-gray-700'>
-              Thickness
-            </Label>
-          </div>
+        <div className='p-4 grid gap-2 border-b'>
+          <Label>Thickness</Label>
           <Tabs
             value={controls.boxThickness.toString()}
             onValueChange={(v) => {
@@ -103,16 +77,16 @@ export default function BoxPage() {
               localStorage.setItem(LSKeys.BOX_THICKNESS, v)
             }}
           >
-            <TabsList className='w-full bg-white border-2 border-gray-200'>
+            <TabsList className='w-full'>
               <TabsTrigger
                 value='1'
-                className='w-full data-[state=active]:bg-orange-100 data-[state=active]:text-orange-700 transition-all duration-200'
+                className='w-full'
               >
                 Single
               </TabsTrigger>
               <TabsTrigger
                 value='2'
-                className='w-full data-[state=active]:bg-orange-100 data-[state=active]:text-orange-700 transition-all duration-200'
+                className='w-full'
               >
                 Double
               </TabsTrigger>
