@@ -106,7 +106,7 @@ export default function SignUpPage() {
         <div className='absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-accent/10 blur-3xl animate-pulse delay-1000'></div>
       </div>
 
-      <div className='max-w-lg w-full bg-card/95 backdrop-blur-sm p-10 rounded-2xl shadow-2xl border border-border animate-in slide-in-from-bottom duration-500 relative z-10'>
+      <div className='max-w-lg w-full bg-card/95 backdrop-blur-sm p-10 rounded-lg shadow-2xl border border-border animate-in slide-in-from-bottom duration-500 relative z-10'>
         <div className='flex items-center justify-between gap-4 mb-6 animate-in slide-in-from-top duration-500 delay-200'>
           <div className='space-y-1'>
             <h2 className='text-3xl font-bold text-foreground'>Sign up</h2>
