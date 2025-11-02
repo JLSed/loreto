@@ -14,14 +14,19 @@ export default async function Page(props: {
   })
 
   return (
-    <div>
-      <header className='p-4'>
-        <h2>Accounts</h2>
+    <div className='container mx-auto p-4 sm:p-6 lg:p-8 space-y-6'>
+      <header>
+        <h2 className='text-xl sm:text-2xl font-bold'>Manage Accounts</h2>
+        <p className='text-sm text-muted-foreground mt-1'>
+          View and manage user accounts and roles
+        </p>
       </header>
-      <AccountsDataTable
-        columns={accountsColumns}
-        data={accounts}
-      />
+      <div className='overflow-hidden'>
+        <AccountsDataTable
+          columns={accountsColumns}
+          data={accounts}
+        />
+      </div>
     </div>
   )
 }

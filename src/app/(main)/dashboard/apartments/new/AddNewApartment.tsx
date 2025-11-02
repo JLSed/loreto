@@ -46,13 +46,28 @@ export default function AddNewApartment() {
   }
 
   return (
-    <form onSubmit={form.handleSubmit(submit)}>
-      <header className='p-4 flex items-center justify-between'>
-        <h3>Add new apartment</h3>
-        <Button loading={loading}>Save</Button>
+    <form
+      onSubmit={form.handleSubmit(submit)}
+      className='min-h-screen'
+    >
+      <header className='sticky top-0 z-10 bg-background border-b p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4'>
+        <div>
+          <h3 className='text-lg sm:text-xl font-semibold'>
+            Add New Apartment
+          </h3>
+          <p className='text-sm text-muted-foreground mt-1'>
+            Fill in the details to add a new rental property
+          </p>
+        </div>
+        <Button
+          loading={loading}
+          className='w-full sm:w-auto'
+        >
+          Save Apartment
+        </Button>
       </header>
 
-      <div className='max-w-[850px] m-auto p-4 grid grid-cols-[1.3fr_1fr] gap-4'>
+      <div className='container mx-auto max-w-6xl p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-6 lg:gap-8'>
         <div className='space-y-4'>
           <FormGroup groupTitle='Basic Information'>
             <FormItem
@@ -85,7 +100,7 @@ export default function AddNewApartment() {
               </div>
             </FormItem>
 
-            <div className='grid grid-cols-2 gap-4'>
+            <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
               <FormItem
                 title='Bedrooms'
                 error={errors.bedrooms?.message}

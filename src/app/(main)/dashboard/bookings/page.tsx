@@ -6,20 +6,25 @@ export default async function Page() {
   const bookings = await getBookings()
 
   return (
-    <div>
-      <header className='p-4 flex items-center justify-between'>
-        <h2>Bookings</h2>
+    <div className='container mx-auto p-4 sm:p-6 lg:p-8 space-y-6'>
+      <header className='flex flex-col sm:flex-row sm:items-center justify-between gap-4'>
+        <div>
+          <h2 className='text-xl sm:text-2xl font-bold'>Vehicle Bookings</h2>
+          <p className='text-sm text-muted-foreground mt-1'>
+            Manage vehicle reservations and booking status
+          </p>
+        </div>
         {/* <Link href='/dashboard/bookings/calendar'>
-          <Button>View on calendar</Button>
+          <Button className='w-full sm:w-auto'>View Calendar</Button>
         </Link> */}
       </header>
 
-      <main className='p-4'>
+      <div className='overflow-hidden'>
         <BookingsDataTable
           columns={bookingsColumns}
           data={bookings}
         />
-      </main>
+      </div>
     </div>
   )
 }

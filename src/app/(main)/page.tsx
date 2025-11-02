@@ -42,7 +42,7 @@ export default async function Home() {
         </div>
 
         <footer className='flex items-center justify-center gap-4 mt-24 mb-8 animate-in fade-in duration-500 delay-1000'>
-          <div className='flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors'>
+          <div className='flex items-center gap-2 px-4 py-2 rounded-lg bg-background transition-colors'>
             <svg
               className='w-4 h-4 text-gray-600'
               fill='none'
@@ -59,7 +59,7 @@ export default async function Home() {
             {email}
           </div>
           <div className='text-gray-400'>|</div>
-          <div className='flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors'>
+          <div className='flex items-center gap-2 px-4 py-2 rounded-lg bg-background transition-colors'>
             <svg
               className='w-4 h-4 text-gray-600'
               fill='none'

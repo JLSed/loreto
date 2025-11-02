@@ -24,8 +24,8 @@ export default function AdminNavigationLink(props: {
     <Link href={props.href}>
       <Button
         variant={isActive ? 'secondary' : 'ghost'}
-        className={cn('w-full justify-start hover:bg-rose-50', {
-          'bg-rose-100 rounded-none text-rose-700': isActive,
+        className={cn('w-full justify-start hover:bg-primary/10', {
+          'bg-primary/20 text-primary': isActive,
         })}
       >
         <MaterialIcon

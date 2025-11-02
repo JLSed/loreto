@@ -134,17 +134,17 @@ export function CSVImport({ onClose }: CSVImportProps) {
 
   return (
     <div className='space-y-4'>
-      <div className='border rounded-md p-4 bg-blue-50 border-blue-200'>
+      <div className='border rounded-md p-4 bg-accent/10 border-accent/20'>
         <div className='flex items-start gap-2'>
-          <FileText className='h-4 w-4 text-blue-600 mt-0.5' />
-          <div className='text-sm text-blue-800'>
+          <FileText className='h-4 w-4 text-accent mt-0.5' />
+          <div className='text-sm text-accent'>
             Upload a CSV file with columns: length, width, height, thickness
             (Single/Double), color, quantity, weightPerPiece, cardboardType,
             boxType.
             <br />
             <Button
               variant='link'
-              className='p-0 h-auto text-blue-600'
+              className='p-0 h-auto text-accent'
               onClick={downloadTemplate}
             >
               Download template file
@@ -167,7 +167,7 @@ export function CSVImport({ onClose }: CSVImportProps) {
       {preview.length > 0 && (
         <div className='space-y-2'>
           <Label>Preview (first 3 rows):</Label>
-          <div className='border rounded-md p-3 bg-gray-50 max-h-32 overflow-auto'>
+          <div className='border rounded-md p-3 bg-muted max-h-32 overflow-auto'>
             <pre className='text-xs'>
               {preview.map((row, index) => (
                 <div key={index}>{JSON.stringify(row, null, 2)}</div>

@@ -138,7 +138,7 @@ export default function RentalAgreementForm({ tenant, apartment }: Props) {
         <CardTitle className='flex items-center gap-2'>
           Room Rental Agreement
           {getTenantField('contractSigned') && (
-            <span className='text-xs bg-green-100 text-green-800 px-2 py-1 rounded'>
+            <span className='text-xs bg-primary/20 text-primary-foreground px-2 py-1 rounded'>
               Agreement Signed
             </span>
           )}
