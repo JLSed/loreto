@@ -209,8 +209,8 @@ export function AddBoxEntryForm({ onClose }: AddBoxEntryFormProps) {
         </div>
       </div>
 
-      <div className='bg-gray-50 p-3 rounded-md'>
-        <p className='text-sm text-gray-600'>
+      <div className='bg-muted p-3 rounded-md'>
+        <p className='text-sm text-muted-foreground'>
           Total Weight:{' '}
           <strong>
             {(formData.quantity * formData.weightPerPiece).toFixed(1)} lbs

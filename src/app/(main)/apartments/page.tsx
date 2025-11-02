@@ -6,6 +6,9 @@ import { Button } from '@/components/ui/button'
 
 export default async function Page() {
   const apartments = await prisma.apartment.findMany({
+    where: {
+      availability_status: 0,
+    },
     orderBy: {
       createdAt: 'desc',
     },
@@ -24,7 +27,6 @@ export default async function Page() {
               Find your perfect rental home
             </p>
           </div>
-
         </header>
         <div className='animate-in fade-in duration-500 delay-200'>
           <Apartments apartments={apartments} />

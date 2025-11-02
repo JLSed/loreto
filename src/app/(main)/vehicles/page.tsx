@@ -36,7 +36,7 @@ export default async function Page() {
         <h1 className='text-3xl font-bold bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent'>
           Choose Your Vehicle
         </h1>
-        <p className='text-gray-600'>
+        <p className='text-muted-foreground'>
           Select from our premium fleet for your transportation needs
         </p>
       </div>
@@ -48,9 +48,9 @@ export default async function Page() {
               className={cn(
                 'hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1',
                 {
-                  'border-green-200 bg-gradient-to-br from-white to-green-50':
+                  'bg-gradient-to-br from-background to-accent':
                     v.status === VehicleStatus.Available,
-                  'opacity-75 shadow-none bg-gray-50':
+                  'opacity-75 shadow-none bg-muted':
                     v.status !== VehicleStatus.Available,
                 }
               )}
@@ -75,21 +75,21 @@ export default async function Page() {
                     fill
                   />
                   <div className='absolute top-2 right-2'>
-                    <div className='bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-xs font-medium text-gray-700'>
+                    <div className='bg-background/90 backdrop-blur-sm px-2 py-1 rounded-full text-xs font-medium text-foreground'>
                       {v.model}
                     </div>
                   </div>
                 </div>
-                <div className='my-4 flex items-center justify-between p-3 bg-gray-50 rounded-lg'>
-                  <div className='text-gray-600 text-sm font-medium'>
+                <div className='my-4 flex items-center justify-between p-3 bg-muted rounded-lg'>
+                  <div className='text-muted-foreground text-sm font-medium'>
                     Hourly rate:
                   </div>
                   <div className='font-bold text-green-600'>
                     {pesos(v.serviceFeePerHour)}/Negotiable
                   </div>
                 </div>
-                <div className='text-sm mb-4 text-gray-500 flex items-center gap-1'>
-                  <div className='w-2 h-2 bg-blue-500 rounded-full'></div>
+                <div className='text-sm mb-4 text-muted-foreground flex items-center gap-1'>
+                  <div className='w-2 h-2 bg-primary rounded-full'></div>
                   Recently booked by {v._count.Booking} people
                 </div>
                 <Link href={`/vehicles/booking/?vehicleId=${v.id}`}>
@@ -97,8 +97,8 @@ export default async function Page() {
                     className={cn(
                       'w-full transition-all duration-300',
                       v.status === VehicleStatus.Available
-                        ? 'bg-gradient-to-r from-red-500 to-primary hover:from-primary hover:to-primary/80 text-white shadow-md hover:shadow-lg'
-                        : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                        ? 'bg-gradient-to-r from-red-500 to-primary hover:from-primary hover:to-primary/80 text-primary-foreground shadow-md hover:shadow-lg'
+                        : 'bg-muted text-muted-foreground cursor-not-allowed'
                     )}
                     disabled={v.status !== VehicleStatus.Available}
                   >

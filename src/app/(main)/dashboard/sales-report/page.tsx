@@ -18,13 +18,13 @@ export default async function Page() {
   })
 
   return (
-    <div className='animate-in fade-in duration-500'>
-      <header className='p-6 border-b border-gray-200 animate-in slide-in-from-top duration-300'>
-        <div className='flex items-center justify-between'>
-          <div className='flex items-center gap-4'>
-            <div className='p-3 rounded-xl bg-gradient-to-br from-emerald-50 to-green-100 border border-emerald-200'>
+    <div className='container mx-auto animate-in fade-in duration-500'>
+      <header className='p-4 sm:p-6 border-b border-border animate-in slide-in-from-top duration-300'>
+        <div className='flex flex-col sm:flex-row sm:items-center justify-between gap-4'>
+          <div className='flex items-center gap-3 sm:gap-4'>
+            <div className='p-2 sm:p-3 rounded-xl bg-gradient-to-br from-primary/10 to-accent/10 border border-primary/20'>
               <svg
-                className='w-6 h-6 text-emerald-600'
+                className='w-5 h-5 sm:w-6 sm:h-6 text-primary'
                 fill='none'
                 stroke='currentColor'
                 viewBox='0 0 24 24'
@@ -38,8 +38,10 @@ export default async function Page() {
               </svg>
             </div>
             <div>
-              <h2 className='text-2xl font-bold text-gray-900'>Sales Report</h2>
-              <p className='text-gray-600 mt-1'>
+              <h2 className='text-xl sm:text-2xl font-bold text-foreground'>
+                Sales Report
+              </h2>
+              <p className='text-muted-foreground mt-1 text-sm sm:text-base'>
                 Overview of your sales performance
               </p>
             </div>
@@ -56,9 +58,9 @@ export default async function Page() {
       </header>
       <div className='p-6 '>
         <div className='flex items-center gap-3 mb-6'>
-          <div className='p-2 rounded-lg bg-blue-50'>
+          <div className='p-2 rounded-lg bg-primary/10'>
             <svg
-              className='w-5 h-5 text-blue-600'
+              className='w-5 h-5 text-primary'
               fill='none'
               stroke='currentColor'
               viewBox='0 0 24 24'
@@ -71,7 +73,7 @@ export default async function Page() {
               />
             </svg>
           </div>
-          <h3 className='text-lg font-semibold text-gray-900'>
+          <h3 className='text-lg font-semibold text-foreground'>
             Earnings Overview
           </h3>
         </div>
@@ -82,11 +84,11 @@ export default async function Page() {
       </div>
 
       <main className='p-6 space-y-8 '>
-        <section className='bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow duration-300'>
+        <section className='bg-card rounded-lg border border-border p-6 hover:shadow-md transition-shadow duration-300'>
           <div className='flex items-center gap-3 mb-4'>
-            <div className='p-2 rounded-lg bg-purple-50'>
+            <div className='p-2 rounded-lg bg-primary/10'>
               <svg
-                className='w-5 h-5 text-purple-600'
+                className='w-5 h-5 text-primary'
                 fill='none'
                 stroke='currentColor'
                 viewBox='0 0 24 24'
@@ -99,7 +101,7 @@ export default async function Page() {
                 />
               </svg>
             </div>
-            <h3 className='text-lg font-semibold text-gray-900'>
+            <h3 className='text-lg font-semibold text-foreground'>
               Sales by Rent
             </h3>
           </div>
@@ -109,11 +111,11 @@ export default async function Page() {
           />
         </section>
 
-        <section className='bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow duration-300'>
+        <section className='bg-card rounded-lg border border-border p-6 hover:shadow-md transition-shadow duration-300'>
           <div className='flex items-center gap-3 mb-4'>
-            <div className='p-2 rounded-lg bg-orange-50'>
+            <div className='p-2 rounded-lg bg-primary/10'>
               <svg
-                className='w-5 h-5 text-orange-600'
+                className='w-5 h-5 text-primary'
                 fill='none'
                 stroke='currentColor'
                 viewBox='0 0 24 24'
@@ -126,7 +128,7 @@ export default async function Page() {
                 />
               </svg>
             </div>
-            <h3 className='text-lg font-semibold text-gray-900'>
+            <h3 className='text-lg font-semibold text-foreground'>
               Sales by Box
             </h3>
           </div>
@@ -136,11 +138,11 @@ export default async function Page() {
           />
         </section>
 
-        <section className='bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow duration-300'>
+        <section className='bg-card rounded-lg border border-border p-6 hover:shadow-md transition-shadow duration-300'>
           <div className='flex items-center gap-3 mb-4'>
-            <div className='p-2 rounded-lg bg-blue-50'>
+            <div className='p-2 rounded-lg bg-primary/10'>
               <svg
-                className='w-5 h-5 text-blue-600'
+                className='w-5 h-5 text-primary'
                 fill='none'
                 stroke='currentColor'
                 viewBox='0 0 24 24'
@@ -153,7 +155,7 @@ export default async function Page() {
                 />
               </svg>
             </div>
-            <h3 className='text-lg font-semibold text-gray-900'>
+            <h3 className='text-lg font-semibold text-foreground'>
               Sales by Booking
             </h3>
           </div>

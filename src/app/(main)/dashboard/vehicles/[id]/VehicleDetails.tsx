@@ -94,7 +94,7 @@ export default function VehicleDetails({ data }: { data: Vehicle }) {
   return (
     <form
       onSubmit={form.handleSubmit(onSubmit)}
-      className='bg-neutral-50 dark:bg-neutral-900'
+      className='bg-card'
     >
       <header className='p-4 flex items-center gap-2 justify-between'>
         <div className='flex items-center gap-2'>

@@ -13,16 +13,23 @@ export default async function Page() {
   })
 
   return (
-    <div>
-      <header className='p-4 flex items-center justify-between'>
-        <h2>Vehicles</h2>
+    <div className='container mx-auto p-4 sm:p-6 lg:p-8 space-y-6'>
+      <header className='flex flex-col sm:flex-row sm:items-center justify-between gap-4'>
+        <div>
+          <h2 className='text-xl sm:text-2xl font-bold'>Fleet Management</h2>
+          <p className='text-sm text-muted-foreground mt-1'>
+            Manage your vehicle fleet and availability
+          </p>
+        </div>
         <Link href='/dashboard/vehicles/new'>
-          <Button>
-            <PlusIcon className='mr-2' /> New
+          <Button className='w-full sm:w-auto'>
+            <PlusIcon className='mr-2' />
+            <span className='sm:hidden'>Add New Vehicle</span>
+            <span className='hidden sm:inline'>New</span>
           </Button>
         </Link>
       </header>
-      <div className='px-4'>
+      <div className='overflow-hidden'>
         <DataTable
           columns={vehiclesTableColumns}
           data={vehicles}

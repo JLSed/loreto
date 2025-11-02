@@ -19,12 +19,12 @@ export default async function InventoryPage() {
   ])
 
   return (
-    <div className='space-y-8 p-6 animate-in fade-in duration-500'>
-      <header className='flex items-center justify-between animate-in slide-in-from-top duration-300'>
-        <div className='flex items-center gap-4'>
-          <div className='p-3 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-100 border border-blue-200'>
+    <div className='container mx-auto space-y-6 sm:space-y-8 p-4 sm:p-6 animate-in fade-in duration-500'>
+      <header className='flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-in slide-in-from-top duration-300'>
+        <div className='flex items-center gap-3 sm:gap-4'>
+          <div className='p-2 sm:p-3 rounded-xl bg-gradient-to-br from-accent/10 to-secondary/10 border border-accent/20'>
             <svg
-              className='w-6 h-6 text-blue-600'
+              className='w-5 h-5 sm:w-6 sm:h-6 text-accent'
               fill='none'
               stroke='currentColor'
               viewBox='0 0 24 24'
@@ -38,10 +38,10 @@ export default async function InventoryPage() {
             </svg>
           </div>
           <div>
-            <h1 className='text-3xl font-bold tracking-tight text-gray-900'>
+            <h1 className='text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-foreground'>
               Box Inventory
             </h1>
-            <p className='text-gray-600 mt-1'>
+            <p className='text-muted-foreground mt-1 text-sm sm:text-base'>
               Manage your box inventory and types
             </p>
           </div>
@@ -56,7 +56,7 @@ export default async function InventoryPage() {
         <InventoryDashboard data={dashboardData} />
       </Suspense>
 
-      <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
+      <div className='grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6'>
         {/* Box Type Management */}
         <Card className='lg:col-span-1'>
           <div className='p-6'>

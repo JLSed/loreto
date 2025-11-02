@@ -37,50 +37,51 @@ export default async function Page() {
 
   return (
     <div className='animate-in fade-in duration-500'>
-      <header className='p-4 px-8 pb-0 animate-in slide-in-from-top duration-300'>
+      <header className='p-4 sm:p-6 lg:p-8 pb-0 animate-in slide-in-from-top duration-300'>
         <div className='flex items-center gap-3 mb-4'>
-          <div className='p-2 rounded-lg bg-blue-50'>
+          <div className='p-2 rounded-lg bg-primary/10'>
             <MaterialIcon
               name='dashboard'
-              className='text-blue-600'
+              className='text-primary'
             />
           </div>
           <div>
-            <h2 className='border-b-0 mb-1'>Dashboard</h2>
-            <p className='text-sm text-gray-600'>
+            <h2 className='border-b-0 mb-1 text-xl sm:text-2xl'>Dashboard</h2>
+            <p className='text-sm text-muted-foreground'>
               Welcome back! Here&apos;s your business overview
             </p>
           </div>
         </div>
       </header>
 
-      <div className='grid grid-cols-12 gap-6 pt-4 px-8'>
+      {/* Responsive Grid: 1 col on mobile, 2 on tablet, 4 on desktop */}
+      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 pt-4 px-4 sm:px-6 lg:px-8'>
         <CardOverviewItem
           label={'Orders'}
           value={boxOrders.length}
           materialIconName={'package_2'}
-          className='bg-rose-50 border-rose-200 hover:bg-rose-100'
+          className='bg-primary/10 border-primary/20 hover:bg-primary/20'
           index={0}
         />
         <CardOverviewItem
           label={'Bookings'}
           value={bookings.length}
           materialIconName={'local_shipping'}
-          className='bg-green-50 border-green-200 hover:bg-green-100'
+          className='bg-primary/10 border-primary/20 hover:bg-primary/20'
           index={1}
         />
         <CardOverviewItem
           label={'Transactions'}
           value={transactions.length}
           materialIconName={'receipt_long'}
-          className='bg-purple-50 border-purple-200 hover:bg-purple-100'
+          className='bg-primary/10 border-primary/20 hover:bg-primary/20'
           index={2}
         />
         <CardOverviewItem
           label={'Active Customers'}
           value={activeCustomers.length}
           materialIconName={'group'}
-          className='bg-blue-50 border-blue-200 hover:bg-blue-100'
+          className='bg-primary/10 border-primary/20 hover:bg-primary/20'
           index={3}
         />
       </div>
@@ -89,30 +90,27 @@ export default async function Page() {
         <EarningsDashboard />
       </div>
 
-      <div className='grid grid-cols-2 gap-8 p-8 animate-in slide-in-from-bottom duration-500 delay-600'>
-        <Card className='p-6 hover:shadow-lg transition-shadow duration-300'>
-          <div className='flex items-center gap-2 mb-6'>
-            <div className='p-2 rounded-lg bg-blue-50'>
-              <MaterialIcon
-                name='dashboard'
-                className='text-blue-600'
-              />
-            </div>
-            <h3 className='font-semibold text-gray-900'>Recent Bookings</h3>
+      {/* Charts Section - Stack on mobile, side by side on desktop */}
+      <div className='grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 p-4 sm:p-6 lg:p-8 animate-in slide-in-from-bottom duration-500 delay-600'>
+        <Card className='p-4 sm:p-6 hover:shadow-lg transition-shadow duration-300'>
+          <div className='flex items-center gap-2 mb-4 sm:mb-6'>
+            <h3 className='font-semibold text-foreground text-sm sm:text-base'>
+              Recent Bookings
+            </h3>
           </div>
-          <BookingsBarChart data={bookings} />
+          <div className=''>
+            <BookingsBarChart data={bookings} />
+          </div>
         </Card>
-        <Card className='p-6 hover:shadow-lg transition-shadow duration-300'>
-          <div className='flex items-center gap-2 mb-6'>
-            <div className='p-2 rounded-lg bg-green-50'>
-              <MaterialIcon
-                name='dashboard'
-                className='text-green-600'
-              />
-            </div>
-            <h3 className='font-semibold text-gray-900'>Booking Status</h3>
+        <Card className='p-4 sm:p-6 hover:shadow-lg transition-shadow duration-300'>
+          <div className='flex items-center gap-2 mb-4 sm:mb-6'>
+            <h3 className='font-semibold text-foreground text-sm sm:text-base'>
+              Booking Status
+            </h3>
           </div>
-          <BookingsDonutChart data={bookings} />
+          <div className=''>
+            <BookingsDonutChart data={bookings} />
+          </div>
         </Card>
       </div>
     </div>
@@ -129,23 +127,25 @@ const CardOverviewItem = (props: {
   return (
     <Card
       className={cn(
-        'col-span-3 p-6 transition-all duration-300 hover:scale-105 hover:shadow-md border-2',
+        'p-4 sm:p-6 transition-all duration-300 hover:scale-105 hover:shadow-md border-2',
         props.className
       )}
     >
       <div className='flex items-center justify-between mb-3'>
-        <div className='text-sm font-medium text-gray-600 capitalize'>
+        <div className='text-xs sm:text-sm font-medium text-muted-foreground capitalize'>
           {props.label}
         </div>
-        <div className='p-2 rounded-lg bg-white/80 shadow-sm'>
+        <div className='p-1.5 sm:p-2 rounded-lg bg-card/80 shadow-sm'>
           <MaterialIcon
             name={props.materialIconName}
-            className='text-gray-700'
+            className='text-muted-foreground w-4 h-4 sm:w-5 sm:h-5'
           />
         </div>
       </div>
-      <div className='text-2xl font-bold text-gray-900'>{props.value}</div>
-      <div className='mt-2 text-xs text-gray-500'>Total count</div>
+      <div className='text-xl sm:text-2xl font-bold text-foreground'>
+        {props.value}
+      </div>
+      <div className='mt-2 text-xs text-muted-foreground'>Total count</div>
     </Card>
   )
 }

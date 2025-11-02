@@ -70,14 +70,14 @@ export function BoxTypeManagement({ boxTypes }: BoxTypeManagementProps) {
       {/* List existing types */}
       <div className='space-y-2'>
         {boxTypes.length === 0 ? (
-          <p className='text-sm text-gray-500 text-center py-4'>
+          <p className='text-sm text-muted-foreground text-center py-4'>
             No box types yet. Add one above.
           </p>
         ) : (
           boxTypes.map((type) => (
             <div
               key={type.id}
-              className='flex items-center justify-between p-3 rounded-lg bg-gray-50'
+              className='flex items-center justify-between p-3 rounded-lg bg-muted'
             >
               <Badge variant='secondary'>{type.typeName}</Badge>
               <Button
@@ -85,7 +85,7 @@ export function BoxTypeManagement({ boxTypes }: BoxTypeManagementProps) {
                 size='sm'
                 onClick={() => handleDeleteType(type.id, type.typeName)}
                 disabled={isPending}
-                className='text-red-600 hover:text-red-700 hover:bg-red-50'
+                className='text-destructive hover:text-destructive/80 hover:bg-destructive/10'
               >
                 <Trash2 className='h-4 w-4' />
               </Button>

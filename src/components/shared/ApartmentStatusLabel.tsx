@@ -17,7 +17,7 @@ export default function ApartmentStatusLabel(props: Props) {
     case 1:
       return (
         <StatusWithDot
-          label='Occupied'
+          label='Hide'
           color='orange'
         />
       )

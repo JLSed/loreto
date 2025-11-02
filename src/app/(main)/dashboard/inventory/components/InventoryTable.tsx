@@ -114,7 +114,7 @@ export function InventoryTable({ data, boxTypes }: InventoryTableProps) {
             <TableRow>
               <TableCell
                 colSpan={8}
-                className='text-center py-6 text-gray-500'
+                className='text-center py-6 text-muted-foreground'
               >
                 No inventory entries found. Add some boxes above.
               </TableCell>
@@ -125,7 +125,7 @@ export function InventoryTable({ data, boxTypes }: InventoryTableProps) {
                 <TableCell>
                   <div className='font-mono text-sm'>
                     {entry.length} × {entry.width} × {entry.height}
-                    <div className='text-xs text-gray-500'>
+                    <div className='text-xs text-muted-foreground'>
                       {getThicknessLabel(entry.thickness)} Wall
                     </div>
                   </div>
@@ -180,7 +180,7 @@ export function InventoryTable({ data, boxTypes }: InventoryTableProps) {
                         className='w-20'
                         min='0'
                       />
-                      <span className='text-xs text-gray-500'>lbs</span>
+                      <span className='text-xs text-muted-foreground'>lbs</span>
                     </div>
                   ) : (
                     `${entry.weightPerPiece} lbs`
@@ -227,7 +227,7 @@ export function InventoryTable({ data, boxTypes }: InventoryTableProps) {
                         variant='outline'
                         onClick={() => handleDelete(entry.id)}
                         disabled={isPending}
-                        className='text-red-600 hover:text-red-700 hover:bg-red-50'
+                        className='text-destructive hover:text-destructive/80 hover:bg-destructive/10'
                       >
                         <Trash2 className='h-4 w-4' />
                       </Button>

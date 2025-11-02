@@ -75,7 +75,7 @@ export default function NewVehicle() {
   return (
     <form
       onSubmit={form.handleSubmit(onSubmit)}
-      className='bg-neutral-50 dark:bg-neutral-900'
+      className='bg-card'
     >
       <header className='p-4 flex items-center justify-between'>
         <h3>New Vehicle</h3>

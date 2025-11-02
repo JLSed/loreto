@@ -25,29 +25,29 @@ export function InventoryDashboard({ data }: InventoryDashboardProps) {
       title: 'Total Boxes',
       value: totalQuantity.toLocaleString(),
       icon: Boxes,
-      color: 'text-blue-600',
-      bgColor: 'bg-blue-50',
+      color: 'text-primary',
+      bgColor: 'bg-primary/10',
     },
     {
       title: 'Total Weight',
       value: `${totalWeight.toLocaleString()} lbs`,
       icon: Weight,
-      color: 'text-green-600',
-      bgColor: 'bg-green-50',
+      color: 'text-primary',
+      bgColor: 'bg-primary/10',
     },
     {
       title: 'Inventory Entries',
       value: totalEntries.toLocaleString(),
       icon: Hash,
-      color: 'text-orange-600',
-      bgColor: 'bg-orange-50',
+      color: 'text-primary',
+      bgColor: 'bg-primary/10',
     },
     {
       title: 'Box Types',
       value: totalTypes.toLocaleString(),
       icon: Package,
-      color: 'text-purple-600',
-      bgColor: 'bg-purple-50',
+      color: 'text-primary',
+      bgColor: 'bg-primary/10',
     },
   ]
 
@@ -78,17 +78,17 @@ export function InventoryDashboard({ data }: InventoryDashboardProps) {
               {data.map((item) => (
                 <div
                   key={item.typeName}
-                  className='flex items-center justify-between p-4 rounded-lg bg-gray-50'
+                  className='flex items-center justify-between p-4 rounded-lg bg-muted'
                 >
                   <div>
                     <p className='font-medium'>{item.typeName}</p>
-                    <p className='text-sm text-gray-500'>
+                    <p className='text-sm text-muted-foreground'>
                       {item.entries} entries
                     </p>
                   </div>
                   <div className='text-right'>
                     <p className='font-semibold'>{item.totalQuantity}</p>
-                    <p className='text-sm text-gray-500'>
+                    <p className='text-sm text-muted-foreground'>
                       {item.totalWeight} lbs
                     </p>
                   </div>
