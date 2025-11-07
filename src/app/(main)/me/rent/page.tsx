@@ -3,7 +3,7 @@ import { Badge } from '@/components/ui/badge'
 import { getCurrentUserTenantDetails } from './rent-actions'
 import { notFound } from 'next/navigation'
 import { format } from 'date-fns'
-import Image from 'next/image'
+import TenantRentalAgreementForm from './TenantRentalAgreementForm'
 
 export default async function RentPage() {
   const tenantDetails = await getCurrentUserTenantDetails()
@@ -110,156 +110,19 @@ export default async function RentPage() {
           </CardContent>
         </Card>
 
-        {/* Rental Agreement Contract */}
+        {/* Rental Agreement */}
         {((tenantDetails as any).agreementCreated ||
           (tenantDetails as any).ownerName) && (
-          <Card>
-            <CardHeader>
-              <CardTitle className='flex items-center gap-2'>
-                Rental Agreement Contract
-                {(tenantDetails as any).contractSigned && (
-                  <Badge variant='default'>Signed</Badge>
-                )}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className='space-y-6'>
-              <div className='prose max-w-none'>
-                <p>
-                  This agreement is made on this{' '}
-                  {(tenantDetails as any).agreementCreated
-                    ? format(
-                        new Date((tenantDetails as any).agreementCreated),
-                        'PPP'
-                      )
-                    : 'N/A'}
-                  , between the following parties:
-                </p>
-
-                <div className='mt-4'>
-                  <h4 className='font-semibold'>LANDLORD:</h4>
-                  <p>
-                    Name: {(tenantDetails as any).ownerName || 'Not specified'}
-                  </p>
-                  <p>
-                    Contact:{' '}
-                    {(tenantDetails as any).ownerContact || 'Not specified'}
-                  </p>
-                </div>
-
-                <div className='mt-4'>
-                  <h4 className='font-semibold'>TENANT:</h4>
-                  <p>
-                    Name: {tenantDetails.firstName} {tenantDetails.lastName}
-                  </p>
-                  <p>Contact: {tenantDetails.contactNumber}</p>
-                </div>
-
-                {tenantDetails.apartment && (
-                  <>
-                    <p className='mt-4'>
-                      The Landlord agrees to rent a room located at:
-                    </p>
-                    <div className='ml-4'>
-                      <p>Address: {tenantDetails.apartment.address}</p>
-                      <p>
-                        Monthly Rent: ₱
-                        {tenantDetails.apartment.monthlyRentalPrice.toLocaleString()}
-                      </p>
-                      <p>
-                        Payment Date: Every {tenantDetails.monthlyDueDate} of
-                        the month
-                      </p>
-                      <p>
-                        Advance Deposit: Two (2) months equivalent to ₱
-                        {(
-                          tenantDetails.apartment.monthlyRentalPrice * 2
-                        ).toLocaleString()}
-                      </p>
-                    </div>
-                  </>
-                )}
-
-                <p className='mt-4 text-sm text-muted-foreground'>
-                  The room shall be used for residential purposes only by the
-                  tenant and their family. Both parties agree to maintain
-                  cleanliness, avoid disturbances, and respect each other&apos;s
-                  rights. Either party may end this agreement with a 30-day
-                  notice. Any damages caused by the tenant shall be subject to
-                  deduction from the deposit.
-                </p>
-
-                <p className='mt-4'>
-                  Signed on{' '}
-                  {(tenantDetails as any).contractSigned
-                    ? format(
-                        new Date((tenantDetails as any).contractSigned),
-                        'PPP'
-                      )
-                    : 'Not yet signed'}
-                </p>
-
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mt-6'>
-                  <div>
-                    <h4 className='font-semibold'>LANDLORD:</h4>
-                    {(tenantDetails as any).ownerSignature && (
-                      <div className='mt-2 mb-2'>
-                        <p className='text-sm text-muted-foreground mb-1'>
-                          Signature:
-                        </p>
-                        <Image
-                          src={(tenantDetails as any).ownerSignature}
-                          alt='Landlord Signature'
-                          width={200}
-                          height={100}
-                          className='max-w-[200px] h-auto border rounded'
-                        />
-                      </div>
-                    )}
-                    <p>
-                      Printed Name:{' '}
-                      {(tenantDetails as any).ownerName || 'Not specified'}
-                    </p>
-                  </div>
-
-                  <div>
-                    <h4 className='font-semibold'>TENANT:</h4>
-                    {(tenantDetails as any).tenantSignature && (
-                      <div className='mt-2 mb-2'>
-                        <p className='text-sm text-muted-foreground mb-1'>
-                          Signature:
-                        </p>
-                        <Image
-                          src={(tenantDetails as any).tenantSignature}
-                          alt='Tenant Signature'
-                          width={200}
-                          height={100}
-                          className='max-w-[200px] h-auto border rounded'
-                        />
-                      </div>
-                    )}
-                    <p>
-                      Printed Name: {tenantDetails.firstName}{' '}
-                      {tenantDetails.lastName}
-                    </p>
-                  </div>
-                </div>
-
-                {(tenantDetails as any).witnesses &&
-                  (tenantDetails as any).witnesses.length > 0 && (
-                    <div className='mt-6'>
-                      <h4 className='font-semibold'>WITNESSES:</h4>
-                      {(tenantDetails as any).witnesses.map(
-                        (witness: string, index: number) => (
-                          <p key={index}>
-                            {index + 1}. {witness}
-                          </p>
-                        )
-                      )}
-                    </div>
-                  )}
-              </div>
-            </CardContent>
-          </Card>
+          <TenantRentalAgreementForm
+            tenant={{
+              ...tenantDetails,
+              apartment: tenantDetails.apartment || undefined,
+              tenantSigned: (tenantDetails as any).tenantSigned,
+              adminSigned: (tenantDetails as any).adminSigned,
+              tenantSignedAt: (tenantDetails as any).tenantSignedAt,
+              adminSignedAt: (tenantDetails as any).adminSignedAt,
+            }}
+          />
         )}
 
         {/* Payment History */}

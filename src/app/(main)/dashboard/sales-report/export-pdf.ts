@@ -26,17 +26,15 @@ export function exportSalesReportPDF({
   doc.setFontSize(18)
   doc.setFont('helvetica', 'bold')
   const companyName = 'LORETO BOXES TRADING'
-  const companyNameWidth =
-    (doc.getStringUnitWidth(companyName) * doc.getFontSize()) /
-    doc.internal.scaleFactor
+  // Calculate width manually for text centering
+  const companyNameWidth = companyName.length * 4 // Rough estimation
   doc.text(companyName, (pageWidth - companyNameWidth) / 2, 25)
 
   // Header - Sales Report (Centered)
   doc.setFontSize(16)
   const reportTitle = 'SALES REPORT'
-  const reportTitleWidth =
-    (doc.getStringUnitWidth(reportTitle) * doc.getFontSize()) /
-    doc.internal.scaleFactor
+  // Calculate width manually for text centering
+  const reportTitleWidth = reportTitle.length * 4 // Rough estimation
   doc.text(reportTitle, (pageWidth - reportTitleWidth) / 2, 35)
 
   // Horizontal line

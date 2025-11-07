@@ -338,6 +338,10 @@ model Tenant {
   witnesses        String[]
   contractSigned   DateTime?
   agreementCreated DateTime?
+  tenantSigned     Boolean?  @default(false)
+  adminSigned      Boolean?  @default(false)
+  tenantSignedAt   DateTime?
+  adminSignedAt    DateTime?
 
   status      Int           @default(0)
   // 0 Active

@@ -46,14 +46,9 @@ export async function saveRentalAgreement(data: RentalAgreementData) {
       ownerSignatureUrl = uploadResponse.secure_url
     }
 
-    if (data.tenantSignature && data.tenantSignature.startsWith('data:')) {
-      const uploadResponse = await cloud.uploader.upload(data.tenantSignature, {
-        public_id: `tenant-signature-tenant-${data.tenantId}`,
-        overwrite: true,
-        folder: 'loreto/signatures',
-      })
-      tenantSignatureUrl = uploadResponse.secure_url
-    }
+    // Don't process tenant signature from admin form - preserve existing
+    // Only use the existing tenant signature URL
+    tenantSignatureUrl = existingTenant.tenantSignature || ''
 
     // Update the tenant record with the rental agreement information
     // Note: Using type assertion since IDE might not have picked up the updated Prisma types yet
@@ -65,10 +60,16 @@ export async function saveRentalAgreement(data: RentalAgreementData) {
         ownerName: data.landlordName,
         ownerContact: data.landlordContact,
         ownerSignature: ownerSignatureUrl,
-        tenantSignature: tenantSignatureUrl,
+        tenantSignature: tenantSignatureUrl, // Keep existing tenant signature
         witnesses: data.witnesses,
         contractSigned: data.contractSignedDate,
         agreementCreated: data.agreementDate,
+        // Preserve tenant signature status, only reset admin signature status
+        adminSigned: false,
+        adminSignedAt: null,
+        // Keep existing tenant signature status
+        tenantSigned: (existingTenant as any).tenantSigned || false,
+        tenantSignedAt: (existingTenant as any).tenantSignedAt || null,
       } as any,
     })
 
