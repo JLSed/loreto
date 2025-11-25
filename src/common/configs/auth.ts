@@ -70,16 +70,16 @@ export const authOptions: AuthOptions = {
         update: {
           username: user.name,
           photoUrl: user.image,
-          firstName: profile.given_name,
-          lastName: profile.family_name,
+          firstName: profile.given_name ?? user.name,
+          lastName: profile.family_name ?? '',
           verified: true,
         },
         create: {
           email: user.email,
           username: user.name,
           photoUrl: user.image,
-          firstName: profile.given_name,
-          lastName: profile.family_name,
+          firstName: profile.given_name ?? user.name,
+          lastName: profile.family_name ?? '',
           verified: true,
         },
       })
