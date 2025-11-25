@@ -14,6 +14,14 @@ export async function createApartmentInquiry(
     const contactNumber = formData.get('contact_number') as string
     const visitationDate = formData.get('visitation_date') as string
 
+    // Validate contact number
+    if (!/^[0-9]{11}$/.test(contactNumber)) {
+      return {
+        status: 400,
+        message: 'Contact number must be exactly 11 digits',
+      }
+    }
+
     const exist = await tx.apartmentInquiry.findFirst({
       where: {
         firstName,

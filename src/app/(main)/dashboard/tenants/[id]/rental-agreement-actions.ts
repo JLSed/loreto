@@ -25,6 +25,14 @@ export async function saveRentalAgreement(data: RentalAgreementData) {
       return { success: false, message: 'Unauthorized' }
     }
 
+    // Validate contact number
+    if (!/^[0-9]{11}$/.test(data.landlordContact)) {
+      return {
+        success: false,
+        message: 'Contact number must be exactly 11 digits',
+      }
+    }
+
     // Verify that the tenant exists
     const existingTenant = await prisma.tenant.findUnique({
       where: { id: data.tenantId },

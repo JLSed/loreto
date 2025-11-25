@@ -87,6 +87,11 @@ export default function NewTenantPage() {
             <Input
               required
               name='contact_number'
+              maxLength={11}
+              pattern='[0-9]{11}'
+              inputMode='numeric'
+              placeholder='09XXXXXXXXX'
+              title='Contact number must be exactly 11 digits'
             />
           </FormItem>
           <FormItem title='Email Address'>

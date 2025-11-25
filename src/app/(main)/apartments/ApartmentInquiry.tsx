@@ -88,10 +88,11 @@ export default function ApartmentInquiry(props: Props) {
               required
               maxLength={11}
               minLength={11}
+              pattern='[0-9]{11}'
               name='contact_number'
               placeholder='Contact Number'
               inputMode='numeric'
-              title='Contact number must be 11 digits'
+              title='Contact number must be exactly 11 digits'
             />
           </div>
           <div>

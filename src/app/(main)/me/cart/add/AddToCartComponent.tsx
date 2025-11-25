@@ -25,7 +25,7 @@ export default function AddToCartComponent(props: Props) {
   const router = useRouter()
 
   const [contactNumber, setContactNumber] = useState(
-    props.user.contactNumber ?? '+63'
+    props.user.contactNumber ?? ''
   )
   const [quantity, setquantity] = useState(1)
   const [placingOrder, setPlacingOrder] = useState(false)
@@ -35,8 +35,9 @@ export default function AddToCartComponent(props: Props) {
   }
 
   const handlePlaceOrder = async () => {
-    if (!contactNumber || contactNumber.length < 13) {
-      toast.error('Please enter a valid contact number', {
+    // Validate contact number - must be exactly 11 digits
+    if (!contactNumber || !/^[0-9]{11}$/.test(contactNumber)) {
+      toast.error('Contact number must be exactly 11 digits', {
         position: 'bottom-left',
       })
       return
@@ -141,6 +142,11 @@ export default function AddToCartComponent(props: Props) {
                 <Input
                   value={contactNumber}
                   onChange={(e) => setContactNumber(e.target.value)}
+                  maxLength={11}
+                  pattern='[0-9]{11}'
+                  inputMode='numeric'
+                  placeholder='09XXXXXXXXX'
+                  title='Contact number must be exactly 11 digits'
                 />
               </FormItem>
               <FormItem title='Quantity'>

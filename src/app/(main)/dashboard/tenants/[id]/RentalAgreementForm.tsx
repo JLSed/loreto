@@ -364,9 +364,23 @@ export default function RentalAgreementForm({ tenant, apartment }: Props) {
                     Contact:
                   </label>
                   <Input
-                    {...form.register('landlordContact', { required: true })}
-                    placeholder='Contact number'
+                    {...form.register('landlordContact', {
+                      required: true,
+                      pattern: {
+                        value: /^[0-9]{11}$/,
+                        message: 'Contact number must be exactly 11 digits',
+                      },
+                    })}
+                    maxLength={11}
+                    inputMode='numeric'
+                    placeholder='09XXXXXXXXX'
+                    title='Contact number must be exactly 11 digits'
                   />
+                  {form.formState.errors.landlordContact && (
+                    <p className='text-xs text-red-600 mt-1'>
+                      {form.formState.errors.landlordContact.message}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>

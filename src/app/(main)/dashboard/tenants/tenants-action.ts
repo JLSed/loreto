@@ -43,10 +43,15 @@ export async function getTenants() {
 
 export async function addNewTenant(input: TNewTenant) {
   try {
+    // Validate contact number
+    if (!/^[0-9]{11}$/.test(input.contactNumber)) {
+      return false
+    }
+
     // Get the apartment to get its monthly rental price
     const apartment = await prisma.apartment.findUnique({
       where: { id: input.apartmentId },
-      select: { monthlyRentalPrice: true, availability_status: true }
+      select: { monthlyRentalPrice: true, availability_status: true },
     })
 
     if (!apartment) {
@@ -62,8 +67,8 @@ export async function addNewTenant(input: TNewTenant) {
       // Create tenant with apartment's monthly rental price
       const { apartmentId, ...tenantData } = input
       const added = await tx.tenant.create({
-        data: { 
-          ...tenantData, 
+        data: {
+          ...tenantData,
           moveInDate: new Date(input.moveInDate),
           monthlyPayment: apartment.monthlyRentalPrice,
         },

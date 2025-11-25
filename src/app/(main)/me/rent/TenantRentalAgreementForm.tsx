@@ -223,9 +223,21 @@ export default function TenantRentalAgreementForm({ tenant }: Props) {
                   <Input
                     {...form.register('tenantContact', {
                       required: 'Contact number is required',
+                      pattern: {
+                        value: /^[0-9]{11}$/,
+                        message: 'Contact number must be exactly 11 digits',
+                      },
                     })}
-                    placeholder='Your contact number'
+                    maxLength={11}
+                    inputMode='numeric'
+                    placeholder='09XXXXXXXXX'
+                    title='Contact number must be exactly 11 digits'
                   />
+                  {form.formState.errors.tenantContact && (
+                    <p className='text-xs text-red-600 mt-1'>
+                      {form.formState.errors.tenantContact.message}
+                    </p>
+                  )}
                 </div>
               </div>
 
