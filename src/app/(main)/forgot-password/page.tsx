@@ -47,18 +47,13 @@ export default function ForgotPasswordPage() {
     const formData = new FormData(event.currentTarget)
     const email = formData.get('email')?.toString() ?? ''
 
-    console.log('[FRONTEND] Sending password reset request for:', email)
-
     const res = await sendEmailResetPasswordLinkAction(email)
-
-    console.log('[FRONTEND] Reset email response:', res)
 
     if (res.ok) {
       setCurrentStep(Step.ResetLinkSent)
     } else {
       const errorMessage =
         res.message || 'Something went wrong, please try again later.'
-      console.error('[FRONTEND] Failed to send reset email:', errorMessage)
       toast.error(errorMessage, {
         richColors: true,
       })
@@ -69,21 +64,16 @@ export default function ForgotPasswordPage() {
   const submitCreateNewPassword = async (data: NewPassword) => {
     setCreatingNewPassword(true)
 
-    console.log('[FRONTEND] Submitting new password for UID:', uid)
-
     const res = await createNewPasswordAction(
       uid as string,
       data.confirmPassword
     )
-
-    console.log('[FRONTEND] Create password response:', res)
 
     if (res.ok) {
       setCurrentStep(Step.PasswordResetSuccessfully)
     } else {
       const errorMessage =
         res.message || 'Something went wrong, please try again later.'
-      console.error('[FRONTEND] Failed to reset password:', errorMessage)
       toast.error(errorMessage, {
         richColors: true,
       })
