@@ -24,6 +24,14 @@ export async function placeOrder(params: {
   const session = await getServerSession(authOptions)
   const user = session!.user
 
+  // Validate contact number
+  if (!/^[0-9]{11}$/.test(params.contactNumber)) {
+    return {
+      status: 400,
+      message: 'Contact number must be exactly 11 digits',
+    }
+  }
+
   try {
     return await prisma.$transaction(async (tx) => {
       const orderExists = await tx.boxOrder.findFirst({

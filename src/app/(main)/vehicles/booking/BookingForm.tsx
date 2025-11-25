@@ -35,7 +35,9 @@ const BookInputSchema = z.object({
   lastName: z.string().trim().min(1, { message: 'Please fill out this field' }),
   contactNumber: z
     .string()
-    .min(11, { message: 'Please enter a valid contact number' }),
+    .regex(/^[0-9]{11}$/, {
+      message: 'Contact number must be exactly 11 digits',
+    }),
   email: z.string().email({ message: 'Please enter a valid email address' }),
   pickUpAddress: z
     .string()
@@ -180,6 +182,10 @@ export default function BookingForm({
               <Label>Contact number</Label>
               <Input
                 placeholder='09 ...'
+                maxLength={11}
+                pattern='[0-9]{11}'
+                inputMode='numeric'
+                title='Contact number must be exactly 11 digits'
                 {...form.register('contactNumber')}
               />
               {errors.contactNumber && (

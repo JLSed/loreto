@@ -71,6 +71,11 @@ export default function EditTenantForm(props: Props) {
             <FormItem title='Contact Number'>
               <Input
                 required
+                maxLength={11}
+                pattern='[0-9]{11}'
+                inputMode='numeric'
+                placeholder='09XXXXXXXXX'
+                title='Contact number must be exactly 11 digits'
                 {...form.register('contactNumber')}
               />
             </FormItem>

@@ -53,6 +53,14 @@ export async function signRentalAgreement(data: TenantSignatureData) {
       return { success: false, message: 'Unauthorized' }
     }
 
+    // Validate contact number
+    if (!/^[0-9]{11}$/.test(data.tenantContact)) {
+      return {
+        success: false,
+        message: 'Contact number must be exactly 11 digits',
+      }
+    }
+
     // Verify that the tenant exists and belongs to the current user
     const existingTenant = await prisma.tenant.findFirst({
       where: {
@@ -113,6 +121,14 @@ export async function signRentalAgreementAsAdmin(data: AdminSignatureData) {
 
     if (!session?.user || (session.user as any).role > 2) {
       return { success: false, message: 'Unauthorized - Admin access required' }
+    }
+
+    // Validate contact number
+    if (!/^[0-9]{11}$/.test(data.landlordContact)) {
+      return {
+        success: false,
+        message: 'Contact number must be exactly 11 digits',
+      }
     }
 
     // Verify that the tenant exists
