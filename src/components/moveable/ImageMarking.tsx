@@ -51,6 +51,12 @@ export default function ImageMarking(props: Props) {
             onClick={() => setResizable((r) => !r)}
             onMouseUp={() => {
               props.onMouseUp()
+              // Sync localStorage state back to React state
+              const markings = localStorage.getItem(LSKeys.IMAGE_MARKINGS)
+              if (markings) {
+                const parsed = JSON.parse(markings) as LocalImageMarking[]
+                props.controls.setImageMarkings(parsed)
+              }
             }}
             ref={targetRef}
             className='cursor-move absolute z-10 text-black grid place-items-center'
@@ -113,27 +119,48 @@ export default function ImageMarking(props: Props) {
           e.target.style.width = `${e.width}px`
           e.target.style.height = `${e.height}px`
           e.target.style.transform = e.drag.transform
+        }}
+        onResizeEnd={(e) => {
+          const target = e.target as HTMLElement
+          const transform = target.style.transform
+          const width =
+            parseFloat(target.style.width) / props.controls.SCALE_FACTOR
+          const height =
+            parseFloat(target.style.height) / props.controls.SCALE_FACTOR
 
           const markings = localStorage.getItem(LSKeys.IMAGE_MARKINGS)
           if (markings) {
             const parsed = JSON.parse(markings) as LocalImageMarking[]
             const index = parsed.findIndex((m) => m.id === props.marking.id)
-            parsed[index].transform = e.drag.transform.trim()
-            parsed[index].width = e.width / props.controls.SCALE_FACTOR
-            parsed[index].height = e.height / props.controls.SCALE_FACTOR
-
-            localStorage.setItem(LSKeys.IMAGE_MARKINGS, JSON.stringify(parsed))
+            if (index !== -1) {
+              parsed[index].transform = transform.trim()
+              parsed[index].width = width
+              parsed[index].height = height
+              localStorage.setItem(
+                LSKeys.IMAGE_MARKINGS,
+                JSON.stringify(parsed)
+              )
+              props.controls.setImageMarkings(parsed)
+            }
           }
         }}
         onDrag={(e) => {
           e.target.style.transform = e.transform
+        }}
+        onDragEnd={(e) => {
+          const transform = e.target.style.transform
           const markings = localStorage.getItem(LSKeys.IMAGE_MARKINGS)
           if (markings) {
             const parsed = JSON.parse(markings) as LocalImageMarking[]
             const index = parsed.findIndex((m) => m.id === props.marking.id)
-            parsed[index].transform = e.transform.trim()
-
-            localStorage.setItem(LSKeys.IMAGE_MARKINGS, JSON.stringify(parsed))
+            if (index !== -1) {
+              parsed[index].transform = transform.trim()
+              localStorage.setItem(
+                LSKeys.IMAGE_MARKINGS,
+                JSON.stringify(parsed)
+              )
+              props.controls.setImageMarkings(parsed)
+            }
           }
         }}
       />
