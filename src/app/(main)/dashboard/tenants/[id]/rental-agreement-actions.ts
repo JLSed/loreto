@@ -54,12 +54,9 @@ export async function saveRentalAgreement(data: RentalAgreementData) {
       ownerSignatureUrl = uploadResponse.secure_url
     }
 
-    // Don't process tenant signature from admin form - preserve existing
-    // Only use the existing tenant signature URL
     tenantSignatureUrl = existingTenant.tenantSignature || ''
 
     // Update the tenant record with the rental agreement information
-    // Note: Using type assertion since IDE might not have picked up the updated Prisma types yet
     const updatedTenant = await prisma.tenant.update({
       where: {
         id: data.tenantId,

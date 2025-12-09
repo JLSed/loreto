@@ -36,7 +36,6 @@ export async function createBoxInventoryEntry(data: {
       },
     })
 
-    // Create audit log
     await prisma.auditLog.create({
       data: {
         action: AuditAction.Creation,
@@ -82,7 +81,6 @@ export async function updateBoxInventoryEntry(
       },
     })
 
-    // Create audit log
     await prisma.auditLog.create({
       data: {
         action: AuditAction.Modification,
@@ -112,7 +110,6 @@ export async function deleteBoxInventoryEntry(id: string) {
       where: { id },
     })
 
-    // Create audit log
     await prisma.auditLog.create({
       data: {
         action: AuditAction.Deletion,

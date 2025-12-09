@@ -56,7 +56,6 @@ function Number({ mv, number }: { mv: MotionValue<number>; number: number }) {
     return memo
   })
 
-  // don't render the animated number until we know the height
   if (!bounds.height) {
     return (
       <span

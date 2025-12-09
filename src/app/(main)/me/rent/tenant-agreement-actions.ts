@@ -140,7 +140,6 @@ export async function signRentalAgreementAsAdmin(data: AdminSignatureData) {
       return { success: false, message: 'Tenant not found' }
     }
 
-    // Check if admin has already signed
     if ((existingTenant as any).adminSigned) {
       return { success: false, message: 'Agreement already signed by admin' }
     }

@@ -51,7 +51,6 @@ export default function ImageMarking(props: Props) {
             onClick={() => setResizable((r) => !r)}
             onMouseUp={() => {
               props.onMouseUp()
-              // Sync localStorage state back to React state
               const markings = localStorage.getItem(LSKeys.IMAGE_MARKINGS)
               if (markings) {
                 const parsed = JSON.parse(markings) as LocalImageMarking[]
