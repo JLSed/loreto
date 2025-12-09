@@ -83,7 +83,6 @@ export default function TenantRentalAgreementForm({ tenant }: Props) {
     try {
       const result = await exportRentalAgreementToPDF(tenant.id)
       if (result.success) {
-        // Create blob and download
         const binaryString = atob(result.pdfData)
         const bytes = new Uint8Array(binaryString.length)
         for (let i = 0; i < binaryString.length; i++) {

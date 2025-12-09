@@ -5,7 +5,6 @@ import { ReactNode } from 'react'
 import MaterialIcon, { MaterialIconName } from '@/components/ui/material-icon'
 
 export default async function EarningsDashboard() {
-  // Fetch total earnings for each type from Transaction table
   const [rent, box, booking] = await Promise.all([
     prisma.transaction.aggregate({
       where: { itemType: 3 },
