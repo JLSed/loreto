@@ -103,6 +103,7 @@ export default function FloatingToolbar(props: Props) {
       markings: JSON.parse(localStorage.getItem(LSKeys.BOX_MARKINGS)!),
       thickness: props.controls.boxThickness,
       quality: props.controls.quality,
+      scaleFactor: props.controls.SCALE_FACTOR,
     })
     if (res.status === 200) {
       toast.success('Box saved successfully!', { position: 'top-right' })

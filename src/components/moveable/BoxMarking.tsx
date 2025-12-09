@@ -110,14 +110,18 @@ export default function BoxMarking(props: Props) {
         origin={false}
         onDrag={(e) => {
           e.target.style.transform = e.transform
+        }}
+        onDragEnd={(e) => {
+          const transform = e.target.style.transform
           const markings = localStorage.getItem(LSKeys.BOX_MARKINGS)
           if (markings) {
             const parsed = JSON.parse(markings) as LocalMarking[]
-            const index = parsed.findIndex(
-              (m) => m.label === props.marking.label
-            )
-            parsed[index].transform = e.transform
-            localStorage.setItem(LSKeys.BOX_MARKINGS, JSON.stringify(parsed))
+            const index = parsed.findIndex((m) => m.id === props.marking.id)
+            if (index !== -1) {
+              parsed[index].transform = transform
+              localStorage.setItem(LSKeys.BOX_MARKINGS, JSON.stringify(parsed))
+              props.controls.setMarkings(parsed)
+            }
           }
         }}
       />

@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Box" ADD COLUMN     "scaleFactor" DOUBLE PRECISION NOT NULL DEFAULT 19.2;

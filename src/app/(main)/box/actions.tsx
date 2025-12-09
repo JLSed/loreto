@@ -16,6 +16,7 @@ type SaveBoxParams = Pick<
   | 'dragTransform'
   | 'thickness'
   | 'quality'
+  | 'scaleFactor'
 > & {
   markings: Omit<LocalMarking, 'id'>[]
   imageMarkings: Omit<LocalImageMarking, 'id'>[]
@@ -50,6 +51,7 @@ export const saveBoxAction = async (params: SaveBoxParams) => {
           dragTransform: params.dragTransform,
           thickness: params.thickness,
           quality: params.quality,
+          scaleFactor: params.scaleFactor,
           owner: {
             connect: {
               id: user.id,

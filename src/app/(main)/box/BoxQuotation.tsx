@@ -280,7 +280,7 @@ export function Render2DBox(props: {
           >
             <span>Left side</span>
             <pre>
-              {props.width}x{props.height}
+              {props.width.toFixed(2)}x{props.height.toFixed(2)}
             </pre>
           </BoxPortion>
           <BoxPortion
@@ -290,7 +290,7 @@ export function Render2DBox(props: {
           >
             <span>Front</span>
             <pre>
-              {props.length}x{props.height}
+              {props.length.toFixed(2)}x{props.height.toFixed(2)}
             </pre>
           </BoxPortion>
           <BoxPortion
@@ -300,7 +300,7 @@ export function Render2DBox(props: {
           >
             <span>Right side</span>
             <pre>
-              {props.width}x{props.height}
+              {props.width.toFixed(2)}x{props.height.toFixed(2)}
             </pre>
           </BoxPortion>
           <BoxPortion
@@ -310,7 +310,7 @@ export function Render2DBox(props: {
           >
             <span>Back</span>
             <pre>
-              {props.length}x{props.height}
+              {props.length.toFixed(2)}x{props.height.toFixed(2)}
             </pre>
           </BoxPortion>
           <BoxPortion
