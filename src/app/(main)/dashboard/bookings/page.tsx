@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { BookingsDataTable } from './data-table'
 import { bookingsColumns } from './columns'
 import { getBookings } from './actions'

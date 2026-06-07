@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { prisma } from '@/common/configs/prisma'
 import { VehicleStatusLabel } from '@/common/constants/business'
 import { VehicleStatusColor } from '@/common/constants/status-colors'

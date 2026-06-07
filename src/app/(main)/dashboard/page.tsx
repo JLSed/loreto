@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { prisma } from '@/common/configs/prisma'
 import { UserRole, UserStatus } from '@/common/enums/enums.db'
 import MaterialIcon, { MaterialIconName } from '@/components/ui/material-icon'

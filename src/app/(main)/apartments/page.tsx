@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import Navbar from '../Navbar'
 import { prisma } from '@/common/configs/prisma'
 import Apartments from './Apartments'

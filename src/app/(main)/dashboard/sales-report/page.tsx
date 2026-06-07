@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import EarningsDashboard from '../earnings-dashboard'
 import { getSalesReport } from './actions'
 import SalesReportTable from './sales-report-table'

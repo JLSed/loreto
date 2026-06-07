@@ -4,7 +4,7 @@ import { emailTransporter } from '@/common/services/email'
 import { contact, TimeInSeconds } from '@/lib/constants'
 import { formatDate } from 'date-fns'
 
-export const revalidate = 1 * TimeInSeconds.hour
+export const dynamic = 'force-dynamic'
 
 export async function GET() {
   const activeTenants = await prisma.tenant.findMany({
