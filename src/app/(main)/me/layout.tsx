@@ -4,7 +4,6 @@ import { redirect } from 'next/navigation'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import Link from 'next/link'
-import { Toaster } from 'sonner'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -73,7 +72,6 @@ export default async function Layout(props: { children: React.ReactNode }) {
       </header>
 
       {props.children}
-      <Toaster />
     </div>
   )
 }

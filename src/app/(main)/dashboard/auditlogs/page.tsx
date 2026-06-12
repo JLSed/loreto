@@ -7,12 +7,7 @@ import { ArrowRightIcon } from '@radix-ui/react-icons'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import BoxOrderStatusLabel from '@/components/shared/BoxOrderStatusLabel'
 
-export default async function Page(props: {
-  searchParams: {
-    page?: string
-    per_page?: string
-  }
-}) {
+export default async function Page() {
   const logs = await prisma.auditLog.findMany({
     // take: parseInt(props.searchParams.per_page ?? '10'),
     // skip: props.searchParams.page

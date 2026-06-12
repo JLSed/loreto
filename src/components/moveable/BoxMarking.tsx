@@ -19,7 +19,7 @@ import {
 import { Input } from '../ui/input'
 
 interface Props {
-  containerRef: RefObject<HTMLDivElement>
+  containerRef: RefObject<HTMLDivElement | null>
   controls: ReturnType<typeof useBoxControls>
   marking: LocalMarking
   onMouseDown: () => void

@@ -3,17 +3,18 @@ import { notFound } from 'next/navigation'
 import UpdateUserRole from './UpdateUserRole'
 
 export default async function Page(props: {
-  searchParams: {
-    userId: string
-  }
+  searchParams: Promise<{
+    userId?: string
+  }>
 }) {
-  if (!props.searchParams.userId) {
+  const searchParams = await props.searchParams
+  if (!searchParams.userId) {
     notFound()
   }
 
   const user = await prisma.user.findUnique({
     where: {
-      id: props.searchParams.userId,
+      id: searchParams.userId,
     },
   })
 

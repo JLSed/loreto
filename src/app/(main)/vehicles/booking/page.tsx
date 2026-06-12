@@ -7,16 +7,17 @@ import { getCurrentCustomer } from './booking-actions'
 import { BookingStatus } from '@/common/enums/enums.db'
 
 export default async function Page(props: {
-  searchParams: {
+  searchParams: Promise<{
     vehicleId: string
-  }
+  }>
 }) {
+  const searchParams = await props.searchParams
   const session = await getServerSession(authOptions)
 
   if (!session?.user) {
     redirect(
       encodeURI(
-        `/?open=1&redirect=/vehicles/booking?vehicleId=${props.searchParams.vehicleId}`
+        `/?open=1&redirect=/vehicles/booking?vehicleId=${searchParams.vehicleId}`
       )
     )
   }
@@ -25,7 +26,7 @@ export default async function Page(props: {
     getCurrentCustomer(),
     prisma.vehicle.findUnique({
       where: {
-        id: props.searchParams.vehicleId,
+        id: searchParams.vehicleId,
       },
       include: {
         _count: {
@@ -40,7 +41,7 @@ export default async function Page(props: {
         pickupDate: 'desc',
       },
       where: {
-        vehicleId: props.searchParams.vehicleId,
+        vehicleId: searchParams.vehicleId,
         status: BookingStatus.Confirmed,
       },
     }),
@@ -50,7 +51,7 @@ export default async function Page(props: {
     <BookingForm
       v={v}
       user={user!}
-      vehicleId={props.searchParams.vehicleId}
+      vehicleId={searchParams.vehicleId}
       bookings={bookings}
     />
   )

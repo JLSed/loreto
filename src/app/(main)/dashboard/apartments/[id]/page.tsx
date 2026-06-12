@@ -4,13 +4,14 @@ import { notFound } from 'next/navigation'
 import ApartmentDetail from './ApartmentDetail'
 
 interface Props {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
 export default async function Page(props: Props) {
-  const data = await getApartmentById(props.params.id)
+  const params = await props.params
+  const data = await getApartmentById(params.id)
   if (!data) {
     notFound()
   }

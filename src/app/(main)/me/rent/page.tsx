@@ -102,9 +102,9 @@ export default async function RentPage() {
                 <label className='text-sm font-medium text-muted-foreground'>
                   Status
                 </label>
-                <p className='text-lg'>
+                <div className='text-lg'>
                   {getStatusBadge(tenantDetails.status)}
-                </p>
+                </div>
               </div>
             </div>
           </CardContent>

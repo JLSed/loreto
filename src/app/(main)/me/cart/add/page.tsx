@@ -5,13 +5,14 @@ import { notFound } from 'next/navigation'
 import AddToCartComponent from './AddToCartComponent'
 
 interface Props {
-  searchParams: {
+  searchParams: Promise<{
     box: string
-  }
+  }>
 }
 
 export default async function AddToCartPage(props: Props) {
-  if (!props.searchParams.box || typeof props.searchParams.box !== 'string') {
+  const searchParams = await props.searchParams
+  if (!searchParams.box || typeof searchParams.box !== 'string') {
     return (
       <div className='text-center p-4 my-12'>
         <div>Seems like this link was broken.</div>
@@ -31,7 +32,7 @@ export default async function AddToCartPage(props: Props) {
 
   const box = await prisma.box.findFirst({
     where: {
-      id: props.searchParams.box,
+      id: searchParams.box,
       ownerId: user.id,
     },
     include: {

@@ -2,11 +2,12 @@ import { getBookingById } from './actions'
 import BookingDetails from './BookingDetails'
 
 export default async function Page(props: {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }) {
-  const data = await getBookingById(props.params.id)
+  const params = await props.params
+  const data = await getBookingById(params.id)
 
   return (
     <div>

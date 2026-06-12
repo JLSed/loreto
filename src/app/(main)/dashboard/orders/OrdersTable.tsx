@@ -16,6 +16,17 @@ import {
 } from '@/components/ui/dialog'
 
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog'
+
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -41,11 +52,26 @@ export default function OrdersTable(props: Props) {
     DashboardOrders[number] | undefined
   >()
   const [newStatus, setNewStatus] = useState<number | undefined>()
+  const [inventoryWarning, setInventoryWarning] = useState<string | undefined>()
 
-  const handleSaveStatus = async (order?: DashboardOrders[number]) => {
+  const handleSaveStatus = async (
+    order?: DashboardOrders[number],
+    forceDeduction: boolean = false
+  ) => {
     if (!order || !newStatus) return
     setLoading(true)
-    const res = await updateOrderStatus(order.id, order.status, newStatus)
+    const res = await updateOrderStatus(
+      order.id,
+      order.status,
+      newStatus,
+      forceDeduction
+    )
+    if (res.status === 409) {
+      // Inventory warning — show confirmation dialog
+      setInventoryWarning(res.message)
+      setLoading(false)
+      return
+    }
     if (res.status === 200) {
       // If status is being set to Completed, create a Transaction
       if (newStatus === BoxOrderStatus.OrderCompleted) {
@@ -75,6 +101,11 @@ export default function OrdersTable(props: Props) {
       toast.error(res.message ?? 'Failed to update status')
     }
     setLoading(false)
+  }
+
+  const handleForceDeduction = async () => {
+    setInventoryWarning(undefined)
+    await handleSaveStatus(orderToUpdate, true)
   }
 
   return (
@@ -276,6 +307,29 @@ export default function OrdersTable(props: Props) {
           </div>
         </DialogContent>
       </Dialog>
+
+      <AlertDialog
+        open={!!inventoryWarning}
+        onOpenChange={(o) => {
+          if (!o) setInventoryWarning(undefined)
+        }}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Inventory Warning</AlertDialogTitle>
+            <AlertDialogDescription>
+              {inventoryWarning}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleForceDeduction}>
+              Proceed Anyway
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   )
 }
+

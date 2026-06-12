@@ -1,6 +1,7 @@
 'use client'
 
 import { useTheme } from 'next-themes'
+import { useEffect, useState } from 'react'
 
 import {
   DropdownMenu,
@@ -13,6 +14,13 @@ import { Button } from '@/components/ui/button'
 
 export function ThemeSwitcher(props: { useIcon?: boolean }) {
   const { setTheme, resolvedTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const isDark = mounted && resolvedTheme === 'dark'
 
   return (
     <DropdownMenu>
@@ -22,7 +30,7 @@ export function ThemeSwitcher(props: { useIcon?: boolean }) {
             variant={'ghost'}
             size={'icon'}
           >
-            {resolvedTheme === 'dark' ? (
+            {isDark ? (
               <MoonIcon className='mr-1' />
             ) : (
               <SunIcon className='mr-1' />
@@ -30,7 +38,7 @@ export function ThemeSwitcher(props: { useIcon?: boolean }) {
           </Button>
         ) : (
           <DropdownMenuItem className='flex items-center gap-1'>
-            {resolvedTheme === 'dark' ? (
+            {isDark ? (
               <MoonIcon className='mr-1' />
             ) : (
               <SunIcon className='mr-1' />
@@ -56,3 +64,4 @@ export function ThemeSwitcher(props: { useIcon?: boolean }) {
     </DropdownMenu>
   )
 }
+

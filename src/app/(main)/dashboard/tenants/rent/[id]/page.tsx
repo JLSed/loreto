@@ -6,14 +6,15 @@ import { pesos } from '@/lib/utils'
 import Link from 'next/link'
 
 interface PageProps {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
 export default async function TenantRentDetailPage(props: PageProps) {
+  const params = await props.params
   const tenant = await prisma.tenant.findUnique({
-    where: { id: +props.params.id },
+    where: { id: +params.id },
   })
 
   if (!tenant) return notFound()

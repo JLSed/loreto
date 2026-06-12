@@ -27,7 +27,7 @@ import { Button } from '@/components/ui/button'
 import * as htmlToImage from 'html-to-image'
 import useBoxControls, { LSKeys } from './useBoxControls'
 import { signIn, useSession } from 'next-auth/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { saveBoxAction } from './actions'
 import { useRouter } from 'next/navigation'
@@ -50,6 +50,11 @@ export default function FloatingToolbar(props: Props) {
   const router = useRouter()
   const { setTheme, resolvedTheme, theme } = useTheme()
   const [isSigninDialogOpen, setIsSigninDialogOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const downloadAsImage = () => {
     const node = document
@@ -142,26 +147,26 @@ export default function FloatingToolbar(props: Props) {
             variant='secondary'
             size={'icon'}
           >
-            {resolvedTheme === 'dark' ? <MoonIcon /> : <SunIcon />}
+            {mounted && resolvedTheme === 'dark' ? <MoonIcon /> : <SunIcon />}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className='mx-4 backdrop-blur'>
           <DropdownMenuLabel>Theme</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuCheckboxItem
-            checked={theme === 'light'}
+            checked={mounted && theme === 'light'}
             onCheckedChange={(checked) => checked && setTheme('light')}
           >
             Light
           </DropdownMenuCheckboxItem>
           <DropdownMenuCheckboxItem
-            checked={theme === 'dark'}
+            checked={mounted && theme === 'dark'}
             onCheckedChange={(checked) => checked && setTheme('dark')}
           >
             Dark
           </DropdownMenuCheckboxItem>
           <DropdownMenuCheckboxItem
-            checked={theme === 'system'}
+            checked={mounted && theme === 'system'}
             onCheckedChange={(checked) => checked && setTheme('system')}
           >
             System

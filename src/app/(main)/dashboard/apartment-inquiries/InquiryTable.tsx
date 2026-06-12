@@ -37,7 +37,7 @@ export default function InquiryTable({ inquiries }: Props) {
           accessorKey: 'preferredVisitationDate',
           header: 'Preferred Visitation Date',
           cell: ({ row }) => {
-            return format(row.original.preferredVisitationDate, 'MMM d, Y')
+            return format(row.original.preferredVisitationDate, 'MMM d, y')
           },
         },
         {

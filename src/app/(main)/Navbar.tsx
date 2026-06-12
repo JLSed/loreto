@@ -4,11 +4,10 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { UserRole } from '@/common/enums/enums.db'
 import { authOptions } from '@/common/configs/auth'
-import dynamic from 'next/dynamic'
+import { Suspense } from 'react'
 import NavLink, { NavbarToggleButton, NavLinksWrapper } from './nav-link'
 import { MenuIcon } from 'lucide-react'
-
-const SignInButton = dynamic(() => import('./SignInButton'), { ssr: false })
+import SignInButton from './SignInButton'
 
 const HomeLinkTitle = (
   <Link href={'/'}>
@@ -32,7 +31,9 @@ export default async function Navbar() {
     if (!session?.user)
       return (
         <>
-          <SignInButton />
+          <Suspense fallback={<Button variant='outline'>Sign in</Button>}>
+            <SignInButton />
+          </Suspense>
           <Link href={'/signup'}>
             <Button>Sign up</Button>
           </Link>

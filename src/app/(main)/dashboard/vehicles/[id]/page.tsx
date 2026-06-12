@@ -3,13 +3,14 @@ import { notFound } from 'next/navigation'
 import VehicleDetails from './VehicleDetails'
 
 interface Props {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }
 
 export default async function Page(props: Props) {
+  const params = await props.params
   const data = await prisma.vehicle.findUnique({
     where: {
-      id: props.params.id,
+      id: params.id,
     },
   })
 

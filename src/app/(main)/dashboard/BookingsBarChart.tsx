@@ -3,11 +3,22 @@
 import { Booking } from '@prisma/client'
 import { format } from 'date-fns'
 import { useTheme } from 'next-themes'
+import { useEffect, useState } from 'react'
 import { Chart } from 'react-google-charts'
 
 export default function BookingsBarChart(props: { data: Booking[] }) {
   const { resolvedTheme } = useTheme()
-  const isDark = resolvedTheme === 'dark'
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const isDark = mounted && resolvedTheme === 'dark'
+
+  if (!mounted) {
+    return <div className='w-full h-[400px]' />
+  }
 
   const bookingsGroupedByCreatedAt = props.data.reduce((acc, booking) => {
     const key = booking.createdAt.toISOString().split('T')[0]

@@ -3,15 +3,16 @@ import { prisma } from '@/common/configs/prisma'
 import { notFound } from 'next/navigation'
 
 interface PageProps {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
 export default async function Page(props: PageProps) {
+  const params = await props.params
   const tenant = await prisma.tenant.findUnique({
     where: {
-      id: +props.params.id,
+      id: +params.id,
     },
   })
   if (!tenant) notFound()

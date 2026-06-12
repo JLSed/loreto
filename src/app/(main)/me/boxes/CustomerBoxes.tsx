@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+ 
 import { BoxPlacement, BoxThickness } from '@/common/enums/enums.db'
 import { TCustomerBoxes } from './page'
 import AddToCardButton from './AddToCardButton'

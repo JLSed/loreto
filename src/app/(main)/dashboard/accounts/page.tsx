@@ -3,14 +3,15 @@ import { accountsColumns } from './accounts-column'
 import { AccountsDataTable } from './accounts-table'
 
 export default async function Page(props: {
-  searchParams: {
-    page: number
-    perPage: number
-  }
+  searchParams: Promise<{
+    page?: number
+    perPage?: number
+  }>
 }) {
+  const searchParams = await props.searchParams
   const accounts = await getAccountsForDashboard({
-    page: props.searchParams.page ?? 1,
-    perPage: props.searchParams.perPage ?? 10,
+    page: searchParams.page ?? 1,
+    perPage: searchParams.perPage ?? 10,
   })
 
   return (

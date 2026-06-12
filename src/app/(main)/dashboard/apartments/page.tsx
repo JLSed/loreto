@@ -6,16 +6,17 @@ import { apartmentsColumn } from './apartments-column'
 
 export type Apartment = Awaited<ReturnType<typeof getApartments>>[0]
 interface Props {
-  searchParams: {
-    page: number
-    perPage: number
-  }
+  searchParams: Promise<{
+    page?: number
+    perPage?: number
+  }>
 }
 
 export default async function Page(props: Props) {
+  const searchParams = await props.searchParams
   const apartments = await getApartments({
-    page: props.searchParams.page ? +props.searchParams.page : 1,
-    perPage: props.searchParams.perPage ? +props.searchParams.perPage : 10,
+    page: searchParams.page ? +searchParams.page : 1,
+    perPage: searchParams.perPage ? +searchParams.perPage : 10,
   })
 
   return (

@@ -3,9 +3,9 @@ import BoxPreview from './BoxPreview'
 import { notFound } from 'next/navigation'
 
 interface PageProps {
-  searchParams: {
+  searchParams: Promise<{
     box: string
-  }
+  }>
 }
 
 const getBoxDetails = async (id: string) => {
@@ -23,7 +23,8 @@ const getBoxDetails = async (id: string) => {
 export type BoxDetails = Awaited<ReturnType<typeof getBoxDetails>>
 
 export default async function Page(props: PageProps) {
-  const box = await getBoxDetails(props.searchParams.box)
+  const searchParams = await props.searchParams
+  const box = await getBoxDetails(searchParams.box)
 
   return (
     <div className='min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-4'>

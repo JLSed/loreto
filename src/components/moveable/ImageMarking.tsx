@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+ 
 'use client'
 
 import { RefObject, useRef, useState } from 'react'
@@ -20,7 +20,7 @@ import ImageUpload from '../shared/ImageUpload'
 import Image from 'next/image'
 
 interface Props {
-  containerRef: RefObject<HTMLDivElement>
+  containerRef: RefObject<HTMLDivElement | null>
   controls: ReturnType<typeof useBoxControls>
   marking: LocalImageMarking
   onMouseDown: () => void
