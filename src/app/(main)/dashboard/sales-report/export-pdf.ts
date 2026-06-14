@@ -1,5 +1,6 @@
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
+import { format } from 'date-fns'
 
 interface SalesSummary {
   total: number
@@ -8,19 +9,28 @@ interface SalesSummary {
   booking: number
 }
 
+interface DateRange {
+  from: Date
+  to: Date
+}
+
 export function exportSalesReportPDF({
-  month,
+  dateRange,
   description,
   summary,
   exportDate,
 }: {
-  month: string
+  dateRange: DateRange
   description: string
   summary: SalesSummary
   exportDate: string
 }) {
   const doc = new jsPDF()
   const pageWidth = doc.internal.pageSize.width
+
+  // Format date range for display
+  const fromFormatted = format(dateRange.from, 'MMM dd, yyyy hh:mm a')
+  const toFormatted = format(dateRange.to, 'MMM dd, yyyy hh:mm a')
 
   // Header - Company Name (Centered)
   doc.setFontSize(18)
@@ -58,12 +68,16 @@ export function exportSalesReportPDF({
     yPosition += 10
   }
 
-  // Terms and Date on the right side
-  doc.text(`Terms: ${month}`, pageWidth - 80, 55)
-  doc.text(`Date: ${exportDate}`, pageWidth - 80, 65)
+  // Date range and export date on the right side
+  doc.setFontSize(10)
+  doc.text('Report Period:', pageWidth - 90, 55)
+  doc.text(`From: ${fromFormatted}`, pageWidth - 90, 63)
+  doc.text(`To: ${toFormatted}`, pageWidth - 90, 71)
+  doc.text(`Exported: ${exportDate}`, pageWidth - 90, 81)
+  doc.setFontSize(11)
 
   // Bottom line for description section
-  yPosition = Math.max(yPosition, 75)
+  yPosition = Math.max(yPosition, 90)
   doc.line(20, yPosition, pageWidth - 20, yPosition)
 
   // Categories and Earnings Table
@@ -123,7 +137,9 @@ export function exportSalesReportPDF({
     yPosition
   )
 
-  // Save the PDF
-  const fileName = `${month.replace(' ', '-')}-sales-report.pdf`
+  // Save the PDF with date range in filename
+  const fromFile = format(dateRange.from, 'yyyy-MM-dd')
+  const toFile = format(dateRange.to, 'yyyy-MM-dd')
+  const fileName = `sales-report_${fromFile}_to_${toFile}.pdf`
   doc.save(fileName)
 }

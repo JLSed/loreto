@@ -49,12 +49,9 @@ export default async function Page() {
             </div>
           </div>
           <ExportSalesPdfButton
-            summary={{
-              total,
-              rent: rentTotal,
-              box: boxTotal,
-              booking: bookingTotal,
-            }}
+            rent={rent}
+            box={box}
+            booking={booking}
           />
         </div>
       </header>
