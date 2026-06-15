@@ -2,7 +2,6 @@
 
 import React, { createContext, useContext, useState, ReactNode } from 'react'
 
-// Define the shape of the context
 interface NavbarContextType {
   isOpen: boolean
   toggleNavbar: () => void
@@ -10,10 +9,8 @@ interface NavbarContextType {
   closeNavbar: () => void
 }
 
-// Create the context
 const NavbarContext = createContext<NavbarContextType | undefined>(undefined)
 
-// Create a provider component
 export const NavbarProvider = ({ children }: { children: ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -30,7 +27,6 @@ export const NavbarProvider = ({ children }: { children: ReactNode }) => {
   )
 }
 
-// Custom hook for easier access
 export const useNavbar = (): NavbarContextType => {
   const context = useContext(NavbarContext)
   if (!context) {

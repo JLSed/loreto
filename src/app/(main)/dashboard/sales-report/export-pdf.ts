@@ -1,5 +1,4 @@
 import jsPDF from 'jspdf'
-import autoTable from 'jspdf-autotable'
 import { format } from 'date-fns'
 
 interface SalesSummary {
@@ -14,7 +13,33 @@ interface DateRange {
   to: Date
 }
 
-export function exportSalesReportPDF({
+/**
+ * Loads the company logo from the public directory and converts it to a base64 Data URL.
+ */
+function getLogoBase64(): Promise<string> {
+  return new Promise((resolve) => {
+    const img = new Image()
+    img.crossOrigin = 'anonymous'
+    img.src = '/logo.png'
+    img.onload = () => {
+      const canvas = document.createElement('canvas')
+      canvas.width = img.width
+      canvas.height = img.height
+      const ctx = canvas.getContext('2d')
+      if (ctx) {
+        ctx.drawImage(img, 0, 0)
+        resolve(canvas.toDataURL('image/png'))
+      } else {
+        resolve('')
+      }
+    }
+    img.onerror = () => {
+      resolve('')
+    }
+  })
+}
+
+export async function exportSalesReportPDF({
   dateRange,
   description,
   summary,
@@ -28,116 +53,144 @@ export function exportSalesReportPDF({
   const doc = new jsPDF()
   const pageWidth = doc.internal.pageSize.width
 
-  // Format date range for display
-  const fromFormatted = format(dateRange.from, 'MMM dd, yyyy hh:mm a')
-  const toFormatted = format(dateRange.to, 'MMM dd, yyyy hh:mm a')
+  const logoBase64 = await getLogoBase64()
 
-  // Header - Company Name (Centered)
-  doc.setFontSize(18)
-  doc.setFont('helvetica', 'bold')
-  const companyName = 'LORETO BOXES TRADING'
-  // Calculate width manually for text centering
-  const companyNameWidth = companyName.length * 4 // Rough estimation
-  doc.text(companyName, (pageWidth - companyNameWidth) / 2, 25)
-
-  // Header - Sales Report (Centered)
-  doc.setFontSize(16)
-  const reportTitle = 'SALES REPORT'
-  // Calculate width manually for text centering
-  const reportTitleWidth = reportTitle.length * 4 // Rough estimation
-  doc.text(reportTitle, (pageWidth - reportTitleWidth) / 2, 35)
-
-  // Horizontal line
-  doc.setLineWidth(0.5)
-  doc.line(20, 45, pageWidth - 20, 45)
-
-  // Description and Terms section
-  doc.setFontSize(11)
-  doc.setFont('helvetica', 'normal')
-
-  let yPosition = 55
-
-  // Description
-  if (description) {
-    doc.text('Description:', 25, yPosition)
-    const descriptionLines = doc.splitTextToSize(description, pageWidth - 100)
-    doc.text(descriptionLines, 25, yPosition + 8)
-    yPosition += descriptionLines.length * 5 + 8
-  } else {
-    doc.text('Description:', 25, yPosition)
-    yPosition += 10
+  let y = 20
+  if (logoBase64) {
+    const logoSize = 18
+    const logoX = (pageWidth - logoSize) / 2
+    doc.addImage(logoBase64, 'PNG', logoX, y, logoSize, logoSize)
+    y += logoSize + 10
   }
 
-  // Date range and export date on the right side
+  doc.setFontSize(22)
+  doc.setFont('helvetica', 'bold')
+  doc.setTextColor(17, 24, 39) // slate-900
+  const brandName = 'Loreto Trading'
+  doc.text(brandName, (pageWidth - doc.getTextWidth(brandName)) / 2, y)
+  y += 7
+
+  doc.setFontSize(8)
+  doc.setFont('helvetica', 'bold')
+  doc.setTextColor(156, 163, 175) // gray-400
+  const brandSubtitle = 'SALES REPORT'
+  doc.text(brandSubtitle, (pageWidth - doc.getTextWidth(brandSubtitle)) / 2, y)
+  y += 18
+
+  const leftX = 20
+  const rightX = pageWidth - 20
+
+  doc.setFontSize(14)
+  doc.setFont('helvetica', 'bold')
+  doc.setTextColor(17, 24, 39) // slate-900
+  doc.text('Revenue Summary', leftX, y)
+
+  doc.setFontSize(8)
+  doc.setFont('helvetica', 'bold')
+  doc.setTextColor(107, 114, 128) // gray-500
+  const dateGenLabel = 'Date Generated'
+  doc.text(dateGenLabel, rightX - doc.getTextWidth(dateGenLabel), y)
+
+  y += 6
+
   doc.setFontSize(10)
-  doc.text('Report Period:', pageWidth - 90, 55)
-  doc.text(`From: ${fromFormatted}`, pageWidth - 90, 63)
-  doc.text(`To: ${toFormatted}`, pageWidth - 90, 71)
-  doc.text(`Exported: ${exportDate}`, pageWidth - 90, 81)
-  doc.setFontSize(11)
-
-  // Bottom line for description section
-  yPosition = Math.max(yPosition, 90)
-  doc.line(20, yPosition, pageWidth - 20, yPosition)
-
-  // Categories and Earnings Table
-  yPosition += 15
-
-  // Table headers
   doc.setFont('helvetica', 'bold')
-  doc.text('Category', 25, yPosition)
-  doc.text('Earnings', pageWidth - 50, yPosition)
+  doc.setTextColor(55, 65, 81) // gray-700
+  const fromFormatted = format(dateRange.from, 'MMMM d, yyyy')
+  const toFormatted = format(dateRange.to, 'MMMM d, yyyy')
+  const periodText =
+    fromFormatted === toFormatted
+      ? fromFormatted
+      : `${fromFormatted} - ${toFormatted}`
+  doc.text(periodText, leftX, y)
 
-  yPosition += 5
-  doc.line(20, yPosition, pageWidth - 20, yPosition)
-
-  // Table content
+  doc.setFontSize(9)
   doc.setFont('helvetica', 'normal')
-  yPosition += 10
+  doc.setTextColor(107, 114, 128) // gray-500
+  doc.text(exportDate, rightX - doc.getTextWidth(exportDate), y)
 
-  // Rental
-  doc.text('Rental', 25, yPosition)
-  doc.text(
-    `${summary.rent.toLocaleString('en-US', { minimumFractionDigits: 2 })}`,
-    pageWidth - 50,
-    yPosition
-  )
-  yPosition += 8
-  doc.line(20, yPosition, pageWidth - 20, yPosition)
+  y += 12
 
-  // Shipping Box
-  yPosition += 10
-  doc.text('Shipping Box', 25, yPosition)
-  doc.text(
-    `${summary.box.toLocaleString('en-US', { minimumFractionDigits: 2 })}`,
-    pageWidth - 50,
-    yPosition
-  )
-  yPosition += 8
-  doc.line(20, yPosition, pageWidth - 20, yPosition)
+  const cardW = 80
+  const cardH = 26
+  const cardGapX = 10
+  const cardGapY = 6
 
-  // Vehicle Rental
-  yPosition += 10
-  doc.text('Vehicle Rental', 25, yPosition)
-  doc.text(
-    `${summary.booking.toLocaleString('en-US', { minimumFractionDigits: 2 })}`,
-    pageWidth - 50,
-    yPosition
-  )
-  yPosition += 8
-  doc.line(20, yPosition, pageWidth - 20, yPosition)
+  const col1X = leftX
+  const col2X = leftX + cardW + cardGapX
 
-  // Total
-  yPosition += 15
-  doc.setFont('helvetica', 'bold')
-  doc.text('Total', pageWidth - 80, yPosition)
-  doc.text(
-    `${summary.total.toLocaleString('en-US', { minimumFractionDigits: 2 })}`,
-    pageWidth - 50,
-    yPosition
-  )
+  const formatAmount = (num: number) => {
+    return (
+      'P ' +
+      num.toLocaleString('en-US', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      })
+    )
+  }
 
-  // Save the PDF with date range in filename
+  const drawCard = (
+    x: number,
+    y: number,
+    label: string,
+    amount: number,
+    isGreen: boolean = false,
+  ) => {
+    // Card border
+    doc.setDrawColor(229, 231, 235) // gray-200
+    doc.setFillColor(255, 255, 255)
+    doc.setLineWidth(0.3)
+    doc.roundedRect(x, y, cardW, cardH, 3, 3, 'FD')
+
+    // Card label
+    doc.setFontSize(7.5)
+    doc.setFont('helvetica', 'bold')
+    if (isGreen) {
+      doc.setTextColor(22, 163, 74) // green-600
+    } else {
+      doc.setTextColor(156, 163, 175) // gray-400
+    }
+    doc.text(label, x + 6, y + 8)
+
+    // Card Value
+    doc.setFontSize(15)
+    doc.setFont('helvetica', 'bold')
+    if (isGreen) {
+      doc.setTextColor(22, 163, 74) // green-600
+    } else {
+      doc.setTextColor(17, 24, 39) // slate-900
+    }
+    doc.text(formatAmount(amount), x + 6, y + 18)
+  }
+
+  // Row 1
+  const row1Y = y
+  drawCard(col1X, row1Y, 'TOTAL REVENUE', summary.total, true)
+  drawCard(col2X, row1Y, 'RENT EARNINGS', summary.rent)
+
+  // Row 2
+  const row2Y = y + cardH + cardGapY
+  drawCard(col1X, row2Y, 'BOX EARNINGS', summary.box)
+  drawCard(col2X, row2Y, 'BOOKING EARNINGS', summary.booking)
+
+  y = row2Y + cardH + 12
+
+  // 4. Description section
+  if (description) {
+    doc.setFontSize(9.5)
+    doc.setFont('helvetica', 'bold')
+    doc.setTextColor(17, 24, 39)
+    doc.text('Description', leftX, y)
+    y += 5
+
+    doc.setFontSize(8.5)
+    doc.setFont('helvetica', 'normal')
+    doc.setTextColor(75, 85, 99)
+    const descLines = doc.splitTextToSize(description, pageWidth - 40)
+    doc.text(descLines, leftX, y)
+  }
+
+  // Save the PDF
   const fromFile = format(dateRange.from, 'yyyy-MM-dd')
   const toFile = format(dateRange.to, 'yyyy-MM-dd')
   const fileName = `sales-report_${fromFile}_to_${toFile}.pdf`

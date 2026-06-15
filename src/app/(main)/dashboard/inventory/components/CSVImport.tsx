@@ -22,7 +22,6 @@ export function CSVImport({ onClose }: CSVImportProps) {
     if (selectedFile) {
       setFile(selectedFile)
 
-      // Parse CSV preview
       const reader = new FileReader()
       reader.onload = (e) => {
         const text = e.target?.result as string
@@ -102,7 +101,7 @@ export function CSVImport({ onClose }: CSVImportProps) {
               result.results?.filter((r: any) => !r.success).length || 0
 
             alert(
-              `Import completed! ${successful} entries imported successfully. ${failed} failed.`
+              `Import completed! ${successful} entries imported successfully. ${failed} failed.`,
             )
             onClose()
           } else {

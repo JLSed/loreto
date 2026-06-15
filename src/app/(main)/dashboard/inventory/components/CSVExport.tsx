@@ -27,13 +27,12 @@ export function CSVExport() {
               .map((value: any) =>
                 typeof value === 'string' && value.includes(',')
                   ? `"${value}"`
-                  : value
+                  : value,
               )
-              .join(',')
+              .join(','),
           ),
         ].join('\n')
 
-        // Create and download file
         const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
         const link = document.createElement('a')
 
@@ -42,7 +41,7 @@ export function CSVExport() {
           link.setAttribute('href', url)
           link.setAttribute(
             'download',
-            `box_inventory_${new Date().toISOString().split('T')[0]}.csv`
+            `box_inventory_${new Date().toISOString().split('T')[0]}.csv`,
           )
           link.style.visibility = 'hidden'
           document.body.appendChild(link)

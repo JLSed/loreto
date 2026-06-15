@@ -46,7 +46,7 @@ export async function updateOrderStatus(
   orderId: string,
   oldStatus: number,
   newStatus: number,
-  forceDeduction: boolean = false
+  forceDeduction: boolean = false,
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -55,7 +55,6 @@ export async function updateOrderStatus(
     if (!user) return { status: 401, message: 'Unauthorized' }
 
     return await prisma.$transaction(async (tx) => {
-      // Fetch the order with its box to get dimensions and quantity
       const order = await tx.boxOrder.findUniqueOrThrow({
         where: { id: orderId },
         include: { box: true },
@@ -94,7 +93,6 @@ export async function updateOrderStatus(
         },
       })
 
-      // --- Inventory adjustment logic ---
       const isBecomingConfirmed =
         oldStatus < CONFIRMATION_THRESHOLD &&
         newStatus >= CONFIRMATION_THRESHOLD
@@ -104,11 +102,9 @@ export async function updateOrderStatus(
 
       if (isBecomingConfirmed || isBecomingUnconfirmed) {
         const box = order.box
-        const boxWidth = Math.round(
-          box.totalWidth * (box.leftPanelSize / 100)
-        )
+        const boxWidth = Math.round(box.totalWidth * (box.leftPanelSize / 100))
         const boxLength = Math.round(
-          box.totalWidth * (box.rightPanelSize / 100)
+          box.totalWidth * (box.rightPanelSize / 100),
         )
         const boxHeight = Math.round(box.height)
         // Box model uses 1=single, 2=double; BoxInventory uses 0=single, 1=double
@@ -125,11 +121,10 @@ export async function updateOrderStatus(
             },
             order.quantity,
             user.id,
-            forceDeduction
+            forceDeduction,
           )
 
           if (deductionResult?.warning) {
-            // Abort the transaction — Prisma rolls back on thrown error
             throw new InventoryWarningError(deductionResult.warning)
           }
         } else {
@@ -142,7 +137,7 @@ export async function updateOrderStatus(
               thickness: boxThickness,
             },
             order.quantity,
-            user.id
+            user.id,
           )
         }
       }
@@ -159,12 +154,6 @@ export async function updateOrderStatus(
   }
 }
 
-// --- Inventory helper types and functions ---
-
-/**
- * Custom error used to abort a Prisma transaction when a non-fatal
- * inventory warning needs to surface to the frontend.
- */
 class InventoryWarningError extends Error {
   constructor(message: string) {
     super(message)
@@ -187,7 +176,7 @@ type PrismaTransactionClient = Parameters<
  * Retrieves or creates a default BoxType to use when creating new inventory entries.
  */
 async function getOrCreateDefaultBoxType(
-  tx: PrismaTransactionClient
+  tx: PrismaTransactionClient,
 ): Promise<number> {
   const existing = await tx.boxType.findFirst({
     orderBy: { id: 'asc' },
@@ -212,7 +201,7 @@ async function deductInventory(
   dimensions: BoxDimensions,
   quantityToDeduct: number,
   actorId: string,
-  force: boolean
+  force: boolean,
 ): Promise<{ warning: string } | undefined> {
   const matchingEntries = await tx.boxInventory.findMany({
     where: {
@@ -273,7 +262,6 @@ async function deductInventory(
     }
   }
 
-  // Force — create a deficit entry
   const boxTypeId = await getOrCreateDefaultBoxType(tx)
   const newQuantity = -quantityToDeduct
 
@@ -311,7 +299,7 @@ async function restoreInventory(
   tx: PrismaTransactionClient,
   dimensions: BoxDimensions,
   quantityToRestore: number,
-  actorId: string
+  actorId: string,
 ): Promise<void> {
   const matchingEntries = await tx.boxInventory.findMany({
     where: {
@@ -324,7 +312,6 @@ async function restoreInventory(
   })
 
   if (matchingEntries.length > 0) {
-    // Restore to the first entry (lowest quantity, to replenish deficit first)
     const entry = matchingEntries[0]
     const newQuantity = entry.quantity + quantityToRestore
     const newTotalWeight = newQuantity * entry.weightPerPiece
@@ -350,7 +337,6 @@ async function restoreInventory(
       },
     })
   } else {
-    // No matching inventory — create a new entry with the restored quantity
     const boxTypeId = await getOrCreateDefaultBoxType(tx)
 
     const entry = await tx.boxInventory.create({
@@ -379,13 +365,12 @@ async function restoreInventory(
 }
 
 export async function createBoxOrderTransaction(order: any) {
-  // You may want to adjust the order type for stricter typing
   return prisma.transaction.create({
     data: {
-      modeOfPayment: 1, // Set as needed, or get from order/payment info
-      type: 1, // 1: full payment
-      itemType: 1, // 1: box
-      amount: order.totalPrice, // Compute this as needed
+      modeOfPayment: 1,
+      type: 1,
+      itemType: 1,
+      amount: order.totalPrice,
       fromUserId: order.userId,
     },
   })

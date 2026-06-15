@@ -6,7 +6,6 @@ import { authOptions } from '@/common/configs/auth'
 import { AuditAction, AuditAffectedTable } from '@/common/enums/enums.db'
 import { revalidatePath } from 'next/cache'
 
-// BoxInventory Actions
 export async function createBoxInventoryEntry(data: {
   length: number
   width: number
@@ -59,7 +58,7 @@ export async function updateBoxInventoryEntry(
   data: {
     quantity: number
     weightPerPiece: number
-  }
+  },
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -128,7 +127,6 @@ export async function deleteBoxInventoryEntry(id: string) {
   }
 }
 
-// BoxType Actions
 export async function createBoxType(typeName: string) {
   try {
     const session = await getServerSession(authOptions)
@@ -140,7 +138,6 @@ export async function createBoxType(typeName: string) {
       data: { typeName },
     })
 
-    // Create audit log
     await prisma.auditLog.create({
       data: {
         action: AuditAction.Creation,
@@ -166,7 +163,6 @@ export async function deleteBoxType(id: number) {
       return { success: false, error: 'Unauthorized' }
     }
 
-    // Check if box type is in use
     const inUse = await prisma.boxInventory.findFirst({
       where: { boxType: id },
     })
@@ -179,7 +175,6 @@ export async function deleteBoxType(id: number) {
       where: { id },
     })
 
-    // Create audit log
     await prisma.auditLog.create({
       data: {
         action: AuditAction.Deletion,
@@ -198,7 +193,6 @@ export async function deleteBoxType(id: number) {
   }
 }
 
-// Data fetching functions
 export async function getBoxInventory() {
   try {
     return await prisma.boxInventory.findMany({
@@ -236,22 +230,32 @@ export async function getInventoryDashboardData() {
       },
     })
 
-    // Group by box type and calculate totals
-    const dashboardData = inventory.reduce((acc, item) => {
-      const typeName = item.type.typeName
-      if (!acc[typeName]) {
-        acc[typeName] = {
-          typeName,
-          totalQuantity: 0,
-          totalWeight: 0,
-          entries: 0,
+    const dashboardData = inventory.reduce(
+      (acc, item) => {
+        const typeName = item.type.typeName
+        if (!acc[typeName]) {
+          acc[typeName] = {
+            typeName,
+            totalQuantity: 0,
+            totalWeight: 0,
+            entries: 0,
+          }
         }
-      }
-      acc[typeName].totalQuantity += item.quantity
-      acc[typeName].totalWeight += item.TotalWeight
-      acc[typeName].entries += 1
-      return acc
-    }, {} as Record<string, { typeName: string; totalQuantity: number; totalWeight: number; entries: number }>)
+        acc[typeName].totalQuantity += item.quantity
+        acc[typeName].totalWeight += item.TotalWeight
+        acc[typeName].entries += 1
+        return acc
+      },
+      {} as Record<
+        string,
+        {
+          typeName: string
+          totalQuantity: number
+          totalWeight: number
+          entries: number
+        }
+      >,
+    )
 
     return Object.values(dashboardData)
   } catch (error) {
@@ -260,7 +264,6 @@ export async function getInventoryDashboardData() {
   }
 }
 
-// CSV Export/Import functions
 export async function exportInventoryToCSV() {
   try {
     const inventory = await getBoxInventory()
@@ -294,7 +297,7 @@ export async function importInventoryFromCSV(
     weightPerPiece: number
     cardboardType: string
     boxType: string
-  }>
+  }>,
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -306,7 +309,6 @@ export async function importInventoryFromCSV(
 
     for (const row of csvData) {
       try {
-        // Find or create box type
         let boxType = await prisma.boxType.findFirst({
           where: { typeName: row.boxType },
         })
@@ -317,7 +319,6 @@ export async function importInventoryFromCSV(
           })
         }
 
-        // Create box inventory entry
         const entry = await createBoxInventoryEntry({
           length: row.length,
           width: row.width,

@@ -38,7 +38,6 @@ export function AddBoxEntryForm({ onClose }: AddBoxEntryFormProps) {
   const [isPending, startTransition] = useTransition()
 
   useEffect(() => {
-    // Load box types
     getBoxTypes().then(setBoxTypes)
   }, [])
 

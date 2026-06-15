@@ -19,6 +19,7 @@ import {
 import { Textarea } from '@/components/ui/textarea'
 import { cn } from '@/lib/utils'
 import { format } from 'date-fns'
+import { toast } from 'sonner'
 import { useState } from 'react'
 import { exportSalesReportPDF } from './export-pdf'
 
@@ -36,6 +37,7 @@ interface ExportSalesPdfButtonProps {
 export function ExportSalesPdfButton({ rent, box, booking }: ExportSalesPdfButtonProps) {
   const [open, setOpen] = useState(false)
   const [description, setDescription] = useState('')
+  const [isExporting, setIsExporting] = useState(false)
 
   // Date range state
   const [startDate, setStartDate] = useState<Date | undefined>(undefined)
@@ -59,9 +61,9 @@ export function ExportSalesPdfButton({ rent, box, booking }: ExportSalesPdfButto
     return combined
   }
 
-  const handleExport = () => {
+  const handleExport = async () => {
     if (!startDate || !endDate) {
-      alert('Please select both start and end dates')
+      toast.error('Please select both start and end dates')
       return
     }
 
@@ -69,44 +71,54 @@ export function ExportSalesPdfButton({ rent, box, booking }: ExportSalesPdfButto
     const to = combineDateAndTime(endDate, endTime)
 
     if (from > to) {
-      alert('Start date/time must be before end date/time')
+      toast.error('Start date/time must be before end date/time')
       return
     }
 
-    // Filter transactions by the selected date and time range
-    const filterByDateRange = (transactions: Transaction[]) => {
-      return transactions.filter((t) => {
-        const txDate = new Date(t.createdAt)
-        return txDate >= from && txDate <= to
+    setIsExporting(true)
+
+    try {
+      // Filter transactions by the selected date and time range
+      const filterByDateRange = (transactions: Transaction[]) => {
+        return transactions.filter((t) => {
+          const txDate = new Date(t.createdAt)
+          return txDate >= from && txDate <= to
+        })
+      }
+
+      const filteredRent = filterByDateRange(rent)
+      const filteredBox = filterByDateRange(box)
+      const filteredBooking = filterByDateRange(booking)
+
+      const rentTotal = filteredRent.reduce((sum, t) => sum + (t.amount || 0), 0)
+      const boxTotal = filteredBox.reduce((sum, t) => sum + (t.amount || 0), 0)
+      const bookingTotal = filteredBooking.reduce((sum, t) => sum + (t.amount || 0), 0)
+      const total = rentTotal + boxTotal + bookingTotal
+
+      await exportSalesReportPDF({
+        dateRange: {
+          from,
+          to,
+        },
+        description,
+        summary: {
+          total,
+          rent: rentTotal,
+          box: boxTotal,
+          booking: bookingTotal,
+        },
+        exportDate: new Date().toLocaleDateString(),
       })
+
+      toast.success('Sales report PDF exported successfully')
+      setOpen(false)
+      resetForm()
+    } catch (error) {
+      console.error('Failed to export sales report PDF:', error)
+      toast.error('Failed to generate the PDF. Please try again.')
+    } finally {
+      setIsExporting(false)
     }
-
-    const filteredRent = filterByDateRange(rent)
-    const filteredBox = filterByDateRange(box)
-    const filteredBooking = filterByDateRange(booking)
-
-    const rentTotal = filteredRent.reduce((sum, t) => sum + (t.amount || 0), 0)
-    const boxTotal = filteredBox.reduce((sum, t) => sum + (t.amount || 0), 0)
-    const bookingTotal = filteredBooking.reduce((sum, t) => sum + (t.amount || 0), 0)
-    const total = rentTotal + boxTotal + bookingTotal
-
-    exportSalesReportPDF({
-      dateRange: {
-        from,
-        to,
-      },
-      description,
-      summary: {
-        total,
-        rent: rentTotal,
-        box: boxTotal,
-        booking: bookingTotal,
-      },
-      exportDate: new Date().toLocaleDateString(),
-    })
-
-    setOpen(false)
-    resetForm()
   }
 
   const resetForm = () => {
@@ -387,9 +399,9 @@ export function ExportSalesPdfButton({ rent, box, booking }: ExportSalesPdfButto
             </Button>
             <Button
               onClick={handleExport}
-              disabled={!isRangeValid}
+              disabled={!isRangeValid || isExporting}
             >
-              Export PDF
+              {isExporting ? 'Generating PDF...' : 'Export PDF'}
             </Button>
           </div>
         </div>

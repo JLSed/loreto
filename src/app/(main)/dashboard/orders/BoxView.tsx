@@ -18,7 +18,7 @@ function parseTransform(transform: string): { x: number; y: number } {
 function scaleTransform(
   transform: string,
   originalScaleFactor: number,
-  newScaleFactor: number
+  newScaleFactor: number,
 ): string {
   const { x, y } = parseTransform(transform)
   const scaledX = (x / originalScaleFactor) * newScaleFactor
@@ -27,7 +27,6 @@ function scaleTransform(
 }
 
 export default function BoxView({ box }: Props) {
-  // Use the stored scaleFactor from the box, fallback to default
   const originalScaleFactor = box.scaleFactor || 19.2
   const scaleFactor = box.height > 300 ? 1 : 20
   const totalWidth = box.totalWidth * scaleFactor
@@ -48,7 +47,7 @@ export default function BoxView({ box }: Props) {
           const scaledTransform = scaleTransform(
             m.transform,
             originalScaleFactor,
-            scaleFactor
+            scaleFactor,
           )
           return (
             <Image
@@ -67,7 +66,7 @@ export default function BoxView({ box }: Props) {
           const scaledTransform = scaleTransform(
             m.cssTransform,
             originalScaleFactor,
-            scaleFactor
+            scaleFactor,
           )
           return (
             <div
